@@ -1,6 +1,8 @@
 const express = require('express');
-const userRouter = require('./Routes/userRoutes')
 
+const userRouter = require('./Routes/userRoutes')
+const AppError = require('./Utils/appError')
+const globalErrorHandle = require('./Controllers/errorController')
 
 const app = express();
 
@@ -15,6 +17,8 @@ app.get("/", (req,res) => {
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
+
+app.use(globalErrorHandle)
 
 const PORT = 5000;
 
