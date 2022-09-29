@@ -1,21 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 
+
+import Navbar from '../Components/GeneralComp/Navbar'
+
 const Section = styled.div`
-width: 100%;
-height: 4rem;
+    
 `
 
-const Navbar = () => {
+const Rooms = () => {
   return (
     <Section>
-        Navbar
+        <h1>Rooms</h1>
     </Section>
   )
 }
 
-export default Navbar
-
-// Feed
-// Profile
-// Chat Section
+export default Rooms

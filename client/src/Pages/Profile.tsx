@@ -8,15 +8,15 @@ const Section = styled.div`
     
 `
 
-const Home = () => {
+const Profile = () => {
   return (
     <>
     <Navbar/>
     <Section>
-
+      <h1>Profile</h1>
     </Section>
     </>
   )
 }
 
-export default Home
+export default Profile
