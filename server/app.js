@@ -1,12 +1,16 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 
 const userRouter = require('./Routes/userRoutes')
 const AppError = require('./Utils/appError')
 const globalErrorHandle = require('./Controllers/errorController')
 
 const app = express();
+require("dotenv").config();
 
-app.use(express.static());
+app.use(cors());
+app.use(express.json());
 
 app.use('/api/v1/users', userRouter);
 
@@ -20,7 +24,13 @@ app.all('*', (req, res, next) => {
 
 app.use(globalErrorHandle)
 
-const PORT = 5000;
+const PORT = process.env.PORT;
+
+mongoose.connect(process.env.MONGO_URL).then(() => {
+    console.log("Connected to Database");
+}).catch((err) => {
+    console.log(err);
+})
 
 app.listen(PORT, () => {
     console.log("Server is running on PORT:- " + PORT);
