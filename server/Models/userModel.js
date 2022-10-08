@@ -13,6 +13,24 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
   },
+  designation: {
+    type: String,
+  },
+  linkedinUrl: {
+    type: String
+  },
+  github: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  twitter: {
+    type: String
+  },
+  personalWebsite: {
+    type: String
+  },
   photo: String,
   password: {
     type: String,
@@ -30,6 +48,15 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords are not the same!'
     }
   },
+  connections: {
+    type: Array,
+  },
+  skills: {
+    type: Array,
+  },
+  pastProjects: {
+    type: Array
+  }
 });
 
 const User = mongoose.model('User', userSchema);

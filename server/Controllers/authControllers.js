@@ -61,3 +61,17 @@ exports.login = catchAsync(async (req, res, next) => {
 
   createSendToken(user, 200, res);
 });
+
+exports.getMyProfile = catchAsync(async (req,res,next) => {
+  res.send("My profile")
+})
+
+exports.updateDescription = catchAsync(async (req,res,next) => {
+  res.send("My prof")
+})
+
+exports.updateSkills = catchAsync(async (req,res,next) => {
+  res.send("My Skills")
+})
+
+
