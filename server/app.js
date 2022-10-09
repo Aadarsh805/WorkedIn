@@ -35,3 +35,17 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 app.listen(PORT, () => {
     console.log("Server is running on PORT:- " + PORT);
 })
+
+
+// Auth --> Signup, Login, Forgot Password, Reset Password, Update Password
+// USer --> Update details, update user profile, get details, get other user details
+// Post --> Post post, update Post, get posts
+// Contract API's --> Create Contract, Get Contract
+// Chat API's
+//  Message API's
+
+
+// CONTRACT
+
+//  Team Members | Role and Body | Expected Result | Signature --> Pending | Completed | Broken
+// How Contract completed --> Actual Result | Actual Members Contribution | Signature | Project Links 
