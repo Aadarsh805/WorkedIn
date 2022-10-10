@@ -24,9 +24,6 @@ const userSchema = new mongoose.Schema({
   github: {
     type: String
   },
-  email: {
-    type: String
-  },
   twitter: {
     type: String
   },

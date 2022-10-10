@@ -20,3 +20,9 @@ function App() {
 }
 
 export default App;
+
+//  Profile Page Setup
+//  Profile API
+// --> Name, Pic, Description, About, Social Links
+// Skills
+// Past Projects/Contracts
