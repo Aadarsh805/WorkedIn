@@ -1,29 +1,39 @@
-import React from 'react'
-import styled from 'styled-components'
-import Connect from './Connect'
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { localStorageUser } from "../GeneralComp/GlobalContants";
+import Connect from "./Connect";
 
 const Section = styled.div`
-border: 1px solid red;
-margin-bottom: 1rem;
-`
+  border: 1px solid red;
+  margin-bottom: 1rem;
+`;
 
-const Header = styled.header`
-  
-`
+const Header = styled.header``;
 
-const Intro = () => {
+interface userProps {
+    name?: string;
+  email?: string;
+  active?: boolean;
+  connections?: Array<string>;
+  pastProjects?: Array<string>;
+  photo?: string;
+  skills?: Array<string>;
+  _id?: string;
+}
+
+const Intro = (props: { userDetails: userProps }) => {  
   return (
     <Section>
       <Header>
-        <img src="" alt="" />
-        <h1>Garvit Varshney</h1>
+        <img src={props.userDetails.photo} alt="" />
+        <h1>{props.userDetails.name}</h1>
         <h3>User Designation</h3>
-        <Connect/>
+        <Connect />
       </Header>
     </Section>
-  )
-}
+  );
+};
 
 // Name | Designation | Socials | Photo
 
-export default Intro
+export default Intro;
