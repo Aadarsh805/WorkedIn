@@ -33,7 +33,10 @@ const userSchema = new mongoose.Schema({
   personalWebsite: {
     type: String
   },
-  photo: String,
+  photo: {
+    type: String,
+    default: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],

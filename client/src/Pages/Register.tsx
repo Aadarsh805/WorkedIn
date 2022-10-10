@@ -51,7 +51,6 @@ const Register = () => {
             localStorage.setItem(localStorageUser, JSON.stringify(data.data))   
             navigate('/')
         }
-        
     }
 
     // Verification

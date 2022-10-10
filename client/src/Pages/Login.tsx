@@ -47,14 +47,25 @@ const Login = () => {
         }
     }
 
+    const handleForgetPassword = async (e : any) => {
+        if (!user?.email) {
+            console.log("Enter email");
+            return
+        }
+        const {data} = await axios.post('http://localhost:5000/api/v1/users/forgotpassword', {
+            email: user?.email
+        })
+        console.log(data);
+    }
+
   return (
     <Section>
         <form onSubmit={handleSubmit}>
             <input type="email" name="email" placeholder='Email' value={user?.email} onChange={(e) => handleChange(e)} />
             <input type="password" name="password" placeholder='Password' value={user?.password} onChange={(e) => handleChange(e)} />
             <button type="submit">Login</button>
-            <button>Forgot Password??</button>
         </form>
+            <button onClick={handleForgetPassword} >Forgot Password??</button>
     </Section>
   )
 }
