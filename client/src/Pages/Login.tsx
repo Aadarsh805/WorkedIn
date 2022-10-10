@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios'
+import { localStorageUser } from '../Components/GeneralComp/GlobalContants';
 
 const Section = styled.div`
 height: 100vh;
@@ -32,10 +34,17 @@ const Login = () => {
         setUser({...user, [e.target.name]: e.target.value } as userProps)
     }
 
-    const handleSubmit = (e : any) => {
+    const handleSubmit = async (e : any) => {
         e.preventDefault()
-        alert(JSON.stringify(user));
-        // navigate('/')
+        const {data} = await axios.post('http://localhost:5000/api/v1/users/login', {
+            email: user?.email,
+            password: user?.password 
+        });
+        console.log(data);
+        if (data.status === 'success') {
+            localStorage.setItem(localStorageUser, JSON.stringify(data.data))
+            navigate('/')
+        }
     }
 
   return (
@@ -43,7 +52,8 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
             <input type="email" name="email" placeholder='Email' value={user?.email} onChange={(e) => handleChange(e)} />
             <input type="password" name="password" placeholder='Password' value={user?.password} onChange={(e) => handleChange(e)} />
-            <button type="submit">Register</button>
+            <button type="submit">Login</button>
+            <button>Forgot Password??</button>
         </form>
     </Section>
   )
