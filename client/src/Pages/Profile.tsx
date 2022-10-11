@@ -4,6 +4,7 @@ import { localStorageUser } from "../Components/GeneralComp/GlobalContants";
 
 import Navbar from "../Components/GeneralComp/Navbar";
 import Intro from "../Components/ProfileComp/Intro";
+import NoSkill from "../Components/ProfileComp/NoSkill";
 import PastProjects from "../Components/ProfileComp/PastProjects";
 import Skills from "../Components/ProfileComp/Skills";
 
@@ -59,7 +60,11 @@ const Profile = () => {
       {!loading ? (
         <Section>
           <Intro userDetails={user} />
-          <Skills />
+          {
+            user.skills?.length !== 0 ? 
+            <Skills skillArr={user.skills} /> : 
+            <NoSkill/>
+          }
           <PastProjects />
         </Section>
       ) : 

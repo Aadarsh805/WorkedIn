@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const Skills = () => {
+const Skills = (props: {skillArr?: Array<string>}) => {
+  useEffect(() => {
+    console.log(props.skillArr?.length);
+  }, [])
+
+  const arrLength = props.skillArr?.length
+  
   return (
-    <div>Skills</div>
+    <div>bb</div>
   )
 }
 

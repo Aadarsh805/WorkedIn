@@ -18,6 +18,7 @@ const Header = styled.header`
   align-items: center;
   justify-content: flex-start;
   position: relative;
+  min-height: 12vw;
 `;
 
 const ImageContainer = styled.div`
@@ -48,7 +49,7 @@ const ImageContainer = styled.div`
 
 const DetailContainer = styled.div`
   border: 1px solid red;
-  height: 12vw;
+  min-height: 12vw;
   width: calc(100vw - 25vw);
   padding-left: 1.5vw;
   display: flex;
@@ -57,10 +58,10 @@ const DetailContainer = styled.div`
   justify-content: center;
 
   h1 {
-    font-size: 3vw;
+    font-size: 2.5vw;
     /* margin-bottom: 1vw; */
     text-transform: capitalize;
-    font-weight: 500;
+    font-weight: 400;
   }
 `;
 
@@ -89,9 +90,11 @@ const EditDetails = styled.div`
 `;
 
 const Designation = styled.h3`
-  /* border: 1px solid red; */
-  width: 70%;
-  font-weight: 500;
+  border: 1px solid red;
+  width: 80%;
+  font-size: 1.3vw;
+
+  font-weight: 300;
 `
 
 interface userProps {
@@ -129,7 +132,8 @@ const Intro = (props: { userDetails: userProps }) => {
           {props.userDetails.designation ? (
             props.userDetails.designation
             ) : (
-              'Tell people about your work experience'
+              // 'Tell people about your work experience'
+              'Co-Founder Blockwee | Youtuber (1 lakh+ views) | Web3 Educator | I help Web3 brands in the field of Content Creation, Community building, Metaverse events, NFT creation, and Marketing🚀'
               )}
               </Designation>
         </DetailContainer>
