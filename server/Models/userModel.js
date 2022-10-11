@@ -18,7 +18,10 @@ const userSchema = new mongoose.Schema({
   designation: {
     type: String,
   },
-  linkedinUrl: {
+  discord: {
+    type: String
+  },
+  linkedin: {
     type: String
   },
   github: {
@@ -28,6 +31,9 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   personalWebsite: {
+    type: String
+  },
+  about: {
     type: String
   },
   photo: {

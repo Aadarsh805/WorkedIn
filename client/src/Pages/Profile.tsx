@@ -9,8 +9,7 @@ import Skills from "../Components/ProfileComp/Skills";
 
 const Section = styled.div`
   border: 1px solid black;
-
-  margin: 1rem;
+  margin: 1vw;
   /* display: flex; */
 `;
 
@@ -18,12 +17,18 @@ const Profile = () => {
   interface userProps {
       name?: string;
       email?: string;
-      active?: boolean;
       connections?: Array<string>;
       pastProjects?: Array<string>;
       photo?: string;
       skills?: Array<string>;
       _id?: string;
+      designation?: string;
+      about?: string
+      discord?: string;
+      linkedin?: string;
+      github?: string;
+      twitter?: string;
+      personalWebsite?: string;
   }
 
   const [user, setUser] = useState<userProps>({})
@@ -39,6 +44,8 @@ const Profile = () => {
     fetchUserData();
     setLoading(!loading)
   }, []);
+
+  // API --> for the user --> if Profile --> /me , if other user --> getUser
 
   useEffect(() => {
     console.log(loading);
