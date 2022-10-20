@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const userRouter = require('./Routes/userRoutes')
+const postRouter = require('./Routes/postRoutes')
 const AppError = require('./Utils/appError')
 const globalErrorHandle = require('./Controllers/errorController')
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/posts', postRouter)
 
 app.get("/", (req,res) => {
     res.send("Hello World");

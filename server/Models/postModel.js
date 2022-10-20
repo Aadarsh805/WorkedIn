@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
+const User = require('./userModel')
 
 const postSchema = new mongoose.Schema({
     author: {
-        
+       type: mongoose.Schema.ObjectId,
+       ref: User,
+       required: [true, "Post must belong to a User"] 
     },
     description: {
         type: String,
@@ -15,3 +18,17 @@ const postSchema = new mongoose.Schema({
         type: Array,
     },
 })
+
+postSchema.pre(/^find/, function (next) {
+    this.populate({
+      path: "author",
+      select: "name photo",
+    });
+    next();
+  });
+
+
+
+const Post = mongoose.model("Post", postSchema);
+
+module.exports = Post;

@@ -70,8 +70,9 @@ const EditDetails = styled.div`
   right: 1vw;
   top: 1vw;
   z-index: 2;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   padding: 5px;
+  border-radius: 4px;
   transition: all 0.2s linear;
 
   svg {
@@ -128,11 +129,9 @@ const Intro = (props: { userDetails: userProps }) => {
           <h1>{props.userDetails.name}</h1>
           <Socials />
           <Designation>
-
           {props.userDetails.designation ? (
             props.userDetails.designation
             ) : (
-              // 'Tell people about your work experience'
               'Co-Founder Blockwee | Youtuber (1 lakh+ views) | Web3 Educator | I help Web3 brands in the field of Content Creation, Community building, Metaverse events, NFT creation, and Marketing🚀'
               )}
               </Designation>

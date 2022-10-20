@@ -10,3 +10,9 @@ const Connect = () => {
 }
 
 export default Connect
+
+
+//  4-> Chat --> Contract --> 1 left
+
+
+// 3 --> 1  \ 2
