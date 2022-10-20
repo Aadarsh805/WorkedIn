@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema({
     author: {
        type: mongoose.Schema.ObjectId,
        ref: User,
-       required: [true, "Post must belong to a User"] 
+       required: [true, "Post must belong to a User"]
     },
     description: {
         type: String,
@@ -25,10 +25,11 @@ postSchema.pre(/^find/, function (next) {
       select: "name photo",
     });
     next();
-  });
-
+});
 
 
 const Post = mongoose.model("Post", postSchema);
 
 module.exports = Post;
+
+//  Authors Pic, Name, Tagline, Post Desc, Post Image, Tags, Like Share, Comments, Three Dots --> Report, Delete, Update

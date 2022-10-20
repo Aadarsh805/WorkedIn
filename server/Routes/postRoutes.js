@@ -1,10 +1,11 @@
 const express = require('express');
-const postControllers = require('../Controllers/postControllers')
+const postController = require('../Controllers/postControllers')
+const authController = require('../Controllers/authControllers')
 
 const router = express.Router();
 
-router.get('/', postControllers.getAllPosts)
-router.post('/', postControllers.creatPost);
+router.get('/', postController.getAllPosts)
+router.post('/', authController.protect ,postController.creatPost);
 
 module.exports = router;
 

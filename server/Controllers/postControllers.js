@@ -7,5 +7,6 @@ exports.getAllPosts = catchAsync(async (req,res,next) => {
 })
 
 exports.creatPost = catchAsync(async (req,res,next) => {
+    console.log(req.user);
     res.send('Post Cereated')
 })
