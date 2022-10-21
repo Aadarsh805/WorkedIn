@@ -11,7 +11,9 @@ router.post('/forgotpassword', authController.forgetPassword)
 router.use(authController.protect)
 
 router.get('/me',authController.getMyProfile)
-router.post('/me/desc')
-router.post('/me/skills')
+// router.post('/me/desc')
+// router.post('/me/skills')
 
 module.exports = router;
+
+// --> SignUp, Login, Forgot Password, Reset Password, Get User Profile, 

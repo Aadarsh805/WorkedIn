@@ -122,7 +122,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log(decoded);
+  // console.log(decoded);
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
@@ -163,5 +163,4 @@ exports.updateDescription = catchAsync(async (req,res,next) => {
 exports.updateSkills = catchAsync(async (req,res,next) => {
   res.send("My Skills")
 });
-
 
