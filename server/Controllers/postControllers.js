@@ -10,7 +10,6 @@ exports.setPostAuthor = (req,res,next) => {
 }
 
 exports.protectPost = catchAsync(async (req,res,next) => {
-    console.log(req.user._id.valueOf());
     //  We are getting postId from params
     const postId = req.params.id;
 
@@ -22,17 +21,28 @@ exports.protectPost = catchAsync(async (req,res,next) => {
     let userId = req.user._id.valueOf(); 
     let authorId = authorData.author._id.valueOf(); 
     if (userId === authorId) {
-        console.log("APPROVED 😁");
         next()
     } else {
         return next(new AppError("You dont have permission to change this post"))
     }
 })
 
-exports.getAllPosts = catchAsync(async (req,res,next) => {
-    res.send('All Posts')
-});
+exports.reportPost = catchAsync(async (req,res,next) => {
+    // check if post's author != user
+    const postId = req.params.id;
+    const authorData = await Post.findById(postId).select('author');
 
+    let userId = req.user._id.valueOf(); 
+    let authorId = authorData.author._id.valueOf(); 
+
+    if (userId === authorId) {
+        return next(new AppError("You cant report your own Post"))
+    } else {
+        res.send('Reported')
+    }
+})
+
+exports.getAllPosts = factory.getAll(Post)
 exports.createPost = factory.createOne(Post)
 exports.getOnePost = factory.getOne(Post, {path: 'author'})
 exports.updatePost = factory.updateOne(Post)
