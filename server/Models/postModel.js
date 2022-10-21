@@ -14,8 +14,20 @@ const postSchema = new mongoose.Schema({
     image: {
         type: String
     },
+    tags: {
+        type: Array,
+    },
+    like: {
+        type: Number,
+        default: 0
+    },
     comments: {
         type: Array,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+        select: false // can exclude fields right from model
     },
 })
 
@@ -32,4 +44,4 @@ const Post = mongoose.model("Post", postSchema);
 
 module.exports = Post;
 
-//  Authors Pic, Name, Tagline, Post Desc, Post Image, Tags, Like Share, Comments, Three Dots --> Report, Delete, Update
+//  Authors Pic, Name, Tagline, Post Desc, Post Image, Tags, Like, Share, Comments, Three Dots --> Report, Delete, Update

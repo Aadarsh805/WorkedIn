@@ -1,5 +1,5 @@
 const Post = require('../Models/postModel');
-const catchAsync = require('./../Utils/catchAsync')
+const catchAsync = require('../Utils/catchAsync')
 const AppError = require('../Utils/appError')
 const factory = require('./handlerFactory')
 
@@ -48,4 +48,4 @@ exports.getOnePost = factory.getOne(Post, {path: 'author'})
 exports.updatePost = factory.updateOne(Post)
 exports.deletePost = factory.deleteOne(Post)
 
-// --> "Get All Posts", Get One Post, Crreate Post, Delete Post, Update Post
+// --> "Get All Posts", Get One Post, Crreate Post, Delete Post, Update Post, Report Post
