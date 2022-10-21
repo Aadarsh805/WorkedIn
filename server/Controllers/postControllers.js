@@ -10,21 +10,23 @@ exports.setPostAuthor = (req,res,next) => {
 }
 
 exports.protectPost = catchAsync(async (req,res,next) => {
+    console.log(req.user._id.valueOf());
     //  We are getting postId from params
     const postId = req.params.id;
-    // console.log('POSTID :-' + postId);
+
     // we'll get the author of that Post
     const authorData = await Post.findById(postId).select('author');
     console.log("AUTHOR :-" + authorData);
-    console.log("User ID :- " + req.user._id);
-    console.log("Author ID :- " + authorData.author._id);
-    console.log(typeof(req.user._id));
-    console.log(typeof(authorData.author._id));
+
     //  if only userId and authorId are same, then proceed
-    if (req.user._id === authorData.author._id) {
+    let userId = req.user._id.valueOf(); 
+    let authorId = authorData.author._id.valueOf(); 
+    if (userId === authorId) {
         console.log("APPROVED 😁");
+        next()
+    } else {
+        return next(new AppError("You dont have permission to change this post"))
     }
-    next()
 })
 
 exports.getAllPosts = catchAsync(async (req,res,next) => {
