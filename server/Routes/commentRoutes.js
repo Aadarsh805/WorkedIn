@@ -9,4 +9,12 @@ router.use(authController.protect)
 router
     .route('/')
     .get(commentController.getAllComments)
-    .post(commentController.postComment)
+    .post(commentController.setPostandUserIds, commentController.postComment)
+
+router
+    .route('/:id')
+    .post(commentController.reportComment)    
+    .patch(commentController.protectComment, commentController.updateComment)
+    .delete(commentController.protectComment, commentController.deleteComment)
+
+module.exports = router;

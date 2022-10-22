@@ -1,8 +1,11 @@
 const express = require('express');
 const postController = require('../Controllers/postController')
 const authController = require('../Controllers/authController')
+const commentRouter = require('./commentRoutes')
 
 const router = express.Router();
+
+router.use('/:postId/comment', commentRouter)
 
 router
     .route('/')
@@ -12,9 +15,9 @@ router
 router
     .route('/:id')
     .get(postController.getOnePost)
+    .post(authController.protect, postController.reportPost)
     .patch(authController.protect, postController.protectPost, postController.updatePost)
     .delete(authController.protect, postController.protectPost, postController.deletePost)
-    .post(authController.protect, postController.reportPost)
 
 module.exports = router;
 

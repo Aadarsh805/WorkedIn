@@ -48,4 +48,9 @@ exports.getOnePost = factory.getOne(Post, {path: 'author'})
 exports.updatePost = factory.updateOne(Post)
 exports.deletePost = factory.deleteOne(Post)
 
+exports.likePost = catchAsync(async(req,res,next) => {
+    // get post Id
+    
+    // get
+})
 // --> "Get All Posts", Get One Post, Crreate Post, Delete Post, Update Post, Report Post
