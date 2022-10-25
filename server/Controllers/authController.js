@@ -148,19 +148,3 @@ exports.protect = catchAsync(async (req, res, next) => {
 });
 
 
-exports.getMyProfile = catchAsync(async (req,res,next) => {
-  const user = await User.findById(req.user._id);
-  res.json({
-    status: 'success',
-    data: user
-  })
-})
-
-exports.updateDescription = catchAsync(async (req,res,next) => {
-  res.send("My prof")
-})
-
-exports.updateSkills = catchAsync(async (req,res,next) => {
-  res.send("My Skills")
-});
-
