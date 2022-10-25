@@ -16,9 +16,12 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
 });
 
 exports.updateAbout = catchAsync(async (req, res, next) => {
+  const queryObj = req.body;
+  const excludedFields = ["name", "email", "photo", "tagline", "discord", "linkedin", "github", "twitter", "personalWebsite", "password", "connections", "skills", "pastProjects", "passwordResetToken", "passwordResetExpires", "active"]
+  excludedFields.forEach((el) => delete queryObj[el]);
   const userAbout = await User.findByIdAndUpdate(
     req.params.id,
-    req.body.about,
+    queryObj,
     {
       new: true,
       runValidators: true
