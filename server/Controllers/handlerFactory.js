@@ -1,6 +1,7 @@
 const catchAsync = require("../Utils/catchAsync");
 const AppError = require("../Utils/appError");
 const APIFeatures = require("../Utils/apiFeatures");
+const User = require("../Models/userModel");
 
 
 exports.deleteOne = (Model) =>
@@ -86,3 +87,25 @@ catchAsync(async (req, res, next) => {
     }
   });
 });
+
+exports.updateUser = excludedFields => catchAsync(async (req,res,next) => {
+  const queryObj = req.body;
+  excludedFields.forEach((el) => delete queryObj[el]);
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.id,
+    queryObj,
+    {
+      new: true,
+      runValidators: true
+    });
+    if (!updatedUser) {
+        return next(new AppError("No document found with that ID", 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+          updatedUser
+        }
+    })
+})
