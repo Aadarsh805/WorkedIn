@@ -24,28 +24,35 @@ const userSchema = new mongoose.Schema({
   },
   tagline: {
     type: String,
+    default: ''
   },
   about: {
-    type: String
+    type: String,
+    default: ''
   },
   discord: {
     type: String,
+    default: '',
     unique: true
   },
   linkedin: {
     type: String,
+    default: '',
     unique: true
   },
   github: {
     type: String,
+    default: '',
     unique: true
   },
   twitter: {
     type: String,
+    default: '',
     unique: true
   },
   personalWebsite: {
     type: String,
+    default: '',
     unique: true
   },
   password: {
@@ -74,8 +81,14 @@ const userSchema = new mongoose.Schema({
     type: Array
   },
   passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
+  passwordResetToken: {
+    type: String,
+    select: false
+  },
+  passwordResetExpires: {
+    type: Date,
+    select: false
+  },
   active: {
     type: Boolean,
     default: true,
