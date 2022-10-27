@@ -16,9 +16,15 @@ router
     .route('/:id')
     .get(postController.getOnePost)
     .post(authController.protect, postController.reportPost)
+    .patch(authController.protect, postController.likePost)
     .patch(authController.protect, postController.protectPost, postController.updatePost)
     .delete(authController.protect, postController.protectPost, postController.deletePost)
+    
+// router.patch('/:id/like').patch(authController.protect, postController.likePost)
+
 
 module.exports = router;
 
 //  GetPost, CreatePost, Get One Post, Update Post, Delete Post, Report Post
+
+//  Like Post

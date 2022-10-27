@@ -17,17 +17,19 @@ const postSchema = new mongoose.Schema({
     tags: {
         type: Array,
     },
-    like: {
-        type: Number,
-        default: 0
-    },
+    like: [
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: User
+        }
+    ],
     comments: {
         type: Number,
     },
     createdAt: {
         type: Date,
         default: Date.now(),
-        select: false // can exclude fields right from model
+        select: false
     },
 })
 
