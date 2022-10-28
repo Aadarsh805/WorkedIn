@@ -51,3 +51,10 @@ app.listen(PORT, () => {
 
 //  Team Members | Role and Body | Expected Result | Signature --> Pending | Completed | Broken
 // How Contract completed --> Actual Result | Actual Members Contribution | Signature | Project Links 
+
+// Things to do --> 
+// Auth full API setup --> Today
+// Like and Comment API setup --> Today
+// Group Chats / Single Chats APIs
+// Messaging APIs
+//  Contract API
