@@ -57,3 +57,10 @@ app.listen(PORT, () => {
 // Like/Comment To be added
 // Chat Rooms
 // Chats and Messages API
+
+// Things to do --> 
+// Auth full API setup --> Today
+// Like and Comment API setup --> Today
+// Group Chats / Single Chats APIs
+// Messaging APIs
+//  Contract API
