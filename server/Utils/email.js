@@ -49,4 +49,8 @@ module.exports = class Email {
   async sendWelcome(){
     await this.send('welcome', 'Welcome to the workedin fam')
   }
+
+  async sendPasswordReset(){
+    await this.send('passwordReset', 'Ypur Password reset token (Valid for only 10 minutes)')
+  }
 }
