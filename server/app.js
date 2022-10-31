@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const userRouter = require('./Routes/userRoutes')
 const postRouter = require('./Routes/postRoutes')
+const chatRoutes = require('./Routes/chatRoutes')
 const AppError = require('./Utils/appError')
 const globalErrorHandle = require('./Controllers/errorController')
 
