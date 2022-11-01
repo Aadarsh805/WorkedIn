@@ -1,15 +1,15 @@
 const express = require('express')
 const chatController = require('../Controllers/chatController')
-const authController = require('../Controllers/authController')
+const { protect } = require('../Controllers/authController')
 
 const router = express.Router();
 
-router.route('/').post(authController.protect, chatController.accessChat)
-router.route('/').get(authController.protect, chatController.fetchChats)
-router.route('/group').post(authController.protect, chatController.creatGroupChat)
-router.route('/rename').patch(authController.protect, chatController.renameGroup)
-router.route('/groupremove').patch(authController.protect, chatController.removeFromGroup)
-router.route('/groupadd').patch(authController.protect, chatController.addInGroup)
+router.route('/').post(protect, chatController.accessChat)
+router.route('/').get(protect, chatController.fetchChats)
+router.route('/group').post(protect, chatController.creatGroupChat)
+router.route('/rename').patch(protect, chatController.renameGroup)
+router.route('/groupremove').patch(protect, chatController.removeFromGroup)
+router.route('/groupadd').patch(protect, chatController.addInGroup)
 
 module.exports = router;
 
