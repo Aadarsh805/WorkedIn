@@ -53,30 +53,52 @@ exports.likePost = catchAsync(async (req, res, next) => {
 
   //  get users id
   const userId = req.user.id;
-  
+
   //  check if userId is in likes []
   // --> get post
   const post = await Post.findById(postId).select("like");
-  const likeArr = post.like;
-  console.log(post.like);
-  console.log(typeof(post.like));
+  let likeArr = post.like;
+  // console.log(post.like);
+  // console.log(typeof post.like);
+  // console.log(likeArr.includes(userId));
+
   // check
+  // if true -> remove; if false -> add
   if (likeArr.includes(userId)) {
-    likeArr = likeArr.filter(function(value,index,arr){
-        return value != userId
-    })
-    res.send(likeArr)
+    likeArr = likeArr.filter(function (value, index, arr) {
+      return value != userId;
+    });
+    const likedPost = await Post.findByIdAndUpdate(
+      postId,
+      {
+        like: likeArr,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.send({
+      status: "Like removed",
+      likedPost,
+    });
   } else {
     likeArr.push(userId);
-    // const likedPost = await Post.findByIdAndUpdate(postId, likeArr, {
-    //   new: true,
-    //   runValidators: true,
-    // });
+    const likedPost = await Post.findByIdAndUpdate(
+      postId,
+      {
+        like: likeArr,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
     res.send({
-        status: "success",
-        likeArr
+      status: "success",
+      likedPost,
     });
   }
-  // if true -> remove; if false -> add
 });
+
 // --> "Get All Posts", Get One Post, Crreate Post, Delete Post, Update Post, Report Post
