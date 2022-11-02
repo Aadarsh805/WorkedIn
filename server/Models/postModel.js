@@ -25,6 +25,7 @@ const postSchema = new mongoose.Schema({
     ],
     comments: {
         type: Number,
+        default: 0
     },
     createdAt: {
         type: Date,
