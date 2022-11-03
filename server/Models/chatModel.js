@@ -24,6 +24,10 @@ const chatModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: "User"
     },
+    contracted: {
+        type: Boolean,
+        default: false
+    }
 },
 { timestamps: true }
 );

@@ -62,7 +62,7 @@ app.listen(PORT, () => {
 
 // Things to do --> 
 // Auth full API setup --> Today --> DONE
-// Like and Comment API setup --> Today
-// Group Chats / Single Chats APIs
+// Like and Comment API setup --> Today --> DONE
+// Group Chats / Single Chats APIs --> Today
 // Messaging APIs
-//  Contract API
+//  Contract API --> Today
