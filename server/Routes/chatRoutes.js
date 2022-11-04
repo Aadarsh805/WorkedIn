@@ -7,9 +7,10 @@ const router = express.Router();
 router.route('/').post(protect, chatController.accessChat)
 router.route('/').get(protect, chatController.fetchChats)
 router.route('/group').post(protect, chatController.creatGroupChat)
-router.route('/rename').patch(protect, chatController.renameGroup)
-router.route('/groupremove').patch(protect, chatController.removeFromGroup)
-router.route('/groupadd').patch(protect, chatController.addInGroup)
+
+router.route('/:chatId/rename').patch(protect, chatController.renameGroup)
+router.route('/:chatId/groupremove').patch(protect, chatController.removeFromGroup)
+router.route('/:chatId/groupadd').patch(protect, chatController.addInGroup)
 
 module.exports = router;
 

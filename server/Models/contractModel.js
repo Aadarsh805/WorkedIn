@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const contractModel = mongoose.Schema({
+    lead: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "User"  
+    },
     team: [
         {
             member: {
@@ -14,7 +18,8 @@ const contractModel = mongoose.Schema({
                 default: 4.5,
                 min: [1, 'Rating must be above 1.0'],
                 max: [5, 'Rating must be below 5.0']
-            }
+            },
+            extraWork: String
         }
     ],
     startDate: {
@@ -24,6 +29,12 @@ const contractModel = mongoose.Schema({
     dueDate: {
         type: Date,
     },
+    prevDueDates: [
+        {
+            prevDate: Date,
+            delayReason: String
+        }
+    ],
     status: {
         type: String,
         enum: ['in-progress', 'delayed', 'pending', 'completed', 'broken'],
