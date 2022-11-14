@@ -32,14 +32,14 @@ app.use(globalErrorHandle)
 
 const PORT = process.env.PORT;
 
+app.listen(PORT, () => {
+    console.log("Server is running on PORT:- " + PORT);
+})
+
 mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("Connected to Database");
 }).catch((err) => {
     console.log(err);
-})
-
-app.listen(PORT, () => {
-    console.log("Server is running on PORT:- " + PORT);
 })
 
 
@@ -68,3 +68,29 @@ app.listen(PORT, () => {
 // Group Chats / Single Chats APIs --> Today
 // Messaging APIs
 //  Contract API --> Today
+
+
+// Things to do in life
+// --> Personal Website
+// --> WorkedIn
+// --> Open Source
+// --> DSA
+// --> Electronics Study
+
+
+// Documentation Content 
+// --> What is WorkedIn
+// --> Content
+//  --> About --> Tagline, DemoVideo
+// Glimpse of the site
+// How it works
+// Getting Started --> Directory Layout, Run on local server
+// Tools and Packages
+
+
+
+// Group Chat
+
+// 4team --> Group Chat --> Contract  --> Profile
+
+// Profile --> Past Contracts --> 

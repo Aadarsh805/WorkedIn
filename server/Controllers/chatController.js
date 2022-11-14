@@ -93,20 +93,19 @@ exports.removeFromGroup = catchAsync(async (req, res) => {
     chatGroup: removedUser,
   });
 });
+
 exports.addInGroup = catchAsync(async (req, res) => {
   const chatId = req.params.chatId;
   const { userId } = req.body;
 
   //   check if user already exists in group or not
-//   if deosnt exist, move forwd
-//  if exists return
+  //   if deosnt exist, move forwd
+  //  if exists return
 
-// get Chat
-// search for userId in users
-    const chat = await Chat.findById(chatId)
-    const chatMembers = chat.users
-
-
+  // get Chat
+  // search for userId in users
+  const chat = await Chat.findById(chatId);
+  const chatMembers = chat.users;
 
   const addedUser = await Chat.findByIdAndUpdate(
     chatId,
@@ -116,9 +115,9 @@ exports.addInGroup = catchAsync(async (req, res) => {
     {
       new: true,
     }
-  )
-    // .populate("users", "-password")
-    // .populate("groupAdmin", "-password");
+  );
+  // .populate("users", "-password")
+  // .populate("groupAdmin", "-password");
 
   if (!addedUser) {
     return next(new AppError("Chat not Found"));
