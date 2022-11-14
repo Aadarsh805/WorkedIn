@@ -1,4 +1,5 @@
 const Chat = require("../Models/chatModel");
+const User = require("../Models/userModel");
 const catchAsync = require("../Utils/catchAsync");
 const AppError = require("../Utils/appError");
 
@@ -7,7 +8,22 @@ exports.accessChat = catchAsync(async (req, res) => {
 });
 
 exports.fetchChats = catchAsync(async (req, res) => {
-  res.send("All Chats");
+  const allChats = await Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+    .populate("users", "name")
+    .populate("groupAdmin", "name")
+    .populate("latestMessage")
+    .sort({ updatedAt: -1 });
+
+  // const populatedChats = User.populate(allChats, {
+  //   path: "latestMessage.sender",
+  //   select: "name pic email",
+  // });
+
+  res.status(200).send({
+    status: 'success',
+    totalChats: allChats.length,
+    chats: allChats
+  })
 });
 
 exports.creatGroupChat = catchAsync(async (req, res, next) => {
