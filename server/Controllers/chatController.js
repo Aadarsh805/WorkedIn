@@ -14,15 +14,17 @@ exports.fetchChats = catchAsync(async (req, res) => {
     .populate("latestMessage")
     .sort({ updatedAt: -1 });
 
-  // const populatedChats = User.populate(allChats, {
-  //   path: "latestMessage.sender",
-  //   select: "name pic email",
-  // });
+  const populatedChats = await User.populate(allChats, {
+    path: "latestMessage.sender",
+    select: "name photo email",
+  });
+
+  console.log(populatedChats);
 
   res.status(200).send({
     status: 'success',
-    totalChats: allChats.length,
-    chats: allChats
+    totalChats: populatedChats.length,
+    chats: populatedChats
   })
 });
 
