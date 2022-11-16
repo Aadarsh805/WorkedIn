@@ -38,29 +38,43 @@ This section will walk you through how you can get started with the project.
 |
 ├── <strong>server</strong>
 |      ├── <strong>Controllers</strong>
-|      │      ├── <strong>diaryControllers.js</strong>
-|      │      ├── <strong>messageControllers.js</strong>
+|      │      ├── <strong>authController.js</strong>
+|      │      ├── <strong>chatController.js</strong>
+|      │      └── <strong>commentController.js</strong> 
+|      │      └── <strong>errorController.js</strong> 
+|      │      └── <strong>handlerFactory.js</strong> 
+|      │      └── <strong>messageController.js</strong> 
+|      │      └── <strong>postControllers.js</strong> 
 |      │      └── <strong>userControllers.js</strong> 
 |      │
-|      ├── <strong>Model</strong>
-|      │      ├── <strong>diaryModel.js</strong>
-|      │      ├── <strong>messageModel.js</strong>
+|      ├── <strong>Models</strong>
+|      │      ├── <strong>chatModel.js</strong>
+|      │      ├── <strong>commentModel.js</strong>
+|      │      └── <strong>contractModel.js</strong> 
+|      │      └── <strong>messageModel.js</strong> 
+|      │      └── <strong>postModel.js</strong> 
 |      │      └── <strong>userModel.js</strong> 
 |      │
 |      ├── <strong>Routes</strong>
-|      │      ├── <strong>diaryRoutes.js</strong>
-|      │      ├── <strong>messageRoutes.js</strong>
+|      │      ├── <strong>chatRoutes.js</strong>
+|      │      ├── <strong>commentRoutes.js</strong>
+|      │      └── <strong>contractRoutes.js</strong> 
+|      │      └── <strong>messageRoutes.js</strong> 
+|      │      └── <strong>postRoutes.js</strong> 
 |      │      └── <strong>userRoutes.js</strong> 
 |      |
 |      ├── <strong>Utils</strong>
-|      │      ├── <strong>diaryRoutes.js</strong>
-|      │      ├── <strong>messageRoutes.js</strong>
-|      │      └── <strong>userRoutes.js</strong> 
+|      │      ├── <strong>apiFeatures.js</strong>
+|      │      ├── <strong>appError.js</strong>
+|      │      └── <strong>catchAsync.js</strong> 
+|      │      └── <strong>email.js</strong> 
+|      │      └── <strong>exludedFields.js</strong> 
 |      |
 |      ├── <strong>Views</strong>
-|      │      ├── <strong>diaryRoutes.js</strong>
-|      │      ├── <strong>messageRoutes.js</strong>
-|      │      └── <strong>userRoutes.js</strong> 
+|      │      ├── <strong>_style.pug</strong>
+|      │      ├── <strong>baseEmail.pug</strong>
+|      │      └── <strong>passwordReset.pug</strong> 
+|      │      └── <strong>welcome.pug</strong> 
 |      │  
 |      └── app.js
 |  

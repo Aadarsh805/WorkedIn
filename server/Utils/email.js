@@ -29,7 +29,7 @@ module.exports = class Email {
 
   async send(template, subject){
 
-    const html = pug.renderFile(`${__dirname}/../views/${template}.pug`, {
+    const html = pug.renderFile(`${__dirname}/../Views/${template}.pug`, {
       firstName: this.firstName,
       url: this.url,
       subject
@@ -51,6 +51,6 @@ module.exports = class Email {
   }
 
   async sendPasswordReset(){
-    await this.send('passwordReset', 'Ypur Password reset token (Valid for only 10 minutes)')
+    await this.send('passwordReset', 'Your Password reset token (Valid for only 10 minutes)')
   }
 }

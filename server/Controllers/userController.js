@@ -2,7 +2,7 @@ const User = require("../Models/userModel");
 const AppError = require("../Utils/appError");
 const catchAsync = require("../Utils/catchAsync");
 const factory = require("./handlerFactory");
-const excludedFields = require('../Utils/ExcludedFields')
+const excludedFields = require('../Utils/excludedFields')
 
 exports.getMe = catchAsync(async (req, res, next) => {
   req.params.id = req.user.id;
