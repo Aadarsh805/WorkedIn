@@ -1,12 +1,12 @@
-const Message = require("../models/messageModel");
-const User = require("../models/userModel");
-const Chat = require("../models/chatModel");
+const Message = require("../Models/messageModel");
+const User = require("../Models/userModel");
+const Chat = require("../Models/chatModel");
 const catchAsync = require('../Utils/catchAsync')
 
-const allMessages = catchAsync(async (req,res) => {
-    res.send('Hello')
+exports.allMessages = catchAsync(async (req,res) => {
+    res.send('Hello') 
 })
 
-const sendMessage = catchAsync(async (req,res) => {
+exports.sendMessage = catchAsync(async (req,res) => {
     res.send('SendMessage')
 })

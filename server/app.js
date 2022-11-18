@@ -4,8 +4,9 @@ const cors = require('cors');
 
 const userRouter = require('./Routes/userRoutes')
 const postRouter = require('./Routes/postRoutes')
-const chatRoutes = require('./Routes/chatRoutes')
-const contractRoutes = require('./Routes/contractRoutes')
+const chatRouter = require('./Routes/chatRoutes')
+const contractRouter = require('./Routes/contractRoutes')
+
 const AppError = require('./Utils/appError')
 const globalErrorHandle = require('./Controllers/errorController')
 
@@ -17,8 +18,8 @@ app.use(express.json());
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
-app.use('/api/v1/chats', chatRoutes);
-app.use('/api/v1/contract', contractRoutes);
+app.use('/api/v1/chats', chatRouter);
+app.use('/api/v1/contract', contractRouter);
 
 app.get("/", (req,res) => {
     res.send("Hello World");

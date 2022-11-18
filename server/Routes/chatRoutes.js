@@ -1,12 +1,16 @@
 const express = require('express')
 const chatController = require('../Controllers/chatController')
 const { protect } = require('../Controllers/authController')
+const messageRouter = require('./messageRoutes')
 
 const router = express.Router();
+
+router.use('/:id/messages', messageRouter)
 
 router.route('/').post(protect, chatController.accessChat)
 router.route('/').get(protect, chatController.fetchChats)
 router.route('/group').post(protect, chatController.creatGroupChat)
+
 
 router.route('/:chatId/rename').patch(protect, chatController.renameGroup)
 router.route('/:chatId/groupremove').patch(protect, chatController.removeFromGroup)
