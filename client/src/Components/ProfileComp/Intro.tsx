@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Pen } from "../SVG";
+import { Pen } from "../GeneralComp/SVG";
 import Connect from "./Connect";
 import Socials from "./Socials";
 

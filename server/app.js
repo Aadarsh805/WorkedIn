@@ -66,9 +66,9 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 // Things to do --> 
 // Auth full API setup --> Today --> DONE
 // Like and Comment API setup --> Today --> DONE
-// Group Chats / Single Chats APIs --> Today
-// Messaging APIs
-//  Contract API --> Today
+// Group Chats / Single Chats APIs --> DONE
+// Messaging APIs --> DONE
+//  Contract API --> PENDING
 
 
 // Things to do in life
@@ -89,9 +89,8 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 // Tools and Packages
 
 
+// Make contract API's
+// Update and Complete Contract
+// NotifiCation API --> Contract  
 
-// Group Chat
-
-// 4team --> Group Chat --> Contract  --> Profile
-
-// Profile --> Past Contracts --> 
+// Contract --> Send --> Notification --> Approve

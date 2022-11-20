@@ -13,6 +13,10 @@ const contractModel = mongoose.Schema({
             },
             role: String,
             responsibility: String,
+            approved: {
+                type: Boolean,
+                default: false
+            },
             review: {
                 type: Number,
                 default: 4.5,
@@ -37,7 +41,7 @@ const contractModel = mongoose.Schema({
     ],
     status: {
         type: String,
-        enum: ['in-progress', 'delayed', 'pending', 'completed', 'broken'],
+        enum: ['in-progress', 'delayed', 'completed', 'broken'],
         default: 'in-progress'
     },
 })
@@ -48,6 +52,12 @@ const Contract = mongoose.model("Contract", contractModel);
 module.exports = Contract
 
 // Team Members Details --> Name, Mail, Pic
+//  Project Name
+// Project About
+// Project stack
 // Start Date
 // Due Date
+// roles
 // Responsibilities
+
+// on Contract complete --> Project links --> github, deployed version || give other teammates ratings and reviews
