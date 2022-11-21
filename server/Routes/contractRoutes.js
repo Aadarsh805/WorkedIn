@@ -2,7 +2,6 @@ const express = require('express');
 const contractController = require('../Controllers/contractController')
 const { protect } = require('../Controllers/authController')
 
-
 const router = express.Router();
 
 router.use(protect)
@@ -14,7 +13,7 @@ router
 
 
 router
-    .route('/:id')
+    .route('/:contractId')
     .patch(contractController.acceptContract)
     .patch(contractController.denyContract)
     .patch(contractController.updateContract)

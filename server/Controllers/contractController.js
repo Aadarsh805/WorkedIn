@@ -1,12 +1,38 @@
+const Contract = require('../Models/contractModel');
+const User = require('../Models/userModel');
+const catchAsync = require('../Utils/catchAsync');
+
 exports.getContract = (req,res) => {
-    res.send('My Contract')
+    // get userId
+    // check if thers any contract with that userId
+    // check approved
+    // if false --> show
+    // if true --> dont show
+    res.send('jnni')
 }
 
-exports.initializeContract = (req,res) => {
-    res.send('Contract Initialized')
-}
+exports.initializeContract = catchAsync(async (req,res) => {
+    // leader --> user
+    // approved --> null
+
+    const { team, startDate, dueDate } = req.body;
+    const userId = req.user.id;
+
+    const contract = await Contract.create({
+        lead: userId,
+        team,
+        startDate,
+        dueDate
+    })
+
+    res.status(201).json({
+        status: 'success',
+        contract: contract
+    })
+});
 
 exports.acceptContract = (req,res) => {
+    //  just update that users approved entry
     res.send('Accept Initialized')
 }
 
