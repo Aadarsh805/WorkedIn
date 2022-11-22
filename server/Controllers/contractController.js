@@ -2,14 +2,25 @@ const Contract = require('../Models/contractModel');
 const User = require('../Models/userModel');
 const catchAsync = require('../Utils/catchAsync');
 
-exports.getContract = (req,res) => {
+exports.getContract = catchAsync(async (req,res) => {
     // get userId
     // check if thers any contract with that userId
     // check approved
     // if false --> show
     // if true --> dont show
-    res.send('jnni')
-}
+
+    // userid
+    const userId = req.user.id;
+
+    const contract = await Contract.find({
+        "team.member": userId
+    }).sort("-createdAt")
+
+    res.status(200).json({
+        status: 'success',
+        userContract: contract
+    })
+})
 
 exports.initializeContract = catchAsync(async (req,res) => {
     // leader --> user
@@ -25,9 +36,13 @@ exports.initializeContract = catchAsync(async (req,res) => {
         dueDate
     })
 
+    const fullContract = await Contract.find({ _id: contract._id })
+        .populate("lead", "name")
+        .populate("team.member", "name")
+
     res.status(201).json({
         status: 'success',
-        contract: contract
+        contract: fullContract
     })
 });
 

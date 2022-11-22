@@ -44,7 +44,9 @@ const contractModel = mongoose.Schema({
         enum: ['in-progress', 'delayed', 'completed', 'broken'],
         default: 'in-progress'
     },
-})
+},
+{ timestamps: true }
+)
 
 
 const Contract = mongoose.model("Contract", contractModel);
