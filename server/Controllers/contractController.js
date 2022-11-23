@@ -111,15 +111,15 @@ exports.denyContract = catchAsync(async (req, res) => {
     //  if true --> return
     //  if false --> then denied --> true
 
-    const contract = await Contract.find({
-        _id: req.params.contractId,
-        'team.member': req.user.id,
-        'team.approved': false
-    })
+    // const contract = await Contract.find({
+    //     _id: req.params.contractId,
+    //     'team.member': req.user.id,
+    //     'team.approved': false
+    // })
 
     // console.log(contract);
 
-    console.log(contract.team.member == req.user.id);
+    // console.log(contract.team.member == req.user.id);
 
     // if (contract.team.member == req.user.id) {
 
@@ -134,7 +134,7 @@ exports.denyContract = catchAsync(async (req, res) => {
     //     }
     // })
 
-  res.send(contract);
+  res.send("bkkjbjb");
 })
 
 exports.updateContract = (req, res) => {

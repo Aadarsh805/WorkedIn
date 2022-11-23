@@ -8,19 +8,14 @@ router.route('/allcontracts').get(contractController.getAllContracts)
 
 router.use(protect)
 
-
 router
     .route('/')
     .get(contractController.getContract)
     .post(contractController.initializeContract);
 
-
-router
-    .route('/:contractId')
-    .patch(contractController.acceptContract)
-    .patch(contractController.denyContract)
-    .patch(contractController.updateContract)
-
+router.route('/:contractId').patch(contractController.updateContract)
+router.route('/:contractId/accept').patch(contractController.acceptContract)
+router.route('/:contractId/deny').patch(contractController.denyContract)
 
 module.exports = router;
 
