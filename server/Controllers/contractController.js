@@ -66,8 +66,8 @@ exports.initializeContract = catchAsync(async (req, res) => {
 
 exports.acceptContract = catchAsync(async (req, res) => {
   //  just update that users approved entry
-  //   take contract id
-  // update the approved to true for that member
+  //   take contract id and userid
+  // update the approved --> true and denied --> false to true for that member
 
   console.log(req.user);
 
@@ -93,18 +93,52 @@ const contract = await Contract.updateOne({
     }
 })
 
+console.log(contract);
+
   const updatedContract = await Contract.findById(req.params.contractId)
   .populate("lead", "name")
   .populate("team.member", "name");
 
-  res.send(updatedContract);
+  res.send({
+    status: 'success',
+  });
 });
 
 
-exports.denyContract = (req, res) => {
-  res.send("Deny Contract");
-};
+exports.denyContract = catchAsync(async (req, res) => {
+    // find the contract and the member
+    // look if he has approved the contract
+    //  if true --> return
+    //  if false --> then denied --> true
+
+    const contract = await Contract.find({
+        _id: req.params.contractId,
+        'team.member': req.user.id,
+        'team.approved': false
+    })
+
+    // console.log(contract);
+
+    console.log(contract.team.member == req.user.id);
+
+    // if (contract.team.member == req.user.id) {
+
+    // }
+
+    // const deniedContract = await Contract.updateOne({
+    //     _id: req.params.contractId,
+    //     'team.member': req.user.id
+    //     }, {
+    //     $set: {
+    //         'team.$.denied': true
+    //     }
+    // })
+
+  res.send(contract);
+})
 
 exports.updateContract = (req, res) => {
   res.send("Update Contract");
 };
+
+// update --> dueDates, members role and responsibility
