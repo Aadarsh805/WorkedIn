@@ -63,23 +63,35 @@ exports.initializeContract = catchAsync(async (req, res) => {
   });
 });
 
+
 exports.acceptContract = catchAsync(async (req, res) => {
   //  just update that users approved entry
   //   take contract id
   // update the approved to true for that member
 
-  const contract = await Contract.updateOne(
-    {
-      "team": { "$elemMatch": { "member": req.user.id } },
-    },
-    {
-      "$set": {
-        "team.$.approved": true,
-      },
-    }
-  );
+  console.log(req.user);
 
-  console.log(contract);
+//   const contract = await Contract.updateOne(
+//     {
+//       "team": { $elemMatch: { "member": req.user.id } },
+//     },
+//     {
+//       $set: {
+//         "team.$.approved": true,
+//       },
+//     }
+//   );
+
+//   console.log(contract);
+
+const contract = await Contract.updateOne({
+    _id: req.params.contractId,
+    'team.member': req.user.id
+    }, {
+    $set: {
+        'team.$.approved': true
+    }
+})
 
   const updatedContract = await Contract.findById(req.params.contractId)
   .populate("lead", "name")
@@ -87,6 +99,7 @@ exports.acceptContract = catchAsync(async (req, res) => {
 
   res.send(updatedContract);
 });
+
 
 exports.denyContract = (req, res) => {
   res.send("Deny Contract");
