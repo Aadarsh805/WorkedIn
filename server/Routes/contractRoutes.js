@@ -4,12 +4,15 @@ const { protect } = require('../Controllers/authController')
 
 const router = express.Router();
 
+router.route('/allcontracts').get(contractController.getAllContracts)
+
 router.use(protect)
+
 
 router
     .route('/')
     .get(contractController.getContract)
-    .post(contractController.initializeContract)
+    .post(contractController.initializeContract);
 
 
 router
@@ -26,6 +29,7 @@ module.exports = router;
 // update contract --> can only update due date, responsibilities
 
 //  Routes --> 
+// Get ALL Contracts --> for dev env
 // 1) Initialize contract
 // 2) Accept Contract
 // 3) Deny Contract

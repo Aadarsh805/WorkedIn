@@ -17,6 +17,10 @@ const contractModel = mongoose.Schema({
                 type: Boolean,
                 default: false
             },
+            denied: {
+                type: Boolean,
+                default: false
+            },
             review: {
                 type: Number,
                 default: 4.5,
