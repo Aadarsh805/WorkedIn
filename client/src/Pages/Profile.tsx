@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { localStorageUser } from "../Components/GeneralComp/GlobalContants";
+import { localStorageUser } from "../Utils/GlobalContants";
 
 import Navbar from "../Components/GeneralComp/Navbar";
 import Intro from "../Components/ProfileComp/Intro";
