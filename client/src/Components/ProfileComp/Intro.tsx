@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Pen } from "../GeneralComp/SVG";
-import Connect from "./Connect";
 import Socials from "./Socials";
 
 const Section = styled.div`
   /* border: 1px solid red; */
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   margin: 0 1vw;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   z-index: 1;
 `;
 
 const Header = styled.header`
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -48,18 +47,19 @@ const ImageContainer = styled.div`
 `;
 
 const DetailContainer = styled.div`
-  border: 1px solid red;
+  border: 2px solid green;
   min-height: 12vw;
   width: calc(100vw - 25vw);
   padding-left: 1.5vw;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  /* align-items: flex-start; */
+  /* justify-content: center; */
 
   h1 {
-    font-size: 2.5vw;
-    /* margin-bottom: 1vw; */
+    font-size: 1.8rem;
+    margin-top: 0.3vw;
+    margin-bottom: 0.7vw;
     text-transform: capitalize;
     font-weight: 400;
   }
@@ -96,24 +96,26 @@ const Designation = styled.h3`
   font-size: 1.3vw;
 
   font-weight: 300;
-`
+`;
 
 interface userProps {
-  name?: string;
-  email?: string;
-  connections?: Array<string>;
-  pastProjects?: Array<string>;
-  photo?: string;
-  skills?: Array<string>;
-  _id?: string;
-  designation?: string;
-  about?: string;
+  about?: string; //
+  connections?: Array<string>; //
   discord?: string;
-  linkedin?: string;
+  email?: string;
   github?: string;
-  twitter?: string;
+  linkedin?: string;
+  name?: string;
+  pastProjects?: Array<string>; //
   personalWebsite?: string;
+  photo?: string;
+  skills?: Array<string>; // 
+  tagline?: string;
+  twitter?: string;
+  _id?: string;
 }
+
+
 
 const Intro = (props: { userDetails: userProps }) => {
   return (
@@ -129,16 +131,12 @@ const Intro = (props: { userDetails: userProps }) => {
           <h1>{props.userDetails.name}</h1>
           <Socials />
           <Designation>
-          {props.userDetails.designation ? (
-            props.userDetails.designation
-            ) : (
-              'Co-Founder Blockwee | Youtuber (1 lakh+ views) | Web3 Educator | I help Web3 brands in the field of Content Creation, Community building, Metaverse events, NFT creation, and Marketing🚀'
-              )}
-              </Designation>
+            {props.userDetails.tagline
+              ? props.userDetails.tagline
+              : "Your tagline ..."}
+          </Designation>
         </DetailContainer>
       </Header>
-      <Connect />
-      <h3>About</h3>
     </Section>
   );
 };

@@ -6,11 +6,11 @@ import Register from "./Pages/Register";
 import Rooms from "./Pages/Rooms";
 import GlobalStyles from "./Utils/GlobalStyles";
 import { ThemeProvider } from "styled-components";
-import { light, dark } from "./Utils/Themes";
+import { light, dark, workedinScheme } from "./Utils/Themes";
 
 function App() {
   return (
-    <ThemeProvider theme={light} >
+    <ThemeProvider theme={workedinScheme} >
     <GlobalStyles />
     <BrowserRouter>
         <Routes>

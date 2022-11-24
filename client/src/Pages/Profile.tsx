@@ -9,27 +9,37 @@ import PastProjects from "../Components/ProfileComp/PastProjects";
 import Skills from "../Components/ProfileComp/Skills";
 
 const Section = styled.div`
-  border: 1px solid black;
-  margin: 1vw;
+  /* border: 1px solid black; */
+  /* margin: 1vw; */
+  /* margin-top: 2rem; */
   /* display: flex; */
-`;
+  padding-top: 2rem;
+  margin: 0 1vw;
+  `;
+
+const ProfileContainer = styled.div`
+/* background-color: ${props => props.theme.grey}; */
+  width: 100%;
+  min-height: calc(100vh - 3rem);
+  color: ${props => props.theme.lightBlack};
+`
 
 const Profile = () => {
   interface userProps {
-      name?: string;
-      email?: string;
-      connections?: Array<string>;
-      pastProjects?: Array<string>;
-      photo?: string;
-      skills?: Array<string>;
-      _id?: string;
-      designation?: string;
-      about?: string
-      discord?: string;
-      linkedin?: string;
-      github?: string;
-      twitter?: string;
-      personalWebsite?: string;
+    about?: string
+    connections?: Array<string>;
+    discord?: string;
+    email?: string;
+    github?: string;
+    linkedin?: string;
+    name?: string;
+    pastProjects?: Array<string>;
+    personalWebsite?: string;
+    photo?: string;
+    skills?: Array<string>;
+    tagline?: string;
+    twitter?: string;
+    _id?: string;
   }
 
   const [user, setUser] = useState<userProps>({})
@@ -40,6 +50,8 @@ const Profile = () => {
       const data = await JSON.parse(
         localStorage.getItem(localStorageUser) || "{}"
       );
+      console.log(data);
+      
       setUser(data);
     }
     fetchUserData();
@@ -57,7 +69,8 @@ const Profile = () => {
   return (
     <>
       <Navbar />
-      {!loading ? (
+      {/* {!loading ? ( */}
+      <ProfileContainer>
         <Section>
           <Intro userDetails={user} />
           {
@@ -67,9 +80,10 @@ const Profile = () => {
           }
           <PastProjects />
         </Section>
-      ) : 
-        <h1>Loading ...</h1>
-      }
+        </ProfileContainer>
+      {/* ) :  */}
+        {/* <h1>Loading ...</h1> */}
+      {/* } */}
     </>
   );
 };

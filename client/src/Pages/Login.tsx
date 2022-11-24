@@ -40,9 +40,9 @@ const Login = () => {
             email: user?.email,
             password: user?.password 
         });
-        console.log(data);
+        console.log(data.user);
         if (data.status === 'success') {
-            localStorage.setItem(localStorageUser, JSON.stringify(data.data))
+            localStorage.setItem(localStorageUser, JSON.stringify(data.user))
             navigate('/')
         }
     }

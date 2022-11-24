@@ -8,7 +8,8 @@ const Section = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid red;
+  /* background-color: ${props => props.theme.lightBlack}; */
+  /* border: 1px solid red; */
 `;
 
 const Logo = styled.div`

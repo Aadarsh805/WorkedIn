@@ -24,23 +24,19 @@ const animateSvg = keyframes`
 const Section = styled.div`
 border: 1px solid red;
 width: fit-content;
+margin-bottom: 1rem;
 
 svg{
   width: 2.2vw;
   height: 2.2vw;
-  margin: 0 1vw;
+  margin-right: 1.5rem;
+  /* margin: 0 1vw; */
   border: 1px solid red;
   &:hover{
     animation: ${animateSvg} 1s linear;
     animation-iteration-count: 1;
   }
 }
-
-/* svg{ */
-    /* fill: blue; */
-    /* rotate: calc(45deg); */
-/* } */
-
 `
 
 
