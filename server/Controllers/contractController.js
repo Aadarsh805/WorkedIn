@@ -63,82 +63,121 @@ exports.initializeContract = catchAsync(async (req, res) => {
   });
 });
 
-
 exports.acceptContract = catchAsync(async (req, res) => {
   //  just update that users approved entry
   //   take contract id and userid
-  // update the approved --> true and denied --> false to true for that member
+  // update the approved --> true and denied --> false for that member
 
   console.log(req.user);
 
-//   const contract = await Contract.updateOne(
-//     {
-//       "team": { $elemMatch: { "member": req.user.id } },
-//     },
-//     {
-//       $set: {
-//         "team.$.approved": true,
-//       },
-//     }
-//   );
+  //   const contract = await Contract.updateOne(
+  //     {
+  //       "team": { $elemMatch: { "member": req.user.id } },
+  //     },
+  //     {
+  //       $set: {
+  //         "team.$.approved": true,
+  //       },
+  //     }
+  //   );
 
-//   console.log(contract);
+  //   console.log(contract);
 
-const contract = await Contract.updateOne({
-    _id: req.params.contractId,
-    'team.member': req.user.id
-    }, {
-    $set: {
-        'team.$.approved': true
+  const contract = await Contract.updateOne(
+    {
+      _id: req.params.contractId,
+      "team.member": req.user.id,
+    },
+    {
+      $set: {
+        "team.$.approved": true,
+        "team.$.denied": false,
+      },
     }
-})
+  );
 
-console.log(contract);
+  console.log(contract);
 
   const updatedContract = await Contract.findById(req.params.contractId)
-  .populate("lead", "name")
-  .populate("team.member", "name");
+    .populate("lead", "name")
+    .populate("team.member", "name");
 
   res.send({
-    status: 'success',
+    status: "success",
+    updatedContract,
   });
 });
 
-
 exports.denyContract = catchAsync(async (req, res) => {
-    // find the contract and the member
-    // look if he has approved the contract
-    //  if true --> return
-    //  if false --> then denied --> true
+  // find the contract and the member
+  // look if he has approved the contract
+  //  if true --> return
+  //  if false --> then denied --> true
 
-    // const contract = await Contract.find({
-    //     _id: req.params.contractId,
-    //     'team.member': req.user.id,
-    //     'team.approved': false
-    // })
+  // const contract = await Contract.findOne({ _id: req.params.contractId })
+  //   .populate("lead", "name")
+  //   .populate("team.member", "name");
 
-    // console.log(contract);
+  // console.log(contract);
 
-    // console.log(contract.team.member == req.user.id);
+  // check if the team member has
 
-    // if (contract.team.member == req.user.id) {
+  // console.log(contract.team.member == req.user.id);
 
-    // }
+  // if (contract.team.member == req.user.id) {
 
-    // const deniedContract = await Contract.updateOne({
-    //     _id: req.params.contractId,
-    //     'team.member': req.user.id
-    //     }, {
-    //     $set: {
-    //         'team.$.denied': true
-    //     }
-    // })
+  // }
 
-  res.send("bkkjbjb");
-})
+  const deniedContract = await Contract.updateOne(
+    {
+      _id: req.params.contractId,
+      "team.member": req.user.id,
+    },
+    {
+      $set: {
+        "team.$.denied": true,
+        "team.$.approved": false,
+      },
+    }
+  );
 
-exports.updateContract = (req, res) => {
-  res.send("Update Contract");
-};
+  console.log(deniedContract);
+
+  const updatedContract = await Contract.findById(req.params.contractId)
+    .populate("lead", "name")
+    .populate("team.member", "name");
+
+  res.send(updatedContract);
+});
+
+exports.updateContract = catchAsync(async (req, res) => {
+  // if its a date, then update dueDate and push {} to prevDueDates
+  // req.body  --> dueDate, reason
+
+  const { newDueDate, reason } = req.body;
+  const contractId = req.params.contractId;
+
+  const contract = await Contract.findById(contractId);
+
+  console.log(contract.dueDate);
+
+  const newDueObj = {
+    prevDate: contract.dueDate,
+    delayReason: reason
+  };
+
+  let newprevDueDatesArr = contract.prevDueDates;
+  newprevDueDatesArr.push(newDueObj);
+
+  const updatedContract = await Contract.findByIdAndUpdate(contractId, {
+    dueDate: newDueDate,
+    prevDueDates: newprevDueDatesArr 
+  },{
+    new: true,
+    runValidators: true,
+  });
+
+  res.send(updatedContract);
+});
 
 // update --> dueDates, members role and responsibility
