@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { localStorageUser } from "../Utils/GlobalContants";
+import { localStorageUser, userProps } from "../Utils/GlobalContants";
 
 import Navbar from "../Components/GeneralComp/Navbar";
 import Intro from "../Components/ProfileComp/Intro";
@@ -25,22 +25,7 @@ const ProfileContainer = styled.div`
 `
 
 const Profile = () => {
-  interface userProps {
-    about?: string
-    connections?: Array<string>;
-    discord?: string;
-    email?: string;
-    github?: string;
-    linkedin?: string;
-    name?: string;
-    pastProjects?: Array<string>;
-    personalWebsite?: string;
-    photo?: string;
-    skills?: Array<string>;
-    tagline?: string;
-    twitter?: string;
-    _id?: string;
-  }
+  
 
   const [user, setUser] = useState<userProps>({})
   const [loading, setLoading] = useState(true);

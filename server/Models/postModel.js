@@ -14,9 +14,6 @@ const postSchema = new mongoose.Schema({
     image: {
         type: String
     },
-    tags: {
-        type: Array,
-    },
     like: [
         {
             type: mongoose.Schema.ObjectId,
