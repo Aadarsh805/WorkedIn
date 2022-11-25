@@ -26,10 +26,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  about: {
-    type: String,
-    default: ''
-  },
   discord: {
     type: String,
     default: '',
@@ -70,9 +66,6 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Passwords are not the same!'
     }
-  },
-  connections: {
-    type: Array,
   },
   skills: {
     type: Array,

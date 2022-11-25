@@ -12,7 +12,8 @@ const postSchema = new mongoose.Schema({
         required: [true, "A post cannot be empty"]
     },
     image: {
-        type: String
+        type: String,
+        default: ''
     },
     like: [
         {
@@ -24,12 +25,9 @@ const postSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    createdAt: {
-        type: Date,
-        default: Date.now(),
-        select: false
-    },
-})
+}, 
+{timestamps: true}
+)
 
 postSchema.pre(/^find/, function (next) {
     this.populate({
