@@ -46,8 +46,11 @@ const Register = () => {
             password: user?.password,
             passwordConfirm: user?.confirmPassword
         })
+        console.log(data.status);
+        console.log(data.user);
+        
         if (data.status === 'success') {
-            localStorage.setItem(localStorageUser, JSON.stringify(data.data.user))   
+            localStorage.setItem(localStorageUser, JSON.stringify(data.user))   
             navigate('/')
         }
     }

@@ -29,3 +29,10 @@ exports.updateProfile = factory.updateUser(excludedFields.excludeForProfile);
 exports.updateAbout = factory.updateUser(excludedFields.excludeForAbout);
 exports.updateSkills = factory.updateUser(excludedFields.excludeForSkills);
 
+exports.deleteUsers = async (req,res) => {
+  await User.deleteMany();
+
+  res.send({
+    status: 'success',
+  })
+}

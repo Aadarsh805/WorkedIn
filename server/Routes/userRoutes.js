@@ -9,6 +9,8 @@ router.post('/login', authController.login)
 router.post('/forgotpassword', authController.forgetPassword)
 router.patch('/resetPassword/:token', authController.resetPassword);
 
+router.delete('/delete', userController.deleteUsers)
+
 router.use(authController.protect)
 
 
@@ -18,6 +20,7 @@ router.get('/me', userController.getMe, userController.getUser)
 router.patch('/me/profile', userController.getMe, userController.updateProfile)
 router.patch('/me/about', userController.getMe, userController.updateAbout)
 router.patch('/me/skills', userController.getMe, userController.updateSkills)
+
 
 router.get('/:id', userController.getUser)
 

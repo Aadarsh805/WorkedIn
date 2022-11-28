@@ -35,6 +35,7 @@ const Home = () => {
     comments: number;
     like: Array<string>;
     _id: string;
+    createdAt: string;
   }
 
   const [posts, setPosts] = useState<Array<postArr>>([]);
