@@ -15,4 +15,5 @@ export interface userProps {
     tagline?: string;
     twitter?: string;
     _id?: string;
+    token?: string;
   }

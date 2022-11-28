@@ -1,0 +1,83 @@
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { BASE_URL, postEnd } from '../../Utils/APIRoutes'
+import { userProps } from '../../Utils/GlobalContants'
+import { getUserData } from '../../Utils/helperFunction'
+import CommentFeed from './CommentFeed'
+import CreateComment from './CreateComment'
+
+
+
+const Section = styled.div`
+display: ${(props: commentStylesProps) => props.isCommentBoxOpen ? 'block' : 'none'};
+opacity: ${(props : commentStylesProps) => props.isCommentBoxOpen ? 1 : 0};
+/* max-height: ${(props : commentStylesProps) => props.isCommentBoxOpen ? '10vh' : 0}; */
+/* transition: max-height 0.25s linear, opacity 0.2s linear; */
+`
+
+interface commentFeedProps {
+    isCommentBoxOpen: Boolean
+    postId: string;
+}
+
+interface commentStylesProps {
+  isCommentBoxOpen: Boolean
+}
+
+interface commentProps {
+  comment: string,
+  createdAt: string,
+  user: {
+    name: string,
+    photo: string,
+    tagline: string,
+    _id: string,
+  },
+  _id: string
+}
+
+const CommentBox = (props: commentFeedProps) => {
+  const [userData, setUserData] = useState<userProps>({});
+  const [comments, setComments] = useState<Array<commentProps>>([]);
+
+  let isCommentBoxOpen = props.isCommentBoxOpen;
+
+  useEffect(() => {
+    const userData = getUserData();
+    setUserData(userData); 
+  }, []);
+
+  async function fetchComments () {
+    const {data} = await axios.get(`${BASE_URL}${postEnd}${props.postId}/comment`, {
+      headers: {
+        'Authorization': `Bearer ${userData.token}`
+      }
+    })
+    console.log(data.data.data);
+    const allComments = data.data.data;
+    setComments(allComments)
+  }
+
+  useEffect(() => {    
+    if (isCommentBoxOpen) {
+      fetchComments()
+    }
+  }, [isCommentBoxOpen])
+
+  return (
+    <Section isCommentBoxOpen={props.isCommentBoxOpen} > 
+        <CreateComment postId={props.postId} userData={userData} />
+        {
+          comments.map((comment,index) => {
+            return (
+              // author img, author name, comment id, comment, author tagline
+              <CommentFeed key={index} comment={comment} user={userData} />
+            )
+          })
+        }
+    </Section>
+  )
+}
+
+export default CommentBox

@@ -25,17 +25,17 @@ const Register = () => {
 
     const navigate = useNavigate()
 
-    interface userProps {
+    interface newUserProps {
         name: string,
         email: string,
         password: string,
         confirmPassword: string,
     }
 
-    const [user, setUser] = useState<userProps>()
+    const [user, setUser] = useState<newUserProps>()
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setUser({...user, [e.target.name]: e.target.value } as userProps)
+        setUser({...user, [e.target.name]: e.target.value } as newUserProps)
     }
 
     const handleSubmit = async (e : any) => {
@@ -46,10 +46,11 @@ const Register = () => {
             password: user?.password,
             passwordConfirm: user?.confirmPassword
         })
-        console.log(data.status);
-        console.log(data.user);
+        // console.log(data.status);
+        // console.log(data.user);
         
         if (data.status === 'success') {
+            data.user.token = data.token
             localStorage.setItem(localStorageUser, JSON.stringify(data.user))   
             navigate('/')
         }

@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Comment, Share, ThumbsUp, ThumbsUp2 } from "../../Components/GeneralComp/SVG";
+import {
+  Comment,
+  Share,
+  ThumbsUp,
+  ThumbsUp2,
+} from "../../Components/GeneralComp/SVG";
 import { BASE_URL, postEnd } from "../../Utils/APIRoutes";
+import CommentBox from "./CommentBox";
 
 const Section = styled.div`
   width: 100%;
   margin-top: 1rem;
   border: 1px solid blue;
-
+  
   hr {
     width: 90%;
     margin: 0 auto;
@@ -38,13 +44,13 @@ const PostStats = styled.div`
   justify-content: space-between;
   border: 1px solid red;
 
-  div{
+  div {
     display: flex;
 
-    svg{
+    svg {
       width: 1.2rem;
-      fill: ${props => props.theme.lightBlack};
-      /* fill: ${props => props.theme.green} */
+      fill: ${(props) => props.theme.lightBlack};
+      /* fill: ${(props) => props.theme.green} */
       /* fill: blue; */
       /* background-color: red; */
     }
@@ -52,16 +58,16 @@ const PostStats = styled.div`
 `;
 
 const PostBottom = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-around;
-border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid red;
 
-svg{
-  width: 20px;
-  cursor: pointer;
-  /* fill: blue; */
-}
+  svg {
+    width: 20px;
+    cursor: pointer;
+    /* fill: blue; */
+  }
 `;
 
 interface postProps {
@@ -79,21 +85,12 @@ interface postProps {
 }
 
 const PostFeed = (props: postProps) => {
-  console.log("LIKE :- " + props.like);
-
+  const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false)
   const totalLikes = props.like.length;
 
-  useEffect(() => {
-    console.log(window.location.href);
-    
-  }, [])
-  
-  // const shareHandler = () => {
-    // }
-    
-    const shareHandler = () => {
-      // navigator.clipboard.writeText(`${BASE_URL}${postEnd}`)}
-  }
+  const shareHandler = () => {
+    // navigator.clipboard.writeText(`${BASE_URL}${postEnd}`)}
+  };
 
   return (
     <Section>
@@ -115,15 +112,25 @@ const PostFeed = (props: postProps) => {
       </PostStats>
       <hr />
       <PostBottom>
-        <ThumbsUp2/>
-        <Comment/>
-        <div onClick={() => {navigator.clipboard.writeText(`${window.location.href}${postEnd}${props._id}`)}} >
-        <Share/>
+        <ThumbsUp2 />
+        <div onClick={() => setIsCommentBoxOpen(!isCommentBoxOpen)}>
+        <Comment />
+        </div>
+        <div
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `${window.location.href}${postEnd}${props._id}`
+            );
+          }}
+        >
+          <Share />
         </div>
       </PostBottom>
-      
+      <CommentBox isCommentBoxOpen={isCommentBoxOpen} postId={props._id} />
     </Section>
   );
 };
 
 export default PostFeed;
+
+// comment -> true -> commentbox Open

@@ -24,14 +24,15 @@ form{
 const Login = () => {
     const navigate = useNavigate();
 
-    interface userProps {
+    interface userLoginProps {
         email: string,
         password: string
     }
-    const [user, setUser] = useState<userProps>()
+    
+    const [user, setUser] = useState<userLoginProps>()
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setUser({...user, [e.target.name]: e.target.value } as userProps)
+        setUser({...user, [e.target.name]: e.target.value } as userLoginProps)
     }
 
     const handleSubmit = async (e : any) => {
@@ -40,8 +41,9 @@ const Login = () => {
             email: user?.email,
             password: user?.password 
         });
-        console.log(data.user);
+        console.log(data);
         if (data.status === 'success') {
+            data.user.token = data.token
             localStorage.setItem(localStorageUser, JSON.stringify(data.user))
             navigate('/')
         }
