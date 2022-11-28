@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { BASE_URL, postEnd } from '../../Utils/APIRoutes'
 import { userProps } from '../../Utils/GlobalContants'
-import { getUserData } from '../../Utils/helperFunction'
+import { getHeaders, getUserData } from '../../Utils/helperFunction'
 import CommentFeed from './CommentFeed'
 import CreateComment from './CreateComment'
 
@@ -15,11 +15,6 @@ opacity: ${(props : commentStylesProps) => props.isCommentBoxOpen ? 1 : 0};
 /* max-height: ${(props : commentStylesProps) => props.isCommentBoxOpen ? '10vh' : 0}; */
 /* transition: max-height 0.25s linear, opacity 0.2s linear; */
 `
-
-interface commentFeedProps {
-    isCommentBoxOpen: Boolean
-    postId: string;
-}
 
 interface commentStylesProps {
   isCommentBoxOpen: Boolean
@@ -37,6 +32,11 @@ interface commentProps {
   _id: string
 }
 
+interface commentFeedProps {
+  isCommentBoxOpen: Boolean
+  postId: string;
+}
+
 const CommentBox = (props: commentFeedProps) => {
   const [userData, setUserData] = useState<userProps>({});
   const [comments, setComments] = useState<Array<commentProps>>([]);
@@ -50,9 +50,7 @@ const CommentBox = (props: commentFeedProps) => {
 
   async function fetchComments () {
     const {data} = await axios.get(`${BASE_URL}${postEnd}${props.postId}/comment`, {
-      headers: {
-        'Authorization': `Bearer ${userData.token}`
-      }
+      headers: getHeaders(userData.token ?? '' )
     })
     console.log(data.data.data);
     const allComments = data.data.data;
@@ -72,7 +70,7 @@ const CommentBox = (props: commentFeedProps) => {
           comments.map((comment,index) => {
             return (
               // author img, author name, comment id, comment, author tagline
-              <CommentFeed key={index} comment={comment} user={userData} />
+              <CommentFeed key={index} comment={comment}/>
             )
           })
         }

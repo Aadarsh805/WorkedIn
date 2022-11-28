@@ -1,34 +1,61 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { BASE_URL, postEnd } from "../../Utils/APIRoutes";
 import { userProps } from "../../Utils/GlobalContants";
-import { getUserData } from "../../Utils/helperFunction";
+import { getHeaders } from "../../Utils/helperFunction";
 
 const Section = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  /* justify-content: space-around; */
 
-display: flex;
-align-items: center;
+  img {
+    width: 5vw;
+    border-radius: 50%;
+  }
 
-img{
-  width: 5vw;
-}
-
-input{
-
-}
+  input {
+    width: 30vw;
+    padding: 10px;
+    border-radius: 12px;
+    /* border: none; */
+    outline: none;
+    margin-left: 1rem;
+  }
 `;
 
 interface commentProps {
   postId: string;
-  userData: userProps
+  userData: userProps;
 }
 
 const CreateComment = (props: commentProps) => {
+  const [comment, setComment] = useState("");
 
+  const commentHandler = async (e: React.FormEvent<HTMLFormElement>) => {    
+    const data = await axios.post(`${BASE_URL}${postEnd}${props.postId}/comment`, {
+      comment
+    }, {
+      headers: getHeaders(props.userData.token ?? '')
+    })
+
+    console.log(data);
+  };
 
   return (
     <Section>
-      <img src={props.userData.photo} alt="userImg" />
-      <input type="text" placeholder="Share your thoughts on this post"/>
+      <form onSubmit={commentHandler}>
+        <img src={props.userData.photo} alt="userImg" />
+        <input
+          type="text"
+          placeholder="Share your thoughts on this post"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          autoFocus
+        />
+      </form>
     </Section>
   );
 };
