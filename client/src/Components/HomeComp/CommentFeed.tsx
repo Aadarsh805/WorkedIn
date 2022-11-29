@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { userProps } from "../../Utils/GlobalContants";
 import { HiDotsVertical } from "react-icons/hi";
 import CommentModal from "./CommentModal";
+import axios from "axios";
+import { BASE_URL, postEnd } from "../../Utils/APIRoutes";
+import { getHeaders } from "../../Utils/helperFunction";
 
 const Section = styled.div`
   /* display: flex; */
@@ -49,6 +52,8 @@ const CommentOptions = styled.div`
   }
 `;
 
+const CommentContent = styled.div``
+
 interface commentType {
   comment: string;
   createdAt: string;
@@ -63,11 +68,25 @@ interface commentType {
 
 interface commentProps {
   comment: commentType,
-  userData: userProps
+  userData: userProps,
+  postId: string
 }
 
-const CommentFeed = ({ comment, userData }: commentProps) => {
+const CommentFeed = ({ comment, userData, postId }: commentProps) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const [updateComment, setUpdateComment] = useState(false)
+  const [commentContent, setCommentContent] = useState(comment.comment)
+
+  const updateCommentHandler = async () => {
+    const { data } = await axios.patch(`${BASE_URL}${postEnd}${postId}/comment/${comment._id}`, {
+      comment: commentContent
+    }, {
+      headers: getHeaders(userData.token ?? '')
+    })
+
+    console.log(data);
+  }
+  
   return (
     <Section>
       <CommentAuthor>
@@ -79,13 +98,21 @@ const CommentFeed = ({ comment, userData }: commentProps) => {
               onClick={() => setIsCommentModalOpen(!isCommentModalOpen)}
             >
               <HiDotsVertical />
-              {isCommentModalOpen ? <CommentModal commentId={comment._id} commentAuthorId={comment.user._id} userData={userData} /> : null}
+              {isCommentModalOpen ? <CommentModal comment={comment} userData={userData} postId={postId} setUpdateComment={setUpdateComment}/> : null}
             </CommentOptions>
           </AuthorName>
           <h4>{comment.user.tagline}</h4>
         </AboutAuthor>
       </CommentAuthor>
-      {comment.comment}
+      <CommentContent>
+      {
+        updateComment ?
+        <form onSubmit={updateCommentHandler}>
+         <input type="text" value={commentContent} onChange={(e) => setCommentContent(e.target.value)} autoFocus/>
+        </form>
+        : <p>{commentContent}</p>
+      }
+      </CommentContent>
     </Section>
   );
 };

@@ -66,7 +66,7 @@ const CommentBox = (props: commentFeedProps) => {
           comments.map((comment,index) => {
             return (
               // author img, author name, comment id, comment, author tagline
-              <CommentFeed key={index} comment={comment} userData={props.userData} />
+              <CommentFeed key={index} comment={comment} userData={props.userData} postId={props.postId} />
             )
           })
         }

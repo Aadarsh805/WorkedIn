@@ -1,6 +1,9 @@
+import axios from "axios";
 import React from "react";
 import styled from "styled-components";
+import { BASE_URL, postEnd } from "../../Utils/APIRoutes";
 import { userProps } from "../../Utils/GlobalContants";
+import { getHeaders } from "../../Utils/helperFunction";
 
 const Menu = styled.div`
   position: absolute;
@@ -24,26 +27,60 @@ h4{
 }
 `;
 
+interface commentType {
+    comment: string;
+    createdAt: string;
+    user: {
+      name: string;
+      photo: string;
+      tagline: string;
+      _id: string;
+    };
+    _id: string;
+  }
+
 interface commentModalProps {
   userData: userProps;
-  commentId: string;
-  commentAuthorId: string;
+  comment: commentType,
+  postId: string,
+  setUpdateComment: any,
 }
 
 const CommentModal = ({
   userData,
-  commentId,
-  commentAuthorId,
+  comment,
+  postId,
+  setUpdateComment,
 }: commentModalProps) => {
+
+    const updateCommentHandler = async () => {
+        setUpdateComment(true)   
+    }
+
+    const deleteCommentHandler = async () => {
+        await axios.delete(`${BASE_URL}${postEnd}${postId}/comment/${comment._id}`, {
+            headers: getHeaders(userData.token ?? '')
+        })
+        window.location.reload();
+    }
+
+    const reportCommentHandler = async () => {
+        const {data} = await axios.post(`${BASE_URL}${postEnd}${postId}/comment/${comment._id}`, {}, {
+            headers: getHeaders(userData.token ?? '')
+        })
+        console.log(data);
+        alert(data)
+    }
+
   return (
     <Menu>
-      {commentAuthorId === userData._id ? (
+      {comment.user._id === userData._id ? (
         <>
-          <MenuItem><h4>Update Comment</h4></MenuItem>
-          <MenuItem><h4>Delete Comment</h4></MenuItem>
+          <MenuItem onClick={updateCommentHandler} ><h4>Update Comment</h4></MenuItem>
+          <MenuItem onClick={deleteCommentHandler} ><h4>Delete Comment</h4></MenuItem>
         </>
       ) : (
-        <MenuItem>Report Post</MenuItem>
+        <MenuItem onClick={reportCommentHandler} >Report Post</MenuItem>
       )}
     </Menu>
   );
