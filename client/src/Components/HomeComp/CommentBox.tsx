@@ -35,22 +35,18 @@ interface commentProps {
 interface commentFeedProps {
   isCommentBoxOpen: Boolean
   postId: string;
+  userData: userProps
 }
 
 const CommentBox = (props: commentFeedProps) => {
-  const [userData, setUserData] = useState<userProps>({});
+
   const [comments, setComments] = useState<Array<commentProps>>([]);
 
   let isCommentBoxOpen = props.isCommentBoxOpen;
 
-  useEffect(() => {
-    const userData = getUserData();
-    setUserData(userData); 
-  }, []);
-
   async function fetchComments () {
     const {data} = await axios.get(`${BASE_URL}${postEnd}${props.postId}/comment`, {
-      headers: getHeaders(userData.token ?? '' )
+      headers: getHeaders(props.userData.token ?? '' )
     })
     console.log(data.data.data);
     const allComments = data.data.data;
@@ -65,12 +61,12 @@ const CommentBox = (props: commentFeedProps) => {
 
   return (
     <Section isCommentBoxOpen={props.isCommentBoxOpen} > 
-        <CreateComment postId={props.postId} userData={userData} />
+        <CreateComment postId={props.postId} userData={props.userData} />
         {
           comments.map((comment,index) => {
             return (
               // author img, author name, comment id, comment, author tagline
-              <CommentFeed key={index} comment={comment}/>
+              <CommentFeed key={index} comment={comment} userData={props.userData} />
             )
           })
         }

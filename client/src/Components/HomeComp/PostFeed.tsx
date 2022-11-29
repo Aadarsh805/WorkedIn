@@ -7,6 +7,7 @@ import {
   ThumbsUp2,
 } from "../../Components/GeneralComp/SVG";
 import { BASE_URL, postEnd } from "../../Utils/APIRoutes";
+import { userProps } from "../../Utils/GlobalContants";
 import CommentBox from "./CommentBox";
 
 const Section = styled.div`
@@ -74,6 +75,7 @@ interface postProps {
   author: {
     name: string;
     photo: string;
+    tagline: string;
     _id: string;
   };
   description: string;
@@ -84,10 +86,17 @@ interface postProps {
   createdAt: string;
 }
 
-const PostFeed = (props: postProps) => {
-  const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false)
-  const totalLikes = props.like.length;
 
+interface postFeedProps {
+  user: userProps,
+  post: postProps
+}
+
+
+const PostFeed = ({post, user}: postFeedProps) => {
+  const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false)
+  const totalLikes = post.like.length;
+  
   const shareHandler = () => {
     // navigator.clipboard.writeText(`${BASE_URL}${postEnd}`)}
   };
@@ -95,20 +104,20 @@ const PostFeed = (props: postProps) => {
   return (
     <Section>
       <AuthorDetails>
-        <img src={props.author.photo} alt="" />
-        <h3>{props.author.name}</h3>
-        {/* <h5>{props.author}</h5> */}
+        <img src={post.author.photo} alt="" />
+        <h3>{post.author.name}</h3>
+        {/* <h5>{props.author.tagline}</h5> */}
       </AuthorDetails>
       <Description>
-        <h4>{props.description}</h4>
-        {props.image === undefined ? "hello" : null}
+        <h4>{post.description}</h4>
+        {post.image !== '' ? post.image : null}
       </Description>
       <PostStats>
         <div>
           <ThumbsUp />
           <h4>{totalLikes}</h4>
         </div>
-        <h4>{props.comments}</h4>
+        <h4>{post.comments}</h4>
       </PostStats>
       <hr />
       <PostBottom>
@@ -119,14 +128,14 @@ const PostFeed = (props: postProps) => {
         <div
           onClick={() => {
             navigator.clipboard.writeText(
-              `${window.location.href}${postEnd}${props._id}`
+              `${window.location.href}${postEnd}${post._id}`
             );
           }}
         >
           <Share />
         </div>
       </PostBottom>
-      <CommentBox isCommentBoxOpen={isCommentBoxOpen} postId={props._id} />
+      <CommentBox userData={user} isCommentBoxOpen={isCommentBoxOpen} postId={post._id} />
     </Section>
   );
 };

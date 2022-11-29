@@ -7,6 +7,7 @@ import ProfileBriefBox from "../Components/HomeComp/ProfileBriefBox";
 import { apiProvider } from "../Utils/helperFunction";
 import ActivityBox from "../Components/HomeComp/ActivityBox";
 import PostFeed from "../Components/HomeComp/PostFeed";
+import { localStorageUser, userProps } from "../Utils/GlobalContants";
 
 const Section = styled.div`
   background-color: ${(props) => props.theme.grey};
@@ -28,6 +29,7 @@ const Home = () => {
     author: {
       name: string;
       photo: string;
+      tagline: string;
       _id: string;
     };
     description: string;
@@ -38,7 +40,21 @@ const Home = () => {
     createdAt: string;
   }
 
+  const [userData, setUserData] = useState<userProps>({});
   const [posts, setPosts] = useState<Array<postArr>>([]);
+
+  // get userData 
+  useEffect(() => {
+    async function fetchUserData() {
+      const data = await JSON.parse(
+        localStorage.getItem(localStorageUser) || "{}"
+      );
+      setUserData(data);
+    }
+    fetchUserData();
+  }, []);
+
+  //  get all posts
   useEffect(() => {
     async function fetchPosts() {
       const { data } = await apiProvider.get(`${BASE_URL}${postEnd}`);
@@ -56,7 +72,7 @@ const Home = () => {
         <PostContainer>
           <CreatePost />
           {posts.map((post, index) => {
-            return <PostFeed {...post} key={index} />;
+            return <PostFeed post={post} user={userData} key={index} />;
           })}
         </PostContainer>
         <ActivityBox />

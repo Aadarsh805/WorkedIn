@@ -54,7 +54,7 @@ const CreatePost = () => {
           placeholder={`Create a post ${userData.name?.split(" ")[0]}`}
         />
         <Buttons>
-          <button>Photo</button>
+          <input type="file" name="" id="" />
           <button type="submit">Create Post</button>
         </Buttons>
       </form>
