@@ -17,7 +17,7 @@ exports.accessChat = catchAsync(async (req, res) => {
       { users: { $elemMatch: { $eq: userId } } },
     ],
   })
-    .populate("users", "name")
+    .populate("users", "name photo")
     .populate("latestMessage");
 
   isChat = await User.populate(isChat, {
@@ -52,14 +52,14 @@ exports.accessChat = catchAsync(async (req, res) => {
 
 exports.fetchChats = catchAsync(async (req, res) => {
   const allChats = await Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
-    .populate("users", "name")
-    .populate("groupAdmin", "name")
+    .populate("users", "name photo")
+    .populate("groupAdmin", "name photo")
     .populate("latestMessage")
     .sort({ updatedAt: -1 });
 
   const populatedChats = await User.populate(allChats, {
     path: "latestMessage.sender",
-    select: "name photo email",
+    select: "name photo",
   });
 
   console.log(populatedChats);

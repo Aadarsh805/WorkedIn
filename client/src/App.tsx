@@ -3,7 +3,7 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Profile from "./Pages/Profile";
 import Register from "./Pages/Register";
-import Rooms from "./Pages/Rooms";
+import Chats from "./Pages/Chats";
 import GlobalStyles from "./Utils/GlobalStyles";
 import { ThemeProvider } from "styled-components";
 import { light, dark, workedinScheme } from "./Utils/Themes";
@@ -17,7 +17,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
-          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/chats" element={<Chats />} />
           <Route path="/me" element={<Profile />} />
         </Routes>
       </BrowserRouter>
