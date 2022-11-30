@@ -9,24 +9,29 @@ import formatDistance from "date-fns/formatDistance";
 
 const Section = styled.div`
   border: 1px solid blue;
-  /* min-height: calc(100vh - 3rem); */
+  height: calc(100vh - 3rem);
   width: 100%;
   position: relative;
+  overflow: hidden;
+  overflow-y: hidden;
 `;
 
 const Messages = styled.div`
-  height: calc(97vh - 5rem);
-  border: 1px solid purple;
+  height: calc(97vh - 6rem);
+  /* border: 1px solid purple; */
   padding: 1rem;
+  box-sizing: border-box;
 `;
 
 const Message = styled.div`
   border: 1px solid red;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  margin-bottom: 1rem;
 `;
 
 const ImageContainer = styled.div`
+margin-right: 0.7rem;
   img {
     border-radius: 50%;
     width: 2rem;
@@ -43,7 +48,7 @@ const SenderDetails = styled.div`
     align-items: center;
     /* justify-content: center; */
 
-    h4{
+    h4 {
       margin-right: 0.6rem;
     }
   }
@@ -52,15 +57,20 @@ const SenderDetails = styled.div`
 const SendMessage = styled.div`
   position: absolute;
   bottom: 3vh;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   height: 2rem;
   width: 100%;
   display: flex;
   align-items: center;
 
-  input {
+  form {
     height: 2rem;
     width: 100%;
+    input {
+      height: 2rem;
+      width: 90%;
+      margin-left: 1rem;
+    }
   }
 `;
 
@@ -104,6 +114,7 @@ interface messageProps {
 
 const ChatMessages = ({ user, selectedChat }: chatMessageProps) => {
   const [messages, setMessages] = useState<Array<messageProps>>([]);
+  const [chatMessage, setChatMessage] = useState('');
 
   async function fetchChatMessages() {
     const { data } = await axios.get(
@@ -122,13 +133,26 @@ const ChatMessages = ({ user, selectedChat }: chatMessageProps) => {
     }
   }, [selectedChat]);
 
+  const postMessageHandler = async () => {
+    const { data } = await axios.post(
+      `${BASE_URL}${chatEnd}${selectedChat._id}/messages`,
+      {
+        chatMessage,
+      },
+      {
+        headers: getHeaders(user.token ?? ""),
+      }
+    );
+    console.log(data);
+  };
+
   return (
     <Section>
       <Messages>
         {messages.map((message) => {
           const date = formatDistance(new Date(message.createdAt), new Date());
           return (
-            <Message>
+            <Message key={message._id} >
               <ImageContainer>
                 <img src={message.sender.photo} alt="" />
               </ImageContainer>
@@ -144,7 +168,14 @@ const ChatMessages = ({ user, selectedChat }: chatMessageProps) => {
         })}
       </Messages>
       <SendMessage>
-        <input type="text" name="" id="" />
+        <form onSubmit={postMessageHandler}>
+          <input
+            type="text"
+            value={chatMessage}
+            onChange={(e) => setChatMessage(e.target.value)}
+            autoFocus
+          />
+        </form>
       </SendMessage>
     </Section>
   );
