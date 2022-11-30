@@ -8,11 +8,37 @@ import { getHeaders, getUserData } from "../../Utils/helperFunction";
 const Section = styled.div`
   border: 1px solid red;
   /* min-height: calc(100vh - 3rem); */
-  width: 20vw;
+  width: 16vw;
+  padding-top: 0.8rem;
+`;
+
+const Chat = styled.div`
+  box-sizing: border-box;
+  width: calc(16vw - 2rem);
+  border: 1px solid red;
+  margin: 0.2rem 1rem;
+  border-radius: 10px;
+  padding: 0.5rem 0.2rem 0.5rem 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 500;
+  }
 `;
 
 interface allChatProps {
   user: userProps;
+  setSelectedChat: any;
 }
 
 interface groupMemberProps {
@@ -24,6 +50,7 @@ interface groupMemberProps {
 interface chatsArr {
   chatName: string;
   contracted: Boolean;
+  chatPhoto: string;
   createdAt: string;
   groupAdmin: {
     _id: string;
@@ -35,7 +62,7 @@ interface chatsArr {
   _id: string;
 }
 
-const AllChats = ({ user }: allChatProps) => {
+const AllChats = ({ user, setSelectedChat }: allChatProps) => {
   const [allChats, setAllChats] = useState<Array<chatsArr>>([]);
 
   async function fetchUserChats() {
@@ -47,7 +74,7 @@ const AllChats = ({ user }: allChatProps) => {
   }
 
   useEffect(() => {
-    console.log(user.token);
+    // console.log(user.token);
     if (user.token) {
       fetchUserChats();
     }
@@ -56,16 +83,28 @@ const AllChats = ({ user }: allChatProps) => {
   return (
     <Section>
       {allChats.map((chat, index) => {
-        if (chat.chatName === 'one_On_one') {
-            const chatUsers = chat.users
-            const filteredUser = (chatUsers as unknown as any[]).filter(chatUser => {
-                return chatUser.name !== user.name
-            })         
-            console.log(filteredUser[0].name);
-            return <h4>{filteredUser[0].name}</h4>
+        if (chat.chatName === "one_On_one") {
+          const chatUsers = chat.users;
+          const filteredUser = (chatUsers as unknown as any[]).filter(
+            (chatUser) => {
+              return chatUser.name !== user.name;
+            }
+          );
+          console.log(filteredUser[0].name);
+          return (
+            <Chat key={index} onClick={() => setSelectedChat(chat)}>
+              <img src={filteredUser[0].photo} alt="" />
+              <h4>{filteredUser[0].name}</h4>
+            </Chat>
+          );
         }
 
-        return <h4>{chat.chatName}</h4>
+        return (
+          <Chat key={index} onClick={() => setSelectedChat(chat)}>
+            <img src={chat.chatPhoto} alt="" />
+            <h4>{chat.chatName}</h4>
+          </Chat>
+        );
       })}
     </Section>
   );

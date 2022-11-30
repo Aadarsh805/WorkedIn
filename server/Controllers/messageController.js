@@ -5,11 +5,9 @@ const catchAsync = require('../Utils/catchAsync');
 const AppError = require("../Utils/appError");
 
 exports.allMessages = catchAsync(async (req,res) => {
-    // console.log(req.params);
     const chatId = req.params.id
     const messages = await Message.find({ chat: chatId })
     .populate("sender", "name photo")
-      .populate("chat");
 
     res.status(200).json({
         status: 'success',
