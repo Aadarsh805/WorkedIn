@@ -19,7 +19,7 @@ exports.searchUser = catchAsync(async (req,res,next) => {
       }
     : {};
 
-  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id }}).select('name photo');
   res.send(users);
 })
 

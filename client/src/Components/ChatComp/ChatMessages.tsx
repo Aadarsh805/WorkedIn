@@ -8,7 +8,7 @@ import { getHeaders } from "../../Utils/helperFunction";
 import formatDistance from "date-fns/formatDistance";
 
 const Section = styled.div`
-  border: 1px solid blue;
+  border: 1px solid yellow;
   height: calc(100vh - 3rem);
   width: 100%;
   position: relative;
@@ -18,9 +18,11 @@ const Section = styled.div`
 
 const Messages = styled.div`
   height: calc(97vh - 6rem);
-  /* border: 1px solid purple; */
+  border: 1px solid purple;
   padding: 1rem;
   box-sizing: border-box;
+  overflow-y: scroll;
+  /* overflow-x: hidden; */
 `;
 
 const Message = styled.div`

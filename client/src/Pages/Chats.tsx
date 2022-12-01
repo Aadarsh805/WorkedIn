@@ -13,6 +13,8 @@ const Section = styled.div`
     min-height: calc(100vh - 3rem);
     display: flex;
     overflow-y: hidden;
+    position: relative;
+    z-index: 1;
 `
 
 interface groupMemberProps {
@@ -34,10 +36,6 @@ interface chatObj {
   isGroupChat?: Boolean;
   users?: groupMemberProps;
   _id?: string;
-}
-
-interface chat {
-  selectedChat: chatObj
 }
 
 const Chats = () => {

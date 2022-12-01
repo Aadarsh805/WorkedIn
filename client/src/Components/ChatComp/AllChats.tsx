@@ -4,12 +4,14 @@ import styled from "styled-components";
 import { BASE_URL, chatEnd } from "../../Utils/APIRoutes";
 import { userProps } from "../../Utils/GlobalContants";
 import { getHeaders, getUserData } from "../../Utils/helperFunction";
+import CreateChatModal from "./CreateChatModal";
 
 const Section = styled.div`
   border: 1px solid red;
   /* min-height: calc(100vh - 3rem); */
   width: 16vw;
   padding-top: 0.8rem;
+  
 `;
 
 const Chat = styled.div`
@@ -35,6 +37,22 @@ const Chat = styled.div`
     font-weight: 500;
   }
 `;
+
+const GroupChatButton = styled.div`
+border: 1px solid red;
+box-sizing: border-box;
+  width: calc(16vw - 2rem);
+  border: 1px solid red;
+  margin: 0.2rem 1rem;
+  border-radius: 10px;
+  padding: 0.5rem 0.2rem 0.5rem 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  position: absolute;
+  bottom: 3vh;
+`
 
 interface allChatProps {
   user: userProps;
@@ -63,7 +81,9 @@ interface chatsArr {
 }
 
 const AllChats = ({ user, setSelectedChat }: allChatProps) => {
+
   const [allChats, setAllChats] = useState<Array<chatsArr>>([]);
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false)
 
   async function fetchUserChats() {
     const { data } = await axios.get(`${BASE_URL}${chatEnd}`, {
@@ -106,6 +126,13 @@ const AllChats = ({ user, setSelectedChat }: allChatProps) => {
           </Chat>
         );
       })}
+      <GroupChatButton onClick={() => setIsChatModalOpen(!isChatModalOpen)}>
+        Creat Group Chat
+      </GroupChatButton>
+      {
+        isChatModalOpen ? 
+        <CreateChatModal user={user} /> : null
+      }
     </Section>
   );
 };

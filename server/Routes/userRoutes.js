@@ -14,8 +14,8 @@ router.delete('/delete', userController.deleteUsers)
 router.use(authController.protect)
 
 
-router.get('/allusers', userController.getAllUsers)
 router.get('/', userController.searchUser)
+router.get('/allusers', userController.getAllUsers)
 router.get('/me', userController.getMe, userController.getUser)
 router.patch('/me/profile', userController.getMe, userController.updateProfile)
 router.patch('/me/about', userController.getMe, userController.updateAbout)
