@@ -105,13 +105,19 @@ exports.creatGroupChat = catchAsync(async (req, res, next) => {
 
 exports.renameGroup = catchAsync(async (req, res, next) => {
   const chatId = req.params.chatId;
-  const { chatName } = req.body;
+  const { chatName, chatPhoto } = req.body;
+
+  if ( !req.body.chatName && !req.body.chatPhoto ) {
+    return next(new AppError('Neither new Chat Photo or Chat Name is provided'))
+  }
 
   const updatedChat = await Chat.findByIdAndUpdate(
-    chatId,
+    chatId, 
     {
-      chatName: chatName,
-    },
+      chatName,
+      chatPhoto
+    }
+    ,
     {
       new: true,
     }

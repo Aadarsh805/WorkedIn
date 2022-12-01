@@ -61,7 +61,7 @@ const Chats = () => {
             selectedChat && <ChatMessages user={userData} selectedChat={selectedChat} />
           }
           {
-            selectedChat && <ChatMembers selectedChat={selectedChat} />
+            selectedChat && <ChatMembers selectedChat={selectedChat} user={userData} />
           }
     </Section>
     </>

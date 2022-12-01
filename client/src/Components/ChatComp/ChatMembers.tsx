@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { GiCrown } from 'react-icons/gi'
+import { GiCrown } from "react-icons/gi";
+import { AiOutlineDown } from "react-icons/ai";
+import ChatOptions from "./ChatOptions";
+import { userProps } from "../../Utils/GlobalContants";
+import UpdateChatModal from "./UpdateChatModal";
 
 const Section = styled.div`
   border: 1px solid red;
   /* min-height: calc(100vh - 3rem); */
   width: 25vw;
-  padding-top: 1rem;
+`;
+
+const Members = styled.div`
+  padding-top: 0.5rem;
+  border: 1px solid red;
+  height: calc(97vh - 7rem);
+  overflow: auto;
 `;
 
 const Member = styled.div`
@@ -17,7 +27,7 @@ const Member = styled.div`
   margin: 0 0.5rem 0.5rem;
   border-radius: 10px;
 
-  svg{
+  svg {
     width: 30px;
   }
 
@@ -52,39 +62,51 @@ interface chatObj {
 
 interface chat {
   selectedChat: chatObj;
+  user: userProps;
 }
 
-const ChatMembers = ({ selectedChat }: chat) => {  
+const ChatMembers = ({ selectedChat, user }: chat) => {
+  const [updateServer, setupdateServer] = useState(false)
+  const [invitePeople, setInvitePeople] = useState(false)
+
+  useEffect(() => {
+    setupdateServer(false)
+    setInvitePeople(false)
+  }, [selectedChat])
   
-    return selectedChat.chatName === "one_On_one"  ? 
-    null : (
-      <Section>
-        {
-          selectedChat.users !== undefined && (selectedChat.users as unknown as any[]).map((user) => {
+
+  return selectedChat.chatName === "one_On_one" ? null : (
+    <Section>
+      <Members>
+        {user._id === selectedChat.groupAdmin?._id ? (
+          <ChatOptions selectedChat={selectedChat} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} updateServer={updateServer} invitePeople={invitePeople}/>
+        ) : null}
+        {selectedChat.users !== undefined &&
+          (selectedChat.users as unknown as any[]).map((user) => {
             return (
               <Member>
                 <img src={user.photo} alt="" />
                 <h4>{user.name}</h4>
-                {
-                  user._id === selectedChat.groupAdmin?._id ? <GiCrown/> : null
-                }
+                {user._id === selectedChat.groupAdmin?._id ? <GiCrown /> : null}
               </Member>
-            )
-          })
-        }
-      </Section>
-    );
+            );
+          })}
+      </Members>
+      {
+        updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} /> : null
+      }
+    </Section>
+  );
 };
 
 export default ChatMembers;
-
 
 // {(selectedChat.users as unknown as any[]).map(({_id,name,photo}: groupMemberProps, index) => {
 //   return (
 //     <Member key={index} >
 //       <img src={photo} alt="memberPic" />
 //       <h3>{name}</h3>
-      
+
 //     </Member>
 //   );
 // })}

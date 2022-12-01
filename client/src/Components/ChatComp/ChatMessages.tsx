@@ -21,7 +21,7 @@ const Messages = styled.div`
   border: 1px solid purple;
   padding: 1rem;
   box-sizing: border-box;
-  overflow-y: scroll;
+  overflow-y: auto;
   /* overflow-x: hidden; */
 `;
 
