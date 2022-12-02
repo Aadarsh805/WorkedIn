@@ -5,6 +5,8 @@ import { BASE_URL, chatEnd, searchUserEnd, userEnd } from '../../Utils/APIRoutes
 import { userProps } from '../../Utils/GlobalContants'
 import { getHeaders } from '../../Utils/helperFunction'
 import { GrFormClose } from 'react-icons/gr'
+import UserBadge from './UserBadge'
+import SearchedUser from './SearchedUser'
 
 const Section = styled.div`
 position: absolute;
@@ -23,17 +25,17 @@ form{
 }
 `
 
-const SearchedUser = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+// const SearchedUser = styled.div`
+//   display: flex;
+//   align-items: center;
+//   cursor: pointer;
 
-  img{
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-  }
-`
+//   img{
+//     width: 2rem;
+//     height: 2rem;
+//     border-radius: 50%;
+//   }
+// `
 
 const UserBadges = styled.div`
 display: flex;
@@ -44,31 +46,39 @@ margin: 1rem auto;
 padding-left: 1rem;
 `
 
-const UserBadge = styled.div`
-display: flex;
-align-items: center;
-box-sizing: border-box;
+// interface userBadgeProps {
+//   userImage?: string
+// }
 
-border: 1px solid red;
-border-radius: 12px;
-padding: 0.2rem;
-margin: 0 0.4rem;
-display: flex;
-align-items: center;
+// const UserBadge = styled.div`
+// display: flex;
+// align-items: center;
+// box-sizing: border-box;
 
-div{
-  /* border: 1px solid red; */
-  display: flex;
-  align-items: center;
-}
-svg{
-  margin-left: 0.4rem;
-  border-radius: 50%;
-  border: 1px solid blue;
-  cursor: pointer;
-  width: 1rem;
-}
-`
+// border: 1px solid red;
+// border-radius: 20px;
+// padding: 0.4rem 0.5rem;
+// margin: 0 0.4rem;
+// display: flex;
+// align-items: center;
+
+// background-image: ${(props: userBadgeProps) => `url(${props.userImage})`};
+// background-repeat: no-repeat;
+// background-size: 50px 50px;
+
+// div{
+//   /* border: 1px solid red; */
+//   display: flex;
+//   align-items: center;
+// }
+// svg{
+//   margin-left: 0.4rem;
+//   border-radius: 50%;
+//   border: 1px solid blue;
+//   cursor: pointer;
+//   width: 1rem;
+// }
+// `
 
 interface chatModalProps {
   user: userProps
@@ -87,18 +97,12 @@ const CreateChatModal = (props: chatModalProps) => {
 
 
   const handleSearch = async (query: string) => {
-    // {{URL}}{{UserEnd}}?search=ic
-    console.log(query);
     const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
       headers: getHeaders(props.user.token ?? '')
     })
     console.log(data);
     setSearchResult(data)
   }
-
-  const handleDelete = (delUser: searchResultProps) => {
-    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
-  };
 
   const handleGroup = (userToAdd: searchResultProps) => {
     if (selectedUsers.includes(userToAdd)) {
@@ -134,23 +138,15 @@ const CreateChatModal = (props: chatModalProps) => {
             {
               selectedUsers.map(user => {
                 return (
-                  <UserBadge>
-                    <h5>{user.name}</h5>
-                    <div onClick={() => handleDelete(user)} >
-                    <GrFormClose/>
-                    </div>
-                  </UserBadge>
-                )
+                  <UserBadge key={user._id} user={user} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
+                ) 
               })
             }
             </UserBadges>
             {
               searchResult.map((result) => {
                 return (
-                  <SearchedUser onClick={() => handleGroup(result)} >
-                    <img src={result.photo} alt="" />
-                    <h5>{result.name}</h5>
-                  </SearchedUser>
+                  <SearchedUser key={result._id} user={result} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
                 )
               })
             }

@@ -49,6 +49,8 @@ const UpdateChatModal = ({
     const updateChatInfoHandler = (e: any) => {
         e.preventDefault();
         alert(newChatName)
+        // {{URL}}{{ChatEnd}}/638845f3d4536216311c2785/rename
+        // {{URL}}{{ChatEnd}}/636411e05b51004eba083740/groupadd
     }
 
   return (

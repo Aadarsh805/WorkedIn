@@ -5,6 +5,7 @@ import { AiOutlineDown } from "react-icons/ai";
 import ChatOptions from "./ChatOptions";
 import { userProps } from "../../Utils/GlobalContants";
 import UpdateChatModal from "./UpdateChatModal";
+import ManageMembers from "./ManageMembers";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -95,18 +96,11 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
       {
         updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} /> : null
       }
+      {
+        invitePeople ? <ManageMembers/> : null
+      }
     </Section>
   );
 };
 
 export default ChatMembers;
-
-// {(selectedChat.users as unknown as any[]).map(({_id,name,photo}: groupMemberProps, index) => {
-//   return (
-//     <Member key={index} >
-//       <img src={photo} alt="memberPic" />
-//       <h3>{name}</h3>
-
-//     </Member>
-//   );
-// })}
