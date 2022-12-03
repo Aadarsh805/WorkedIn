@@ -1,8 +1,8 @@
-const Message = require("../Models/messageModel");
-const User = require("../Models/userModel");
-const Chat = require("../Models/chatModel");
-const catchAsync = require('../Utils/catchAsync');
-const AppError = require("../Utils/appError");
+const Message = require("../models/messageModel");
+const User = require("../models/userModel");
+const Chat = require("../models/chatModel");
+const catchAsync = require('../utils/catchAsync');
+const AppError = require("../utils/appError");
 
 exports.allMessages = catchAsync(async (req,res) => {
     const chatId = req.params.id

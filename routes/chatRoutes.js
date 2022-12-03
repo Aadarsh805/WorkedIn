@@ -1,6 +1,6 @@
 const express = require('express')
-const chatController = require('../Controllers/chatController')
-const { protect } = require('../Controllers/authController')
+const chatController = require('../controllers/chatController')
+const { protect } = require('../controllers/authController')
 const messageRouter = require('./messageRoutes')
 
 const router = express.Router();

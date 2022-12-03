@@ -1,9 +1,9 @@
 import axios from "axios";
 import React from "react";
 import styled from "styled-components";
-import { BASE_URL, postEnd } from "../../Utils/APIRoutes";
-import { userProps } from "../../Utils/GlobalContants";
-import { getHeaders } from "../../Utils/helperFunction";
+import { BASE_URL, postEnd } from "../../utils/APIRoutes";
+import { userProps } from "../../utils/GlobalContants";
+import { getHeaders } from "../../utils/helperFunction";
 
 const Menu = styled.div`
   position: absolute;

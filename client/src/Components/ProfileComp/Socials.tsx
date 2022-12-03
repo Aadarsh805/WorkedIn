@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from "styled-components";
-import { Discord, Github, Linkedin, Portfolio, Twitter } from '../GeneralComp/SVG';
+import { Discord, Github, Linkedin, Portfolio, Twitter } from '../generalComp/SVG';
 
 
 const animateSvg = keyframes`

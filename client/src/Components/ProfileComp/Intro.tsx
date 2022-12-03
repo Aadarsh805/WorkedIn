@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Pen } from "../GeneralComp/SVG";
+import { Pen } from "../generalComp/SVG";
 import Socials from "./Socials";
 
 const Section = styled.div`

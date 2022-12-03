@@ -7,8 +7,8 @@ const postRouter = require('./Routes/postRoutes')
 const chatRouter = require('./Routes/chatRoutes')
 const contractRouter = require('./Routes/contractRoutes')
 
-const AppError = require('./Utils/appError')
-const globalErrorHandle = require('./Controllers/errorController')
+const AppError = require('./utils/appError')
+const globalErrorHandle = require('./controllers/errorController')
 
 const app = express();
 require("dotenv").config();

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import AllChats from '../Components/ChatComp/AllChats'
-import ChatMembers from '../Components/ChatComp/ChatMembers'
-import ChatMessages from '../Components/ChatComp/ChatMessages'
+import AllChats from '../components/chatComp/AllChats'
+import ChatMembers from '../components/chatComp/ChatMembers'
+import ChatMessages from '../components/chatComp/ChatMessages'
 
-import Navbar from '../Components/GeneralComp/Navbar'
-import { userProps } from '../Utils/GlobalContants'
-import { getUserData } from '../Utils/helperFunction'
+import Navbar from '../components/generalComp/Navbar'
+import { userProps } from '../utils/GlobalContants'
+import { getUserData } from '../utils/helperFunction'
 
 const Section = styled.div`
     /* border: 1px solid red; */

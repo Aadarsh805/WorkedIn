@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { BASE_URL, chatEnd, searchUserEnd } from "../../Utils/APIRoutes";
-import { userProps } from "../../Utils/GlobalContants";
-import { getHeaders } from "../../Utils/helperFunction";
+import { BASE_URL, chatEnd, searchUserEnd } from "../../utils/APIRoutes";
+import { userProps } from "../../utils/GlobalContants";
+import { getHeaders } from "../../utils/helperFunction";
 import SearchedUser from "./SearchedUser";
 
 const Section = styled.div`

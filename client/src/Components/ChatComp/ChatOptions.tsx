@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
 import styled from "styled-components";
-import { InvitePeople } from "../../Assets/InvitePeople";
+import { InvitePeople } from "../../assets/InvitePeople";
 import { HiUserAdd } from 'react-icons/hi'
 
 const Section = styled.div`

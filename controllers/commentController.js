@@ -1,7 +1,7 @@
-const Post = require('../Models/postModel');
-const Comment = require('../Models/commentModel')
-const catchAsync = require('../Utils/catchAsync')
-const AppError = require('../Utils/appError')
+const Post = require('../models/postModel');
+const Comment = require('../models/commentModel')
+const catchAsync = require('../utils/catchAsync')
+const AppError = require('../utils/appError')
 const factory = require('./handlerFactory')
 
 exports.setPostandUserIds = (req,res,next) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { localStorageUser, userProps } from "../../Utils/GlobalContants";
+import { localStorageUser, userProps } from "../../utils/GlobalContants";
 
 const Section = styled.div`
   height: 40vh;

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { localStorageUser, userProps } from "../Utils/GlobalContants";
+import { localStorageUser, userProps } from "../utils/GlobalContants";
 
-import Navbar from "../Components/GeneralComp/Navbar";
-import Intro from "../Components/ProfileComp/Intro";
-import NoSkill from "../Components/ProfileComp/NoSkill";
-import PastProjects from "../Components/ProfileComp/PastProjects";
-import Skills from "../Components/ProfileComp/Skills";
+import Navbar from "../components/generalComp/Navbar";
+import Intro from "../components/profileComp/Intro";
+import NoSkill from "../components/profileComp/NoSkill";
+import PastProjects from "../components/profileComp/PastProjects";
+import Skills from "../components/profileComp/Skills";
 
 const Section = styled.div`
   /* border: 1px solid black; */

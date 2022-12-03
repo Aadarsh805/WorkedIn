@@ -5,9 +5,9 @@ import {
   Share,
   ThumbsUp,
   ThumbsUp2,
-} from "../../Components/GeneralComp/SVG";
-import { BASE_URL, postEnd } from "../../Utils/APIRoutes";
-import { userProps } from "../../Utils/GlobalContants";
+} from "../../components/generalComp/SVG";
+import { BASE_URL, postEnd } from "../../utils/APIRoutes";
+import { userProps } from "../../utils/GlobalContants";
 import CommentBox from "./CommentBox";
 
 const Section = styled.div`

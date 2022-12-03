@@ -1,6 +1,6 @@
-const Post = require("../Models/postModel");
-const catchAsync = require("../Utils/catchAsync");
-const AppError = require("../Utils/appError");
+const Post = require("../models/postModel");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 const factory = require("./handlerFactory");
 
 exports.setPostAuthor = (req, res, next) => {

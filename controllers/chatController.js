@@ -1,7 +1,7 @@
-const Chat = require("../Models/chatModel");
-const User = require("../Models/userModel");
-const catchAsync = require("../Utils/catchAsync");
-const AppError = require("../Utils/appError");
+const Chat = require("../models/chatModel");
+const User = require("../models/userModel");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
 exports.accessChat = catchAsync(async (req, res) => {
   const { userId } = req.body;

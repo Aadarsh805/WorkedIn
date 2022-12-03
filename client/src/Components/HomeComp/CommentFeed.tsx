@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { userProps } from "../../Utils/GlobalContants";
+import { userProps } from "../../utils/GlobalContants";
 import { HiDotsVertical } from "react-icons/hi";
 import CommentModal from "./CommentModal";
 import axios from "axios";
-import { BASE_URL, postEnd } from "../../Utils/APIRoutes";
-import { getHeaders } from "../../Utils/helperFunction";
+import { BASE_URL, postEnd } from "../../utils/APIRoutes";
+import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`
   /* display: flex; */

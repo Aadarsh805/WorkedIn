@@ -1,6 +1,6 @@
-const Contract = require("../Models/contractModel");
-const User = require("../Models/userModel");
-const catchAsync = require("../Utils/catchAsync");
+const Contract = require("../models/contractModel");
+const User = require("../models/userModel");
+const catchAsync = require("../utils/catchAsync");
 
 exports.getAllContracts = catchAsync(async (req, res) => {
   const contracts = await Contract.find()

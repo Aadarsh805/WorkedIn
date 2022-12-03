@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { BASE_URL, chatEnd } from "../../Utils/APIRoutes";
-import { userProps } from "../../Utils/GlobalContants";
-import { getHeaders, getUserData } from "../../Utils/helperFunction";
+import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
+import { userProps } from "../../utils/GlobalContants";
+import { getHeaders, getUserData } from "../../utils/helperFunction";
 import CreateChatModal from "./CreateChatModal";
 
 const Section = styled.div`

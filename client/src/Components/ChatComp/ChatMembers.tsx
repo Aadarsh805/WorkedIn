@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { GiCrown } from "react-icons/gi";
 import { AiOutlineDown } from "react-icons/ai";
 import ChatOptions from "./ChatOptions";
-import { userProps } from "../../Utils/GlobalContants";
+import { userProps } from "../../utils/GlobalContants";
 import UpdateChatModal from "./UpdateChatModal";
 import ManageMembers from "./ManageMembers";
 

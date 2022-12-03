@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home";
-import Login from "./Pages/Login";
-import Profile from "./Pages/Profile";
-import Register from "./Pages/Register";
-import Chats from "./Pages/Chats";
-import GlobalStyles from "./Utils/GlobalStyles";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Register from "./pages/Register";
+import Chats from "./pages/Chats";
+import GlobalStyles from "./utils/GlobalStyles";
 import { ThemeProvider } from "styled-components";
-import { light, dark, workedinScheme } from "./Utils/Themes";
+import { light, dark, workedinScheme } from "./utils/Themes";
 
 function App() {
   return (

@@ -37,17 +37,17 @@ This section will walk you through how you can get started with the project.
 ├── <strong>client</strong>
 |
 ├── <strong>server</strong>
-|      ├── <strong>Controllers</strong>
+|      ├── <strong>controllers</strong>
 |      │      ├── <strong>authController.js</strong>
 |      │      ├── <strong>chatController.js</strong>
 |      │      └── <strong>commentController.js</strong> 
 |      │      └── <strong>errorController.js</strong> 
 |      │      └── <strong>handlerFactory.js</strong> 
 |      │      └── <strong>messageController.js</strong> 
-|      │      └── <strong>postControllers.js</strong> 
-|      │      └── <strong>userControllers.js</strong> 
+|      │      └── <strong>postcontrollers.js</strong> 
+|      │      └── <strong>usercontrollers.js</strong> 
 |      │
-|      ├── <strong>Models</strong>
+|      ├── <strong>models</strong>
 |      │      ├── <strong>chatModel.js</strong>
 |      │      ├── <strong>commentModel.js</strong>
 |      │      └── <strong>contractModel.js</strong> 
@@ -63,14 +63,14 @@ This section will walk you through how you can get started with the project.
 |      │      └── <strong>postRoutes.js</strong> 
 |      │      └── <strong>userRoutes.js</strong> 
 |      |
-|      ├── <strong>Utils</strong>
+|      ├── <strong>utils</strong>
 |      │      ├── <strong>apiFeatures.js</strong>
 |      │      ├── <strong>appError.js</strong>
 |      │      └── <strong>catchAsync.js</strong> 
 |      │      └── <strong>email.js</strong> 
 |      │      └── <strong>exludedFields.js</strong> 
 |      |
-|      ├── <strong>Views</strong>
+|      ├── <strong>views</strong>
 |      │      ├── <strong>_style.pug</strong>
 |      │      ├── <strong>baseEmail.pug</strong>
 |      │      └── <strong>passwordReset.pug</strong> 
@@ -104,11 +104,11 @@ If you dont have [MongoDB]() you use [MongoDB Atls]()
 
 
        server
-       └──- Controllers
-           - Models
+       └──- controllers
+           - models
            - Routes
-           - Utils
-           - Views
+           - utils
+           - views
            - .env         <-- create it here
            - .gitignore
            - app.js

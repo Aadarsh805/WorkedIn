@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import CreatePost from "../Components/HomeComp/CreatePost";
-import Navbar from "../Components/GeneralComp/Navbar";
-import { BASE_URL, postEnd } from "../Utils/APIRoutes";
-import ProfileBriefBox from "../Components/HomeComp/ProfileBriefBox";
-import { apiProvider } from "../Utils/helperFunction";
-import ActivityBox from "../Components/HomeComp/ActivityBox";
-import PostFeed from "../Components/HomeComp/PostFeed";
-import { localStorageUser, userProps } from "../Utils/GlobalContants";
+import CreatePost from "../components/homeComp/CreatePost";
+import Navbar from "../components/generalComp/Navbar";
+import { BASE_URL, postEnd } from "../utils/APIRoutes";
+import ProfileBriefBox from "../components/homeComp/ProfileBriefBox";
+import { apiProvider } from "../utils/helperFunction";
+import ActivityBox from "../components/homeComp/ActivityBox";
+import PostFeed from "../components/homeComp/PostFeed";
+import { localStorageUser, userProps } from "../utils/GlobalContants";
 
 const Section = styled.div`
   background-color: ${(props) => props.theme.grey};

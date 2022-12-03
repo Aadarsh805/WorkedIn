@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { localStorageUser } from '../Utils/GlobalContants';
+import { localStorageUser } from '../utils/GlobalContants';
 
 const Section = styled.div`
 height: 100vh;
