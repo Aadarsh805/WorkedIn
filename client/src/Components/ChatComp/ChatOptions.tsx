@@ -81,7 +81,7 @@ interface chatObj {
     photo?: string;
   };
   isGroupChat?: Boolean;
-  users?: groupMemberProps;
+  users?: Array<groupMemberProps>;
   _id?: string;
 }
 

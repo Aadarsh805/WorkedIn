@@ -57,7 +57,7 @@ interface chatObj {
     photo?: string;
   };
   isGroupChat?: Boolean;
-  users?: groupMemberProps;
+  users?: Array<groupMemberProps>;
   _id?: string;
 }
 
@@ -97,7 +97,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} /> : null
       }
       {
-        invitePeople ? <ManageMembers/> : null
+        invitePeople ? <ManageMembers selectedChat={selectedChat} user={user}  /> : null
       }
     </Section>
   );

@@ -104,6 +104,10 @@ const CreateChatModal = (props: chatModalProps) => {
     setSearchResult(data)
   }
 
+  const handleDelete = (delUser: searchResultProps) => {
+    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
+  };
+
   const handleGroup = (userToAdd: searchResultProps) => {
     if (selectedUsers.includes(userToAdd)) {
       return;
@@ -133,12 +137,12 @@ const CreateChatModal = (props: chatModalProps) => {
         <h2>Create Group Chat</h2>
         <form onSubmit={handleSubmit} >
             <input type="text" placeholder='Chat Name' value={chatName} onChange={(e) => setChatName(e.target.value)} />
-            <input type="text" name="" id="" placeholder="Add Users eg: John, Piyush, Jane" onChange={(e) => handleSearch(e.target.value)} />
+            <input type="text" name="" id="" placeholder="Add members to group" onChange={(e) => handleSearch(e.target.value)} />
             <UserBadges>
             {
               selectedUsers.map(user => {
                 return (
-                  <UserBadge key={user._id} user={user} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
+                  <UserBadge key={user._id} user={user} onClickFunc={handleDelete} />
                 ) 
               })
             }
@@ -146,7 +150,7 @@ const CreateChatModal = (props: chatModalProps) => {
             {
               searchResult.map((result) => {
                 return (
-                  <SearchedUser key={result._id} user={result} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
+                  <SearchedUser key={result._id} user={result} onClickFunc={handleGroup} />
                 )
               })
             }

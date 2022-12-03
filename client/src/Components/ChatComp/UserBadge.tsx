@@ -45,24 +45,20 @@ interface searchResultProps {
 
 interface userBadgeProps {
   user: searchResultProps;
-  selectedUsers: Array<searchResultProps>;
-  setSelectedUsers: React.Dispatch<React.SetStateAction<searchResultProps[]>>;
+  onClickFunc: any
 }
 
 const UserBadge = ({
   user,
-  selectedUsers,
-  setSelectedUsers,
+  onClickFunc
 }: userBadgeProps) => {
 
-  const handleDelete = (delUser: searchResultProps) => {
-    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
-  };
+  
 
   return (
       <Section userImage={user.photo} >
         <h5>{user.name}</h5>
-        <div onClick={() => handleDelete(user)}>
+        <div onClick={() => onClickFunc(user)}>
           <GrFormClose />
         </div>
       </Section>

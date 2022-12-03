@@ -34,7 +34,7 @@ interface chatObj {
     photo?: string;
   };
   isGroupChat?: Boolean;
-  users?: groupMemberProps;
+  users?: Array<groupMemberProps>;
   _id?: string;
 }
 
@@ -46,11 +46,6 @@ const Chats = () => {
         const user = getUserData();
         setUserData(user)
     }, [])
-
-    // useEffect(() => {
-    //   console.log("Selected Chat :- " + JSON.stringify(selectedChat)); 
-    // }, [selectedChat])
-    
 
   return (
     <>
