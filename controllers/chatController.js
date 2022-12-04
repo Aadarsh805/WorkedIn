@@ -195,3 +195,16 @@ exports.addInGroup = catchAsync(async (req, res) => {
     chatGroup: addedUser,
   });
 });
+
+exports.finaliseContract = catchAsync(async (req,res) => {
+  const chatId = req.params.chatId;
+
+  const chat = await Chat.findByIdAndUpdate(chatId, {
+    contractApproved: true
+  })
+
+  res.status(200).json({
+    status: success,
+    chat
+  })
+})

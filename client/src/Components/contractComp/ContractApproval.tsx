@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { userProps } from '../../utils/GlobalContants';
@@ -47,8 +48,8 @@ const ContractApproval = ({selectedChat, user}: contractApprovalProps) => {
         setPercentageApproval(percentApproval)
     }, [selectedChat]);
 
-    const finaliseContractHandler = () => {
-        alert('Finalise')
+    const finaliseContractHandler = async () => {
+        // const { data } = await axios.post
     }
     
 

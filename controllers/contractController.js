@@ -5,8 +5,8 @@ const catchAsync = require("../utils/catchAsync");
 
 exports.getAllContracts = catchAsync(async (req, res) => {
   const contracts = await Contract.find()
-    .populate("lead", "name")
-    .populate("team.member", "name")
+    .populate("lead", "name photo")
+    .populate("team.member", "name photo")
     .sort("-createdAt");
 
   res.status(200).json({
@@ -29,8 +29,8 @@ exports.getContract = catchAsync(async (req, res) => {
   const contract = await Contract.find({
     "team.member": userId,
   })
-    .populate("lead", "name")
-    .populate("team.member", "name")
+    .populate("lead", "name photo")
+    .populate("team.member", "name photo")
     .sort("-createdAt");
 
   res.status(200).json({
