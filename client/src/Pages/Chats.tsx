@@ -36,6 +36,9 @@ interface chatObj {
   isGroupChat?: Boolean;
   users?: Array<groupMemberProps>;
   _id?: string;
+  contractId?: string;
+  contractAprovedBy: Array<string>;
+  contractApproved: Boolean
 }
 
 const Chats = () => {

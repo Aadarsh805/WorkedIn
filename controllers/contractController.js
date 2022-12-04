@@ -77,6 +77,8 @@ exports.initializeContract = catchAsync(async (req, res) => {
     updatedChat = await Chat.findByIdAndUpdate(
       chatId,
       {
+        contracted: true,
+        contractId: contract._id,
         $push: { contractAprovedBy: userId },
       },
       {

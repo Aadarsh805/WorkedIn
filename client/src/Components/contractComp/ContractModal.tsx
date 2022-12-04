@@ -55,10 +55,10 @@ const MemberRole = styled.div`
 `;
 
 const ContractDates = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+`;
 
 interface groupMemberProps {
   _id: string;
@@ -79,6 +79,9 @@ interface chatObj {
   isGroupChat?: Boolean;
   users?: Array<groupMemberProps>;
   _id?: string;
+  contractId?: string;
+  contractAprovedBy: Array<string>;
+  contractApproved: Boolean;
 }
 
 interface contractModalProps {
@@ -97,8 +100,10 @@ interface memberRolesProps {
 
 const ContractModal = ({ selectedChat, user }: contractModalProps) => {
   const [memberRoles, setMemberRoles] = useState<memberRolesProps[]>([]);
-  const [startDate, setStartDate] = useState('')
-  const [dueDate, setDueDate] = useState('')
+  const [contractName, setContractName] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
   useEffect(() => {
     console.log(selectedChat.users);
@@ -146,21 +151,27 @@ const ContractModal = ({ selectedChat, user }: contractModalProps) => {
 
   useEffect(() => {
     console.log(startDate);
-  }, [startDate])
+  }, [startDate]);
 
   const initializeContractHandler = async (e: any) => {
     e.preventDefault();
 
-    const {data} = await axios.post(`${BASE_URL}${contractEnd}`, {
+    const { data } = await axios.post(
+      `${BASE_URL}${contractEnd}`,
+      {
+        contractName,
+        projectDescription,
         startDate,
         dueDate,
-        team: memberRoles
-    }, {
-        headers: getHeaders(user.token ?? '')
-    })
-    console.log(data); 
-  }
-  
+        team: memberRoles,
+        chatId: selectedChat._id
+      },
+      {
+        headers: getHeaders(user.token ?? ""),
+      }
+    );
+    console.log(data);
+  };
 
   return (
     <Section>
@@ -171,12 +182,21 @@ const ContractModal = ({ selectedChat, user }: contractModalProps) => {
           <h5>Team Lead</h5>
         </div>
       </TeamLead>
+      <input
+        type="text"
+        value={contractName}
+        onChange={(e) => setContractName(e.target.value)}
+      />
+      <textarea
+        value={projectDescription}
+        onChange={(e) => setProjectDescription(e.target.value)}
+      />
       <MemberRoles>
         {memberRoles?.map((member, index) => {
           return (
             <MemberRole key={index}>
               <div>
-                <img src={member.photo} alt="" />
+                <img src={member.photo} alt="memberImg" />
                 <h4>{member.name}</h4>
               </div>
               <input
@@ -196,17 +216,25 @@ const ContractModal = ({ selectedChat, user }: contractModalProps) => {
         })}
       </MemberRoles>
       <ContractDates>
-      <input type="date" name="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)}   />
-      <input type="date" name="endDate" value={dueDate} onChange={(e) => setDueDate(e.target.value)}  />
+        <input
+          type="date"
+          name="startDate"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <input
+          type="date"
+          name="endDate"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+        />
       </ContractDates>
-      <button onClick={initializeContractHandler} >Initialize Contract</button>
+      <button onClick={initializeContractHandler}>Initialize Contract</button>
     </Section>
   );
 };
 
 export default ContractModal;
-
-
 
 // Top --> Lead -> pic, name
 

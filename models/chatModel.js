@@ -43,6 +43,10 @@ const chatModel = mongoose.Schema(
         ref: "User",
       },
     ],
+    contractApproved: {
+      type: Boolean,
+      default: false,
+    }
   },
   { timestamps: true }
 );

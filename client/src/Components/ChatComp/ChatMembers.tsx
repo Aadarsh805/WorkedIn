@@ -7,6 +7,7 @@ import { userProps } from "../../utils/GlobalContants";
 import UpdateChatModal from "./UpdateChatModal";
 import ManageMembers from "./ManageMembers";
 import CreateContract from "../contractComp/CreateContract";
+import ContractApproval from "../contractComp/ContractApproval";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -60,6 +61,9 @@ interface chatObj {
   isGroupChat?: Boolean;
   users?: Array<groupMemberProps>;
   _id?: string;
+  contractId?: string;
+  contractAprovedBy: Array<string>;
+  contractApproved: Boolean
 }
 
 interface chat {
@@ -95,7 +99,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
           })}
       </Members>
       {
-        selectedChat.contracted ? null : <CreateContract selectedChat={selectedChat} user={user} />
+        selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : <CreateContract selectedChat={selectedChat} user={user} />
       }
       {
         updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} /> : null
