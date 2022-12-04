@@ -1,3 +1,4 @@
+const Chat = require("../models/chatModel");
 const Contract = require("../models/contractModel");
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
@@ -27,7 +28,6 @@ exports.getContract = catchAsync(async (req, res) => {
 
   const contract = await Contract.find({
     "team.member": userId,
-    "team.approved": false,
   })
     .populate("lead", "name")
     .populate("team.member", "name")
@@ -35,6 +35,7 @@ exports.getContract = catchAsync(async (req, res) => {
 
   res.status(200).json({
     status: "success",
+    totalContracts: contract.length,
     userContract: contract,
   });
 });
@@ -43,27 +44,46 @@ exports.initializeContract = catchAsync(async (req, res) => {
   // leader --> user
   // approved --> null
 
-  const { team, startDate, dueDate } = req.body;
+  const { team, startDate, dueDate, contractName, projectDescription, chatId } =
+    req.body;
   const userId = req.user.id;
 
   const contract = await Contract.create({
+    contractName,
+    projectDescription,
     lead: userId,
     team,
     startDate,
     dueDate,
+    chatId,
   });
 
   let contract2;
+  let updatedChat;
 
   if (contract) {
-    contract2 = await Contract.updateOne({
-      _id: contract._id,
-      "team.member": req.user.id,
-    }, {
-      $set: {
-        "team.$.approved": true
+    contract2 = await Contract.updateOne(
+      {
+        _id: contract._id,
+        "team.member": req.user.id,
       },
-    }) 
+      {
+        $set: {
+          "team.$.approved": true,
+        },
+      }
+    );
+
+    updatedChat = await Chat.findByIdAndUpdate(
+      chatId,
+      {
+        $push: { contractAprovedBy: userId },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
   }
 
   const fullContract = await Contract.find({ _id: contract._id })
@@ -73,6 +93,7 @@ exports.initializeContract = catchAsync(async (req, res) => {
   res.status(201).json({
     status: "success",
     contract2,
+    updatedChat,
     contract: fullContract,
   });
 });
@@ -83,6 +104,9 @@ exports.acceptContract = catchAsync(async (req, res) => {
   // update the approved --> true and denied --> false for that member
 
   console.log(req.user);
+  const userId = req.user._id;
+
+  const { chatId } = req.body;
 
   //   const contract = await Contract.updateOne(
   //     {
@@ -97,29 +121,55 @@ exports.acceptContract = catchAsync(async (req, res) => {
 
   //   console.log(contract);
 
-  const contract = await Contract.updateOne(
-    {
-      _id: req.params.contractId,
-      "team.member": req.user.id,
-    },
-    {
-      $set: {
-        "team.$.approved": true,
-        "team.$.denied": false,
+  const chat = await Chat.findById(chatId);
+  const approvedArr = chat.contractAprovedBy;
+
+  if (!approvedArr.includes(userId)) {
+    const contract = await Contract.updateOne(
+      {
+        _id: req.params.contractId,
+        "team.member": req.user.id,
       },
+      {
+        $set: {
+          "team.$.approved": true,
+          "team.$.denied": false,
+        },
+      }
+    );
+
+    console.log(contract);
+
+    const updatedContract = await Contract.findById(req.params.contractId)
+      .populate("lead", "name")
+      .populate("team.member", "name");
+
+    let updatedChat;
+
+    if (contract) {
+      updatedChat = await Chat.findByIdAndUpdate(
+        updatedContract.chatId,
+        {
+          $push: { contractAprovedBy: userId },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
     }
-  );
 
-  console.log(contract);
-
-  const updatedContract = await Contract.findById(req.params.contractId)
-    .populate("lead", "name")
-    .populate("team.member", "name");
-
-  res.send({
-    status: "success",
-    updatedContract,
-  });
+    res.send({
+      status: "success",
+      updatedChat,
+      updatedContract,
+    });
+  } else {
+    res.status(403).json({
+      status: 'fail',
+      message: 'User has already approved the contract'
+    })
+  }
 });
 
 exports.denyContract = catchAsync(async (req, res) => {
@@ -177,21 +227,29 @@ exports.updateContract = catchAsync(async (req, res) => {
 
   const newDueObj = {
     prevDate: contract.dueDate,
-    delayReason: reason
+    delayReason: reason,
   };
 
   let newprevDueDatesArr = contract.prevDueDates;
   newprevDueDatesArr.push(newDueObj);
 
-  const updatedContract = await Contract.findByIdAndUpdate(contractId, {
-    dueDate: newDueDate,
-    prevDueDates: newprevDueDatesArr 
-  },{
-    new: true,
-    runValidators: true,
-  });
+  const updatedContract = await Contract.findByIdAndUpdate(
+    contractId,
+    {
+      dueDate: newDueDate,
+      prevDueDates: newprevDueDatesArr,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   res.send(updatedContract);
 });
 
 // update --> dueDates, members role and responsibility
+
+//  getRequest --> to indicate the members that have approved the contract
+// then lead will declare the contract
+// patch api --> chat --> contract --> true

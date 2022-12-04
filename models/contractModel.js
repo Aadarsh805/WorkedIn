@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 
 const contractModel = mongoose.Schema({
+    contractName: {
+        type: String,
+        required: [true, 'Please specify the contracts name'],
+        maxlength: [40, 'A Contract name must have less or equal then 25 characters'],
+        minlength: [2, 'A Contract name must have more or equal then 3 characters'],
+    },
+    projectDescription: {
+        type: String,
+        required: [true, `Tell us about the project you'll be working on`],
+    },
     lead: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: "User"  
@@ -26,8 +36,7 @@ const contractModel = mongoose.Schema({
                 default: 4.5,
                 min: [1, 'Rating must be above 1.0'],
                 max: [5, 'Rating must be below 5.0']
-            },
-            extraWork: String
+            }
         }
     ],
     startDate: {
@@ -36,6 +45,7 @@ const contractModel = mongoose.Schema({
     },
     dueDate: {
         type: Date,
+        default: Date.now() + 172800000
     },
     prevDueDates: [
         {
@@ -48,6 +58,10 @@ const contractModel = mongoose.Schema({
         enum: ['in-progress', 'delayed', 'completed', 'broken'],
         default: 'in-progress'
     },
+    chatId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chat',
+    }
 },
 { timestamps: true }
 )
@@ -67,3 +81,6 @@ module.exports = Contract
 // Responsibilities
 
 // on Contract complete --> Project links --> github, deployed version || give other teammates ratings and reviews
+
+
+//  Contract Initialized --> contract goes to all members --> leader automatically approved, team approves --> show in chat status of approvals --> contract made once everyon accepts
