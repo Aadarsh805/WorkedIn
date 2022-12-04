@@ -6,6 +6,7 @@ import ChatOptions from "./ChatOptions";
 import { userProps } from "../../utils/GlobalContants";
 import UpdateChatModal from "./UpdateChatModal";
 import ManageMembers from "./ManageMembers";
+import CreateContract from "../contractComp/CreateContract";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -93,6 +94,9 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
             );
           })}
       </Members>
+      {
+        selectedChat.contracted ? null : <CreateContract selectedChat={selectedChat} user={user} />
+      }
       {
         updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} /> : null
       }

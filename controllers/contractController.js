@@ -53,12 +53,26 @@ exports.initializeContract = catchAsync(async (req, res) => {
     dueDate,
   });
 
+  let contract2;
+
+  if (contract) {
+    contract2 = await Contract.updateOne({
+      _id: contract._id,
+      "team.member": req.user.id,
+    }, {
+      $set: {
+        "team.$.approved": true
+      },
+    }) 
+  }
+
   const fullContract = await Contract.find({ _id: contract._id })
     .populate("lead", "name")
     .populate("team.member", "name");
 
   res.status(201).json({
     status: "success",
+    contract2,
     contract: fullContract,
   });
 });
