@@ -62,6 +62,9 @@ const Navbar = () => {
         <Link to="/chats">
           <MenuItem>Rooms</MenuItem>
         </Link>
+        <Link to="/contracts">
+          <MenuItem>My Contracts</MenuItem>
+        </Link>
         <Link to="/me">
           <MenuItem>Profile</MenuItem>
         </Link>

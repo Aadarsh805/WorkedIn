@@ -1,6 +1,9 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
+import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`
   position: absolute;
@@ -133,7 +136,7 @@ const ContractModal = ({ selectedChat, user }: contractModalProps) => {
     index: number
   ) => {
     let newArr = [...memberRoles];
-    newArr[index].role = e.target.value;
+    newArr[index].responsibility = e.target.value;
     setMemberRoles(newArr);
   };
 
@@ -144,12 +147,25 @@ const ContractModal = ({ selectedChat, user }: contractModalProps) => {
   useEffect(() => {
     console.log(startDate);
   }, [startDate])
+
+  const initializeContractHandler = async (e: any) => {
+    e.preventDefault();
+
+    const {data} = await axios.post(`${BASE_URL}${contractEnd}`, {
+        startDate,
+        dueDate,
+        team: memberRoles
+    }, {
+        headers: getHeaders(user.token ?? '')
+    })
+    console.log(data); 
+  }
   
 
   return (
     <Section>
       <TeamLead>
-        <img src={selectedChat.groupAdmin?.photo} alt="" />
+        <img src={selectedChat.groupAdmin?.photo} alt="groupAdmin" />
         <div>
           <h3>{selectedChat.groupAdmin?.name}</h3>
           <h5>Team Lead</h5>
@@ -183,7 +199,7 @@ const ContractModal = ({ selectedChat, user }: contractModalProps) => {
       <input type="date" name="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)}   />
       <input type="date" name="endDate" value={dueDate} onChange={(e) => setDueDate(e.target.value)}  />
       </ContractDates>
-      <button >Initialize Contract</button>
+      <button onClick={initializeContractHandler} >Initialize Contract</button>
     </Section>
   );
 };

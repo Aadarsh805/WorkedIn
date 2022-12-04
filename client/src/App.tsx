@@ -7,6 +7,7 @@ import Chats from "./pages/Chats";
 import GlobalStyles from "./utils/GlobalStyles";
 import { ThemeProvider } from "styled-components";
 import { light, dark, workedinScheme } from "./utils/Themes";
+import Contracts from "./pages/Contracts";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/chats" element={<Chats />} />
+          <Route path="/contracts" element={<Contracts />} />
           <Route path="/me" element={<Profile />} />
         </Routes>
       </BrowserRouter>
