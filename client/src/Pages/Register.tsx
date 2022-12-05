@@ -56,10 +56,6 @@ const Register = () => {
         }
     }
 
-    // Verification
-    // API Integ
-    // JWT Token
-
   return (
     <Section>
         <form onSubmit={handleSubmit}>

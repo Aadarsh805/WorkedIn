@@ -31,13 +31,24 @@ const AuthorDetails = styled.div`
 
 const Description = styled.div`
   font-size: 1rem;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   /* margin-left: 10%; */
   /* margin-left: 2vw; */
   margin-bottom: 0.4rem;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 `;
+
+const ImageContainer = styled.div`
+  width: 100%;
+  max-height: 70vh;
+
+    img{      
+    width: 100%;
+    max-height: 70vh;
+    object-fit: cover;
+  }
+`
 
 const PostStats = styled.div`
   display: flex;
@@ -110,7 +121,10 @@ const PostFeed = ({post, user}: postFeedProps) => {
       </AuthorDetails>
       <Description>
         <h4>{post.description}</h4>
-        {post.image !== '' ? post.image : null}
+        <ImageContainer>
+        {post.image !== '' ? 
+        <img src={post.image} alt="postImg" loading="lazy"/> : null }
+        </ImageContainer>
       </Description>
       <PostStats>
         <div>
