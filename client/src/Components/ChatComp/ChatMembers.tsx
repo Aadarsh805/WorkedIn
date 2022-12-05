@@ -79,6 +79,16 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
     setupdateServer(false)
     setInvitePeople(false)
   }, [selectedChat])
+
+  const closeUpdateServerModal = () => {
+    console.log("Jugad");
+    
+    setupdateServer(false)
+  }
+
+  const closeInvitePeopleModal = () => {
+    setInvitePeople(false)
+  }
   
 
   return selectedChat.chatName === "one_On_one" ? null : (
@@ -102,10 +112,10 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : <CreateContract selectedChat={selectedChat} user={user} />
       }
       {
-        updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} /> : null
+        updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} closeUpdateServerModal={closeUpdateServerModal} /> : null
       }
       {
-        invitePeople ? <ManageMembers selectedChat={selectedChat} user={user}  /> : null
+        invitePeople ? <ManageMembers selectedChat={selectedChat} user={user} closeInvitePeopleModal={closeInvitePeopleModal} /> : null
       }
     </Section>
   );

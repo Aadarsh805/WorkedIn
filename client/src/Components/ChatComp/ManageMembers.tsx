@@ -1,9 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { BASE_URL, chatEnd, searchUserEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
+import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import SearchedUser from "./SearchedUser";
 
 const Section = styled.div`
@@ -53,6 +54,7 @@ interface chatObj {
 interface manageMemberProps {
   selectedChat: chatObj;
   user: userProps;
+  closeInvitePeopleModal: any
 }
 
 interface searchResultProps {
@@ -61,7 +63,7 @@ interface searchResultProps {
   photo: string
 }
 
-const ManageMembers = ({ selectedChat, user }: manageMemberProps) => {
+const ManageMembers = ({ selectedChat, user, closeInvitePeopleModal }: manageMemberProps) => {
     // const [search, setSearch] = useState('')
     const [searchResult, setSearchResult] = useState<Array<searchResultProps>>([]);
 
@@ -70,7 +72,10 @@ const ManageMembers = ({ selectedChat, user }: manageMemberProps) => {
     let chatMembers = selectedChat.users
 
     const [first, setfirst] = useState<groupMemberProps[] | undefined>(selectedChat.users)
-    // const [chatMembers, setChatMembers] = useState<Array<groupMemberProps | undefined>>(selectedChat.users)    
+    // const [chatMembers, setChatMembers] = useState<Array<groupMemberProps | undefined>>(selectedChat.users)   
+    
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeInvitePeopleModal)
 
     useEffect(() => {
       console.log("NEW MEMBERS :- " + first);
@@ -108,7 +113,7 @@ const ManageMembers = ({ selectedChat, user }: manageMemberProps) => {
     }
 
   return (
-    <Section>
+    <Section ref={wrapperRef} >
       <h1>{selectedChat.chatName}</h1>
       {/* user badges --> handleRemoveUser */}
       {

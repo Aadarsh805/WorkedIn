@@ -83,7 +83,7 @@ interface chatsArr {
 const AllChats = ({ user, setSelectedChat }: allChatProps) => {
 
   const [allChats, setAllChats] = useState<Array<chatsArr>>([]);
-  const [isChatModalOpen, setIsChatModalOpen] = useState(false)
+  const [isCreateChatModalOpen, setIsCreateChatModalOpen] = useState(false)
 
   async function fetchUserChats() {
     const { data } = await axios.get(`${BASE_URL}${chatEnd}`, {
@@ -99,6 +99,11 @@ const AllChats = ({ user, setSelectedChat }: allChatProps) => {
       fetchUserChats();
     }
   }, [user.token]);
+
+  const closeCreatChatModal = () => {
+    console.log('Lol');
+    setIsCreateChatModalOpen(false);
+}
 
   return (
     <Section>
@@ -126,12 +131,14 @@ const AllChats = ({ user, setSelectedChat }: allChatProps) => {
           </Chat>
         );
       })}
-      <GroupChatButton onClick={() => setIsChatModalOpen(!isChatModalOpen)}>
+      <GroupChatButton >
+        <button onClick={() => setIsCreateChatModalOpen(!isCreateChatModalOpen)} disabled={isCreateChatModalOpen ? true : undefined} >
         Creat Group Chat
+        </button>
       </GroupChatButton>
       {
-        isChatModalOpen ? 
-        <CreateChatModal user={user} /> : null
+        isCreateChatModalOpen ? 
+        <CreateChatModal user={user} closeCreatChatModal={closeCreatChatModal}/> : null
       }
     </Section>
   );

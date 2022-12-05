@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -36,6 +37,7 @@ interface updateChatModalProps {
   selectedChatImage?: string;
   selectedChatName?: string;
   userId?: string;
+  closeUpdateServerModal: any
 }
 
 const UpdateChatModal = ({
@@ -43,18 +45,21 @@ const UpdateChatModal = ({
   userId,
   selectedChatImage,
   selectedChatName,
+  closeUpdateServerModal
 }: updateChatModalProps) => {
     const [newChatName, setNewChatName] = useState('')
+
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeUpdateServerModal)
 
     const updateChatInfoHandler = (e: any) => {
         e.preventDefault();
         alert(newChatName)
         // {{URL}}{{ChatEnd}}/638845f3d4536216311c2785/rename
-        // {{URL}}{{ChatEnd}}/636411e05b51004eba083740/groupadd
     }
 
   return (
-    <Section>
+    <Section ref={wrapperRef} >
       <form onSubmit={updateChatInfoHandler} >
         <ImageContainer>
           <img src={selectedChatImage} alt="groupImage" />

@@ -86,6 +86,10 @@ const CommentFeed = ({ comment, userData, postId }: commentProps) => {
 
     console.log(data);
   }
+
+  const closeCommentModal = () => {
+    setIsCommentModalOpen(false)
+  }
   
   return (
     <Section>
@@ -98,7 +102,7 @@ const CommentFeed = ({ comment, userData, postId }: commentProps) => {
               onClick={() => setIsCommentModalOpen(!isCommentModalOpen)}
             >
               <HiDotsVertical />
-              {isCommentModalOpen ? <CommentModal comment={comment} userData={userData} postId={postId} setUpdateComment={setUpdateComment}/> : null}
+              {isCommentModalOpen ? <CommentModal comment={comment} userData={userData} postId={postId} setUpdateComment={setUpdateComment} closeCommentModal={closeCommentModal}/> : null}
             </CommentOptions>
           </AuthorName>
           <h4>{comment.user.tagline}</h4>

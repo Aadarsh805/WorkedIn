@@ -41,12 +41,13 @@ const Description = styled.div`
 
 const ImageContainer = styled.div`
   width: 100%;
-  max-height: 70vh;
+  max-height: 90vh;
 
     img{      
     width: 100%;
-    max-height: 70vh;
+    max-height: 90vh;
     object-fit: cover;
+    /* aspect-ratio: 16/16; */
   }
 `
 

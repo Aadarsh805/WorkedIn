@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { BASE_URL, chatEnd, searchUserEnd, userEnd } from '../../utils/APIRoutes'
 import { userProps } from '../../utils/GlobalContants'
@@ -7,6 +7,7 @@ import { getHeaders } from '../../utils/helperFunction'
 import { GrFormClose } from 'react-icons/gr'
 import UserBadge from './UserBadge'
 import SearchedUser from './SearchedUser'
+import { useOutsideAlerter } from '../../utils/OutsideAlerter';
 
 const Section = styled.div`
 position: absolute;
@@ -81,7 +82,8 @@ padding-left: 1rem;
 // `
 
 interface chatModalProps {
-  user: userProps
+  user: userProps,
+  closeCreatChatModal: any
 }
 
 interface searchResultProps {
@@ -95,6 +97,8 @@ const CreateChatModal = (props: chatModalProps) => {
   const [searchResult, setSearchResult] = useState<Array<searchResultProps>>([]);
   const [selectedUsers, setSelectedUsers] = useState<Array<searchResultProps>>([])
 
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, props.closeCreatChatModal)
 
   const handleSearch = async (query: string) => {
     const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
@@ -133,7 +137,8 @@ const CreateChatModal = (props: chatModalProps) => {
   }
 
   return (
-    <Section>
+    <Section ref={wrapperRef} >
+      <div></div>
         <h2>Create Group Chat</h2>
         <form onSubmit={handleSubmit} >
             <input type="text" placeholder='Chat Name' value={chatName} onChange={(e) => setChatName(e.target.value)} />

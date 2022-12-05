@@ -1,9 +1,10 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
+import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -87,6 +88,7 @@ interface chatObj {
 interface contractModalProps {
   selectedChat: chatObj;
   user: userProps;
+  closeContractModal: any
 }
 
 interface memberRolesProps {
@@ -98,12 +100,15 @@ interface memberRolesProps {
   photo: string;
 }
 
-const ContractModal = ({ selectedChat, user }: contractModalProps) => {
+const ContractModal = ({ selectedChat, user, closeContractModal }: contractModalProps) => {
   const [memberRoles, setMemberRoles] = useState<memberRolesProps[]>([]);
   const [contractName, setContractName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [dueDate, setDueDate] = useState("");
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeContractModal)
 
   useEffect(() => {
     console.log(selectedChat.users);
@@ -174,7 +179,7 @@ const ContractModal = ({ selectedChat, user }: contractModalProps) => {
   };
 
   return (
-    <Section>
+    <Section ref={wrapperRef}>
       <TeamLead>
         <img src={selectedChat.groupAdmin?.photo} alt="groupAdmin" />
         <div>

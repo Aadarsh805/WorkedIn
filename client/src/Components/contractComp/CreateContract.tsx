@@ -43,11 +43,15 @@ interface contractModalProps {
 const CreateContract = ({ selectedChat, user }: contractModalProps) => {
     const [contractModal, setContractModal] = useState(false)
 
+    const closeContractModal = () => {
+      setContractModal(false)
+    }
+
   return (
     <Section>
         <ContractBtn onClick={() => setContractModal(!contractModal)} >Create Contract</ContractBtn>
         {
-            contractModal ? <ContractModal selectedChat={selectedChat} user={user} /> : null
+            contractModal ? <ContractModal selectedChat={selectedChat} user={user} closeContractModal={closeContractModal} /> : null
         }
     </Section>
   )

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
 import styled from "styled-components";
 import { InvitePeople } from "../../assets/InvitePeople";
 import { HiUserAdd } from 'react-icons/hi'
+import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -23,6 +24,10 @@ const Header = styled.div`
   }
 `;
 
+interface optionsProps {
+  events: Boolean
+}
+
 const OptionsMenu = styled.div`
   position: absolute;
   top: 1.8rem;
@@ -35,6 +40,7 @@ const OptionsMenu = styled.div`
   /* margin: 0 auto; */
   right: 2.5%;
   border-radius: 10px;
+  pointer-events: ${(props:optionsProps) => props.events ? 'none' : 'auto'};
 
   li {
     cursor: pointer;
@@ -102,19 +108,22 @@ const ChatOptions = ({ selectedChat, setupdateServer, setInvitePeople, updateSer
   useEffect(() => {
     setChatOptions(false)
   }, [selectedChat])
-//   useEffect(() => {
-//     setChatOptions(false)
-//   }, [selectedChat, updateServer, invitePeople])
-  
+
+  const closeChatOptions = () => {
+    setChatOptions(false)
+  }
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeChatOptions)
   
   return (
-    <Section>
+    <Section >
       <Header onClick={() => setChatOptions(!chatOptions)}>
         <h3>{selectedChat.chatName}</h3>
         {chatOptions ? <AiOutlineClose /> : <AiOutlineDown />}
       </Header>
       {chatOptions ? (
-        <OptionsMenu>
+        <OptionsMenu events={updateServer || invitePeople} >
           <ul>
             <li onClick={() => setupdateServer(!updateServer)} >
               <h5>Update Server</h5>

@@ -1,9 +1,10 @@
 import axios from "axios";
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { BASE_URL, postEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
+import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Menu = styled.div`
   position: absolute;
@@ -44,6 +45,7 @@ interface commentModalProps {
   comment: commentType,
   postId: string,
   setUpdateComment: any,
+  closeCommentModal: any
 }
 
 const CommentModal = ({
@@ -51,7 +53,11 @@ const CommentModal = ({
   comment,
   postId,
   setUpdateComment,
+  closeCommentModal
 }: commentModalProps) => {
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeCommentModal)
 
     const updateCommentHandler = async () => {
         setUpdateComment(true)   
@@ -73,7 +79,7 @@ const CommentModal = ({
     }
 
   return (
-    <Menu>
+    <Menu ref={wrapperRef} >
       {comment.user._id === userData._id ? (
         <>
           <MenuItem onClick={updateCommentHandler} ><h4>Update Comment</h4></MenuItem>
