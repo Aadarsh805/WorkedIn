@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import NoContracts from "../components/contractComp/NoContracts";
 import Navbar from "../components/generalComp/Navbar";
 import { BASE_URL, contractEnd } from "../utils/APIRoutes";
 import { localStorageUser, userProps } from "../utils/GlobalContants";
@@ -87,26 +88,15 @@ const Contracts = () => {
     var d = readable.getDay();
     var y = readable.getFullYear();
 
-    var months = [
-      "Jan",
-      "Feb",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
+    var months = ["Jan","Feb","March","April","May","June","July","Aug","Sept","Oct","Nov","Dec"];
     var mlong = months[m];
     var fulldate = mlong + " " + d + ", " + y;
     return fulldate;
   };
 
   return (
+    contracts.length === 0 ? 
+    <NoContracts/> :
     <>
       <Navbar />
       <Section>

@@ -203,6 +203,8 @@ exports.finaliseContract = catchAsync(async (req,res) => {
     contractApproved: true
   })
 
+  // update user profiles
+
   res.status(200).json({
     status: success,
     chat

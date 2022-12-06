@@ -8,6 +8,7 @@ import GlobalStyles from "./utils/GlobalStyles";
 import { ThemeProvider } from "styled-components";
 import { light, dark, workedinScheme } from "./utils/Themes";
 import Contracts from "./pages/Contracts";
+import SinglePost from "./components/postComp/SinglePost";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/chats" element={<Chats />} />
           <Route path="/contracts" element={<Contracts />} />
           <Route path="/me" element={<Profile />} />
+          <Route path="/posts/:id" element={<SinglePost />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

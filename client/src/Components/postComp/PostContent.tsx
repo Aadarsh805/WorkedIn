@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import {
-  Comment,
-  Share,
-  ThumbsUp,
-  ThumbsUp2,
-} from "../../components/generalComp/SVG";
-import { BASE_URL, postEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
-import CommentBox from "./CommentBox";
+import { postEnd } from "../../utils/APIRoutes";
+import { Comment, Share, ThumbsUp, ThumbsUp2 } from "../generalComp/SVG";
 
 const Section = styled.div`
   width: 100%;
-  margin-top: 1rem;
-  border: 1px solid blue;
-  
   hr {
     width: 90%;
     margin: 0 auto;
@@ -43,13 +34,13 @@ const ImageContainer = styled.div`
   width: 100%;
   max-height: 90vh;
 
-    img{      
+  img {
     width: 100%;
     max-height: 90vh;
     object-fit: cover;
     /* aspect-ratio: 16/16; */
   }
-`
+`;
 
 const PostStats = styled.div`
   display: flex;
@@ -98,28 +89,25 @@ interface postProps {
   createdAt: string;
 }
 
-
-interface postFeedProps {
-  user: userProps,
-  post: postProps
+interface postContentProps {
+  post: postProps | undefined;
+  commentBoxModal: any;
 }
 
-
-const PostFeed = ({post, user}: postFeedProps) => {
-  const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false)
-  const totalLikes = post.like.length;
-
-  const commentBoxModal = () => {
-    setIsCommentBoxOpen(!isCommentBoxOpen)
-  }
-  
-  const shareHandler = () => {
-    // navigator.clipboard.writeText(`${BASE_URL}${postEnd}`)}
-  };
-
-  let host = window.location.protocol + "//" + window.location.host
-
+const PostContent = ({ post, commentBoxModal }: postContentProps) => {
+    const location = useLocation();
+    let host = window.location.protocol + "//" + window.location.host
+    useEffect(() => {
+        // console.log('hash', location.hash);
+        // console.log('current URL 👉️', window.location.href);
+        // // var host = window.location.host; 
+        // host = ;
+        // console.log(host);
+        
+    }, [])
+    
   return (
+    post ? (
     <Section>
       <AuthorDetails>
         <img src={post.author.photo} alt="" />
@@ -129,22 +117,23 @@ const PostFeed = ({post, user}: postFeedProps) => {
       <Description>
         <h4>{post.description}</h4>
         <ImageContainer>
-        {post.image !== '' ? 
-        <img src={post.image} alt="postImg" loading="lazy"/> : null }
+          {post.image !== "" ? (
+            <img src={post.image} alt="postImg" loading="lazy" />
+          ) : null}
         </ImageContainer>
       </Description>
       <PostStats>
         <div>
           <ThumbsUp />
-          <h4>{totalLikes}</h4>
+          <h4>{post.like.length}</h4>
         </div>
         <h4>{post.comments}</h4>
       </PostStats>
       <hr />
       <PostBottom>
         <ThumbsUp2 />
-        <div onClick={() => setIsCommentBoxOpen(!isCommentBoxOpen)}>
-        <Comment />
+        <div onClick={commentBoxModal}>
+          <Comment />
         </div>
         <div
           onClick={() => {
@@ -156,11 +145,9 @@ const PostFeed = ({post, user}: postFeedProps) => {
           <Share />
         </div>
       </PostBottom>
-      <CommentBox userData={user} isCommentBoxOpen={isCommentBoxOpen} postId={post._id} />
     </Section>
-  );
+    ) : null
+  ) 
 };
 
-export default PostFeed;
-
-// comment -> true -> commentbox Open
+export default PostContent;
