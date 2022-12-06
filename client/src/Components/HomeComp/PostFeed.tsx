@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { HiDotsVertical } from "react-icons/hi";
 import styled from "styled-components";
 import {
   Comment,
@@ -8,6 +9,7 @@ import {
 } from "../../components/generalComp/SVG";
 import { BASE_URL, postEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
+import PostModal from "../postComp/PostModal";
 import CommentBox from "./CommentBox";
 
 const Section = styled.div`
@@ -28,6 +30,31 @@ const AuthorDetails = styled.div`
     width: 5vw;
   }
 `;
+
+const AuthorTopSection = styled.div`
+  display: flex;
+border: 1px solid red;
+text-align: center;
+/* width: 100%; */
+align-items: center;
+justify-content: space-between;
+width: 35vw;
+
+svg{
+   border: 1px solid red;
+}
+`
+
+const PostOptions = styled.div`
+    position: relative;
+  right: 0.5rem;
+  top: 2px;
+  /* margin: auto 0; */
+  cursor: pointer;
+  svg {
+    /* width: 3vw; */
+  }
+`
 
 const Description = styled.div`
   font-size: 1rem;
@@ -109,13 +136,11 @@ const PostFeed = ({post, user}: postFeedProps) => {
   const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false)
   const totalLikes = post.like.length;
 
-  const commentBoxModal = () => {
-    setIsCommentBoxOpen(!isCommentBoxOpen)
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false)
+
+  const closePostModal = () => {
+    setIsPostModalOpen(false)
   }
-  
-  const shareHandler = () => {
-    // navigator.clipboard.writeText(`${BASE_URL}${postEnd}`)}
-  };
 
   let host = window.location.protocol + "//" + window.location.host
 
@@ -123,8 +148,16 @@ const PostFeed = ({post, user}: postFeedProps) => {
     <Section>
       <AuthorDetails>
         <img src={post.author.photo} alt="" />
+        <AuthorTopSection>
         <h3>{post.author.name}</h3>
-        {/* <h5>{props.author.tagline}</h5> */}
+        <PostOptions  onClick={() => setIsPostModalOpen(!isPostModalOpen)}>
+        <HiDotsVertical />
+        {
+          isPostModalOpen ? <PostModal post={post} user={user} closePostModal={closePostModal}/> : null
+        }
+        </PostOptions>
+        </AuthorTopSection>
+        <h5>{post.author.tagline}</h5>
       </AuthorDetails>
       <Description>
         <h4>{post.description}</h4>

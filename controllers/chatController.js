@@ -199,6 +199,8 @@ exports.addInGroup = catchAsync(async (req, res) => {
 exports.finaliseContract = catchAsync(async (req,res) => {
   const chatId = req.params.chatId;
 
+  //  check if all users in chat have approved
+
   const chat = await Chat.findByIdAndUpdate(chatId, {
     contractApproved: true
   })
