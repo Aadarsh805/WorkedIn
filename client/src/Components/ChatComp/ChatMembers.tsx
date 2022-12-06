@@ -8,6 +8,7 @@ import UpdateChatModal from "./UpdateChatModal";
 import ManageMembers from "./ManageMembers";
 import CreateContract from "../contractComp/CreateContract";
 import ContractApproval from "../contractComp/ContractApproval";
+import ReviewContract from "../contractComp/ReviewContract";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -116,9 +117,10 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
           })}
       </Members>
       {
-        selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 
+        selectedChat.contractApproved ? <ReviewContract user={user} contractId={selectedChat.contractId} /> : selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 
         selectedChat.groupAdmin?._id === user._id ?
         <CreateContract selectedChat={selectedChat} user={user}/> : null
+      
       }
       {
         updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} closeUpdateServerModal={closeUpdateServerModal} /> : null

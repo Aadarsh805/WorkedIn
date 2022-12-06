@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { BASE_URL, chatEnd } from '../../utils/APIRoutes';
 import { userProps } from '../../utils/GlobalContants';
+import { getHeaders } from '../../utils/helperFunction';
 
 const Section = styled.div`
     
@@ -38,18 +40,18 @@ interface contractApprovalProps {
 
 const ContractApproval = ({selectedChat, user}: contractApprovalProps) => {
 
-    const [percentageApproval, setPercentageApproval] = useState(0)
-
     const totalMembers = (selectedChat.users as unknown as any[]).length;
     const membersApproved = selectedChat.contractAprovedBy.length;
     const percentApproval = (membersApproved / totalMembers) * 100;
 
-    useEffect(() => {
-        setPercentageApproval(percentApproval)
-    }, [selectedChat]);
-
     const finaliseContractHandler = async () => {
-        // const { data } = await axios.post
+        if (user._id !== selectedChat.groupAdmin?._id) {
+            return
+        }
+        const { data } = await axios.patch(`${BASE_URL}${chatEnd}${selectedChat._id}/finalisecontract`, {}, {
+            headers: getHeaders(user.token ?? '')
+        })
+        console.log(data);   
     }
     
 

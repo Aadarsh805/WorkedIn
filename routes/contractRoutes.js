@@ -10,9 +10,10 @@ router.use(protect)
 
 router
     .route('/')
-    .get(contractController.getContract)
+    .get(contractController.getUserContracts)
     .post(contractController.initializeContract);
 
+router.route('/:contractId').get(contractController.getContract)
 router.route('/:contractId').patch(contractController.updateContract)
 router.route('/:contractId/accept').patch(contractController.acceptContract)
 router.route('/:contractId/deny').patch(contractController.denyContract)
