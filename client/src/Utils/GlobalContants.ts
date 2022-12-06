@@ -17,3 +17,19 @@ export interface userProps {
     _id?: string;
     token?: string;
   }
+
+
+  export const months = [
+    "Jan",
+    "Feb",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];

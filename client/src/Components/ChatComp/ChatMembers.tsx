@@ -13,12 +13,19 @@ const Section = styled.div`
   border: 1px solid red;
   /* min-height: calc(100vh - 3rem); */
   width: 25vw;
+  overflow: hidden;
 `;
+
+interface membersProps {
+  divHeight: Boolean
+}
 
 const Members = styled.div`
   padding-top: 0.5rem;
+  box-sizing: border-box;
   border: 1px solid red;
-  height: calc(97vh - 7rem);
+  height: calc(100vh - 7rem);
+  /* height: ${(props:membersProps) => props.divHeight ? 'calc(100vh - 7rem)' : 'calc(100vh - 3rem)' }; */
   overflow: auto;
 `;
 
@@ -93,7 +100,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
 
   return selectedChat.chatName === "one_On_one" ? null : (
     <Section>
-      <Members>
+      <Members divHeight={selectedChat.groupAdmin?._id === user._id} >
         {user._id === selectedChat.groupAdmin?._id ? (
           <ChatOptions selectedChat={selectedChat} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} updateServer={updateServer} invitePeople={invitePeople}/>
         ) : null}
@@ -109,7 +116,9 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
           })}
       </Members>
       {
-        selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : <CreateContract selectedChat={selectedChat} user={user} />
+        selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 
+        selectedChat.groupAdmin?._id === user._id ?
+        <CreateContract selectedChat={selectedChat} user={user}/> : null
       }
       {
         updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} closeUpdateServerModal={closeUpdateServerModal} /> : null

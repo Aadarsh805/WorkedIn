@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { userProps } from '../../utils/GlobalContants'
-import ContractModal from './ContractModal'
+import ContractModal from './CreateContractModal'
 
 const Section = styled.div`
     
