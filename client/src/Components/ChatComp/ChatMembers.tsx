@@ -11,10 +11,11 @@ import ContractApproval from "../contractComp/ContractApproval";
 import ReviewContract from "../contractComp/ReviewContract";
 
 const Section = styled.div`
-  border: 1px solid red;
-  /* min-height: calc(100vh - 3rem); */
+  border-left: 2px solid #3a421b;
   width: 25vw;
   overflow: hidden;
+  padding-top: 0.5rem;
+  /* border: 1px solid red; */
 `;
 
 interface membersProps {
@@ -24,20 +25,21 @@ interface membersProps {
 const Members = styled.div`
   padding-top: 0.5rem;
   box-sizing: border-box;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  
   height: calc(100vh - 7rem);
   /* height: ${(props:membersProps) => props.divHeight ? 'calc(100vh - 7rem)' : 'calc(100vh - 3rem)' }; */
   overflow: auto;
 `;
 
 const Member = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   padding: 0.3rem 0.4rem;
   margin: 0 0.5rem 0.5rem;
   border-radius: 10px;
-
+  background-color: rgba(236,227,212,255);
   svg {
     width: 30px;
   }
@@ -47,6 +49,16 @@ const Member = styled.div`
     height: 40px;
     border-radius: 50%;
     margin-right: 0.5rem;
+    /* border: 2px solid rgba(137,117,88,255); */
+    /* box-shadow: 4px 2.4px rgba(207,186,148,255); */
+    box-shadow: 4px 2.4px rgba(137,117,88,255);
+  }
+
+  h4{
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    color: #3a421b;
   }
 `;
 
@@ -99,7 +111,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   }
   
 
-  return selectedChat.chatName === "one_On_one" ? null : (
+  return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
       <Members divHeight={selectedChat.groupAdmin?._id === user._id} >
         {user._id === selectedChat.groupAdmin?._id ? (
@@ -129,7 +141,6 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         invitePeople ? <ManageMembers selectedChat={selectedChat} user={user} closeInvitePeopleModal={closeInvitePeopleModal} /> : null
       }
     </Section>
-  );
 };
 
 export default ChatMembers;

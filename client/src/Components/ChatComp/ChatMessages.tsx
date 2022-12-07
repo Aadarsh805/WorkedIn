@@ -8,7 +8,7 @@ import { getHeaders } from "../../utils/helperFunction";
 import formatDistance from "date-fns/formatDistance";
 
 const Section = styled.div`
-  border: 1px solid yellow;
+  /* border: 1px solid yellow; */
   height: calc(100vh - 3rem);
   width: 100%;
   position: relative;
@@ -17,12 +17,11 @@ const Section = styled.div`
 `;
 
 const Messages = styled.div`
-  height: calc(97vh - 6rem);
-  border: 1px solid purple;
+  height: calc(99vh - 6rem);
+  /* border: 1px solid purple; */
   padding: 1rem;
   box-sizing: border-box;
   overflow-y: auto;
-  /* overflow-x: hidden; */
 `;
 
 const Message = styled.div`
@@ -33,7 +32,7 @@ const Message = styled.div`
 `;
 
 const ImageContainer = styled.div`
-margin-right: 0.7rem;
+  margin-right: 0.7rem;
   img {
     border-radius: 50%;
     width: 2rem;
@@ -58,20 +57,39 @@ const SenderDetails = styled.div`
 
 const SendMessage = styled.div`
   position: absolute;
-  bottom: 3vh;
-  /* border: 1px solid red; */
-  height: 2rem;
+  bottom: 1vh;
+  height: 3rem;
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  /* border: 1px solid red; */
 
   form {
-    height: 2rem;
+    height: 3rem;
+    /* border: 1px solid red; */
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     input {
-      height: 2rem;
-      width: 90%;
-      margin-left: 1rem;
+      height: 2.7rem;
+      width: 95%;
+      border-radius: 10px;
+      outline: none;
+      border: none;
+      padding: 0 1rem;
+      box-sizing: border-box;
+      background-color:#3a421b;
+      color: #fff;
+      color: rgba(236,227,212,255);;
+      font-weight: 500;
+      font-size: 1.2rem;
+      
+      &::placeholder{
+        color: rgba(236,227,212,255);
+      }
     }
   }
 `;
@@ -116,7 +134,7 @@ interface messageProps {
 
 const ChatMessages = ({ user, selectedChat }: chatMessageProps) => {
   const [messages, setMessages] = useState<Array<messageProps>>([]);
-  const [chatMessage, setChatMessage] = useState('');
+  const [chatMessage, setChatMessage] = useState("");
 
   async function fetchChatMessages() {
     const { data } = await axios.get(
@@ -154,7 +172,7 @@ const ChatMessages = ({ user, selectedChat }: chatMessageProps) => {
         {messages.map((message) => {
           const date = formatDistance(new Date(message.createdAt), new Date());
           return (
-            <Message key={message._id} >
+            <Message key={message._id}>
               <ImageContainer>
                 <img src={message.sender.photo} alt="" />
               </ImageContainer>
@@ -175,6 +193,7 @@ const ChatMessages = ({ user, selectedChat }: chatMessageProps) => {
             type="text"
             value={chatMessage}
             onChange={(e) => setChatMessage(e.target.value)}
+            placeholder="Message ......"
             autoFocus
           />
         </form>

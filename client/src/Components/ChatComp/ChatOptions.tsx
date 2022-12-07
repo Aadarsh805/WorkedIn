@@ -7,9 +7,10 @@ import { HiUserAdd } from 'react-icons/hi'
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
-  border: 1px solid red;
-  margin: 0 0.5rem 1rem;
+  border-bottom: 1px solid #3a421b;
+  margin: 0.4rem 0rem 1rem;
   position: relative;
+  padding: 0 0.5rem 0.4rem;
 `;
 
 const Header = styled.div`
@@ -19,8 +20,15 @@ const Header = styled.div`
   height: 1.5rem;
 
   svg {
-    margin-right: 0.5rem;
+    margin-right: 1rem;
     cursor: pointer;
+  }
+
+  h3{
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fff;
+    color: #3a421b;
   }
 `;
 
@@ -31,11 +39,13 @@ interface optionsProps {
 const OptionsMenu = styled.div`
   position: absolute;
   top: 1.8rem;
-  border: 1px solid red;
+
+  /* border: 1px solid red; */
   background-color: #fff;
+  background-color: #3a421b;
   width: 95%;
   /* right: -1px; */
-  padding: 0.5rem 0.1rem;
+  padding: 0.5rem 0rem;
   box-sizing: border-box;
   /* margin: 0 auto; */
   right: 2.5%;
@@ -45,14 +55,23 @@ const OptionsMenu = styled.div`
   li {
     cursor: pointer;
     list-style: none;
+    border-radius: 4px;
     /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 0.4rem;
+    padding: 0 0.8rem;
     margin-bottom: 0.4rem;
+    transition: all 0.15s linear;
     &:hover{
         background-color: antiquewhite;
+        background-color: #fff;
+        svg{
+          fill: #3a421b;
+        }
+        h5{
+          color: #3a421b;
+        }
     }
 
     svg {
@@ -61,7 +80,12 @@ const OptionsMenu = styled.div`
       padding: 0;
       margin: 0;
       height: 1.3rem;
+      fill: #fff;
       /* border: 1px solid red; */
+    }
+
+    h5{
+      color: #fff;
     }
 
     &:nth-last-child(1) {

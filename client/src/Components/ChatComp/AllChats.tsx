@@ -7,34 +7,39 @@ import { getHeaders, getUserData } from "../../utils/helperFunction";
 import CreateChatModal from "./CreateChatModal";
 
 const Section = styled.div`
-  border: 1px solid red;
+  border-right: 2px solid #3a421b;
   /* min-height: calc(100vh - 3rem); */
   width: 16vw;
-  padding-top: 0.8rem;
-  
+  padding-top: 1.3rem;
 `;
 
 const Chat = styled.div`
+  /* border: 1px solid red; */
   box-sizing: border-box;
   width: calc(16vw - 2rem);
-  border: 1px solid red;
   margin: 0.2rem 1rem;
   border-radius: 10px;
   padding: 0.5rem 0.2rem 0.5rem 0.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;
+  /* background-color: #3a421b; */
+  background-color: #fff;
+  background-color: rgba(236,227,212,255);
 
   img {
     margin-right: 0.5rem;
     border-radius: 50%;
     width: 40px;
     height: 40px;
+    border: 1px solid #fff;
   }
 
   h4 {
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 800;
+    color: #fff;
+    color: #3a421b;
   }
 `;
 

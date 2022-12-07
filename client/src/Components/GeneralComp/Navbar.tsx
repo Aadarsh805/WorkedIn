@@ -4,46 +4,55 @@ import styled from "styled-components";
 
 const Section = styled.div`
   width: 100%;
-  height: 3rem;
+  height: 2.5rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* background-color: ${props => props.theme.lightBlack}; */
-  /* border: 1px solid red; */
 `;
 
 const Logo = styled.div`
-  border: 1px solid black;
-  margin-left: 4rem;
+  position: absolute;
+  left: 0;
+  margin-left: 7vw;
+  font-size: 1rem;
   display: flex;
   align-items: center;
-
-`;
-
-const Search = styled.div`
-margin-left: 1rem;
-
-input{
-    /* border: none; */
-    /* background-color: grey; */
-
-    &:focus{
-        outline: none;
-        border: none;
-    }
-}
-`;
+  height: 3rem;
+  z-index: 10;
+  padding: 0rem 1rem;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color:#3a421b;
+  h2{
+    color: #d6ec6f;
+  }
+  `;
 
 const Menu = styled.ul`
+/* border: 1px solid red; */
+position: absolute;
+right: 0;
 list-style: none;
 display: flex;
 align-items: center;
 justify-content: space-between;
 margin-right: 4rem;
+height: 3rem;
+z-index: 10;
+cursor: auto;
 `;
 
 const MenuItem = styled.li`
 margin: 0 1rem;
+background-color: #3a421b;
+height: 3rem;
+color: #d6ec6f;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 0 1rem;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+font-size: 1rem;
+cursor: pointer;
 `;
 
 const Navbar = () => {
@@ -51,9 +60,6 @@ const Navbar = () => {
     <Section>
       <Logo>
         <h2>WorkedIn</h2>
-        <Search>
-            <input type="text" placeholder="Search" />
-        </Search>
       </Logo>
       <Menu>
         <Link to="/">
