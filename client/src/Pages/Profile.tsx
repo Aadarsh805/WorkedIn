@@ -7,6 +7,9 @@ import Intro from "../components/profileComp/Intro";
 import NoSkill from "../components/profileComp/NoSkill";
 import PastProjects from "../components/profileComp/PastProjects";
 import Skills from "../components/profileComp/Skills";
+import axios from "axios";
+import { BASE_URL, userEnd } from "../utils/APIRoutes";
+import { getHeaders } from "../utils/helperFunction";
 
 const Section = styled.div`
   /* border: 1px solid black; */
@@ -25,39 +28,43 @@ const ProfileContainer = styled.div`
 `
 
 const Profile = () => {
-  
 
+  const [localUser, setLocalUser] = useState<userProps>({})
   const [user, setUser] = useState<userProps>({})
-  const [loading, setLoading] = useState(true);
+
+  async function fetchUserData() {
+    const data = await JSON.parse(
+      localStorage.getItem(localStorageUser) || "{}"
+    );      
+    setLocalUser(data);
+  }
+
+  async function fetchMyDetails () {
+    const {data} = await axios.get(`${BASE_URL}${userEnd}me`, {
+      headers: getHeaders(localUser.token ?? '')
+    })
+    console.log(data.data.data);
+    const userData = data.data.data
+    setUser(userData)
+  }
 
   useEffect(() => {
-    async function fetchUserData() {
-      const data = await JSON.parse(
-        localStorage.getItem(localStorageUser) || "{}"
-      );
-      console.log(data);
-      
-      setUser(data);
-    }
     fetchUserData();
-    setLoading(!loading)
   }, []);
 
-  // API --> for the user --> if Profile --> /me , if other user --> getUser
-
   useEffect(() => {
-    console.log(loading);
-    
-  }, [loading])
-  
+    console.log(localUser.token);
+    if (Object.keys(localUser).length !== 0) {
+      fetchMyDetails()
+    }
+  }, [localUser])
 
   return (
     <>
       <Navbar />
-      {/* {!loading ? ( */}
       <ProfileContainer>
         <Section>
-          <Intro userDetails={user} />
+          <Intro user={user} />
           {
             user.skills?.length !== 0 ? 
             <Skills skillArr={user.skills} /> : 
@@ -66,9 +73,6 @@ const Profile = () => {
           <PastProjects />
         </Section>
         </ProfileContainer>
-      {/* ) :  */}
-        {/* <h1>Loading ...</h1> */}
-      {/* } */}
     </>
   );
 };

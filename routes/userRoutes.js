@@ -18,7 +18,6 @@ router.get('/', userController.searchUser)
 router.get('/allusers', userController.getAllUsers)
 router.get('/me', userController.getMe, userController.getUser)
 router.patch('/me/profile', userController.getMe, userController.updateProfile)
-router.patch('/me/about', userController.getMe, userController.updateAbout)
 router.patch('/me/skills', userController.getMe, userController.updateSkills)
 
 

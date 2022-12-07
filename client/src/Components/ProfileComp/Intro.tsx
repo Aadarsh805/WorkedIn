@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { userProps } from "../../utils/GlobalContants";
 import { Pen } from "../generalComp/SVG";
 import Socials from "./Socials";
 
@@ -98,26 +99,24 @@ const Designation = styled.h3`
   font-weight: 300;
 `;
 
-interface userProps {
-  about?: string; //
-  connections?: Array<string>; //
-  discord?: string;
-  email?: string;
-  github?: string;
-  linkedin?: string;
-  name?: string;
-  pastProjects?: Array<string>; //
-  personalWebsite?: string;
-  photo?: string;
-  skills?: Array<string>; // 
-  tagline?: string;
-  twitter?: string;
-  _id?: string;
+interface introProps {
+  user: userProps;
 }
 
+const Intro = ({ user }: introProps) => {
 
+  let socialProps;
 
-const Intro = (props: { userDetails: userProps }) => {
+  if (user !== undefined) {
+  socialProps = {
+      discord: user.discord,
+      github: user.github,
+      linkedin: user.linkedin,
+      portfolio: user.personalWebsite,
+      twitter: user.twitter,
+    };
+  }
+
   return (
     <Section>
       <Header>
@@ -125,15 +124,13 @@ const Intro = (props: { userDetails: userProps }) => {
           <Pen />
         </EditDetails>
         <ImageContainer>
-          <img src={props.userDetails.photo} alt="userPic" />
+          <img src={user.photo} alt="userPic" />
         </ImageContainer>
         <DetailContainer>
-          <h1>{props.userDetails.name}</h1>
-          <Socials />
+          <h1>{user.name}</h1>
+            <Socials {...socialProps}/>
           <Designation>
-            {props.userDetails.tagline
-              ? props.userDetails.tagline
-              : "Your tagline ..."}
+            {user.tagline ? user.tagline : "Your tagline ..."}
           </Designation>
         </DetailContainer>
       </Header>
