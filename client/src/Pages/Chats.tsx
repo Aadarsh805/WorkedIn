@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import AllChats from '../components/chatComp/AllChats'
 import ChatMembers from '../components/chatComp/ChatMembers'
 import ChatMessages from '../components/chatComp/ChatMessages'
+import NoSelectedChat from '../components/chatComp/NoSelectedChat'
 
 import Navbar from '../components/generalComp/Navbar'
 import { userProps } from '../utils/GlobalContants'
@@ -58,6 +59,9 @@ const Chats = () => {
     <Navbar/>
     <Section>
           <AllChats user={userData} setSelectedChat={setSelectedChat} />
+          {
+            selectedChat ? null : <NoSelectedChat/>
+          }
           {
             selectedChat && <ChatMessages user={userData} selectedChat={selectedChat} />
           }

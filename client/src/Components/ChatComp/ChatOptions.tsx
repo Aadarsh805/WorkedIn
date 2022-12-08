@@ -8,6 +8,7 @@ import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
   border-bottom: 1px solid #3a421b;
+  border-bottom: 2px solid rgba(137,117,88,255);
   margin: 0.4rem 0rem 1rem;
   position: relative;
   padding: 0 0.5rem 0.4rem;
@@ -18,6 +19,7 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 1.5rem;
+  cursor: pointer;
 
   svg {
     margin-right: 1rem;

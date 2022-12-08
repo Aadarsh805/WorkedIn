@@ -1,85 +1,90 @@
 import axios from 'axios'
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
-import { BASE_URL, chatEnd, searchUserEnd, userEnd } from '../../utils/APIRoutes'
+import { BASE_URL, chatEnd, searchUserEnd } from '../../utils/APIRoutes'
 import { userProps } from '../../utils/GlobalContants'
 import { getHeaders } from '../../utils/helperFunction'
-import { GrFormClose } from 'react-icons/gr'
 import UserBadge from './UserBadge'
 import SearchedUser from './SearchedUser'
 import { useOutsideAlerter } from '../../utils/OutsideAlerter';
 
 const Section = styled.div`
 position: absolute;
-width: 60vw;
-height: 70vh;
+width: 50vw;
+min-height: 55vh;
+max-height: 70vh;
+transition: all 0.15s ease-in-out;
 top: 50%;
 left: 50%;
 transform: translate(-50%, -55%);
 z-index: 10;
-border: 1px solid red;
+border-radius: 10px;
 background-color: aliceblue;
+padding: 1.5rem 2rem;
+box-sizing: border-box;
+background-color: #FAF8F1;
+background-color: #735F32;
+
+h2{
+  color: #FAF8F1;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+p{
+  /* border: 1px solid red; */
+  color: #FAF8F1;
+  margin-top: 0.35rem;
+  margin-bottom: 1.4rem;
+  line-height: 150%;
+}
 
 form{
   display: flex;
   flex-direction: column;
+
+  input{
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    background: #FAF8F1;
+    color: #735F32;
+    color: rgb(58, 66, 27);
+
+    &::placeholder{
+      color: rgb(58, 66, 27);
+    }
+
+    &:first-child{
+      margin-bottom: 1rem;
+    }
+  }
+
+  button{
+    padding: 0.7rem 0;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    font-weight: 500;
+    width: 80%;
+    margin: 0 auto;
+    cursor: pointer;
+  }
 }
 `
-
-// const SearchedUser = styled.div`
-//   display: flex;
-//   align-items: center;
-//   cursor: pointer;
-
-//   img{
-//     width: 2rem;
-//     height: 2rem;
-//     border-radius: 50%;
-//   }
-// `
 
 const UserBadges = styled.div`
 display: flex;
 flex-wrap: wrap;
-border: 1px solid red;
+/* border: 1px solid ; */
 width: 100%;
 margin: 1rem auto;
 padding-left: 1rem;
 `
-
-// interface userBadgeProps {
-//   userImage?: string
-// }
-
-// const UserBadge = styled.div`
-// display: flex;
-// align-items: center;
-// box-sizing: border-box;
-
-// border: 1px solid red;
-// border-radius: 20px;
-// padding: 0.4rem 0.5rem;
-// margin: 0 0.4rem;
-// display: flex;
-// align-items: center;
-
-// background-image: ${(props: userBadgeProps) => `url(${props.userImage})`};
-// background-repeat: no-repeat;
-// background-size: 50px 50px;
-
-// div{
-//   /* border: 1px solid red; */
-//   display: flex;
-//   align-items: center;
-// }
-// svg{
-//   margin-left: 0.4rem;
-//   border-radius: 50%;
-//   border: 1px solid blue;
-//   cursor: pointer;
-//   width: 1rem;
-// }
-// `
 
 interface chatModalProps {
   user: userProps,
@@ -138,8 +143,8 @@ const CreateChatModal = (props: chatModalProps) => {
 
   return (
     <Section ref={wrapperRef} >
-      <div></div>
         <h2>Create Group Chat</h2>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet qui accusantium, quibusdam quam neque magnam.</p>
         <form onSubmit={handleSubmit} >
             <input type="text" placeholder='Chat Name' value={chatName} onChange={(e) => setChatName(e.target.value)} />
             <input type="text" name="" id="" placeholder="Add members to group" onChange={(e) => handleSearch(e.target.value)} />

@@ -7,8 +7,7 @@ import { getHeaders, getUserData } from "../../utils/helperFunction";
 import CreateChatModal from "./CreateChatModal";
 
 const Section = styled.div`
-  border-right: 2px solid #3a421b;
-  /* min-height: calc(100vh - 3rem); */
+  border-right: 2px solid rgba(137, 117, 88, 255);
   width: 16vw;
   padding-top: 1.3rem;
 `;
@@ -23,9 +22,8 @@ const Chat = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  /* background-color: #3a421b; */
   background-color: #fff;
-  background-color: rgba(236,227,212,255);
+  background-color: rgba(236, 227, 212, 255);
 
   img {
     margin-right: 0.5rem;
@@ -44,20 +42,30 @@ const Chat = styled.div`
 `;
 
 const GroupChatButton = styled.div`
-border: 1px solid red;
-box-sizing: border-box;
+  /* border: 1px solid red; */
+  
   width: calc(16vw - 2rem);
-  border: 1px solid red;
-  margin: 0.2rem 1rem;
-  border-radius: 10px;
-  padding: 0.5rem 0.2rem 0.5rem 0.5rem;
-  cursor: pointer;
+  margin: 0rem 1rem;
   display: flex;
   align-items: center;
 
   position: absolute;
-  bottom: 3vh;
-`
+  bottom: calc(1vh + 0.15rem);
+
+  button{
+    box-sizing: border-box;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 0.7rem 0;
+    border: none;
+    font-size: 1.1rem;
+    background-color: rgba(137,117,88,255);
+    color: #fff;
+    font-weight: 500;
+  }
+`;
 
 interface allChatProps {
   user: userProps;
@@ -86,9 +94,8 @@ interface chatsArr {
 }
 
 const AllChats = ({ user, setSelectedChat }: allChatProps) => {
-
   const [allChats, setAllChats] = useState<Array<chatsArr>>([]);
-  const [isCreateChatModalOpen, setIsCreateChatModalOpen] = useState(false)
+  const [isCreateChatModalOpen, setIsCreateChatModalOpen] = useState(false);
 
   async function fetchUserChats() {
     const { data } = await axios.get(`${BASE_URL}${chatEnd}`, {
@@ -106,9 +113,9 @@ const AllChats = ({ user, setSelectedChat }: allChatProps) => {
   }, [user.token]);
 
   const closeCreatChatModal = () => {
-    console.log('Lol');
+    console.log("Lol");
     setIsCreateChatModalOpen(false);
-}
+  };
 
   return (
     <Section>
@@ -136,15 +143,20 @@ const AllChats = ({ user, setSelectedChat }: allChatProps) => {
           </Chat>
         );
       })}
-      <GroupChatButton >
-        <button onClick={() => setIsCreateChatModalOpen(!isCreateChatModalOpen)} disabled={isCreateChatModalOpen ? true : undefined} >
-        Creat Group Chat
+      <GroupChatButton>
+        <button
+          onClick={() => setIsCreateChatModalOpen(!isCreateChatModalOpen)}
+          disabled={isCreateChatModalOpen ? true : undefined}
+        >
+          Creat Group Chat
         </button>
       </GroupChatButton>
-      {
-        isCreateChatModalOpen ? 
-        <CreateChatModal user={user} closeCreatChatModal={closeCreatChatModal}/> : null
-      }
+      {isCreateChatModalOpen ? (
+        <CreateChatModal
+          user={user}
+          closeCreatChatModal={closeCreatChatModal}
+        />
+      ) : null}
     </Section>
   );
 };

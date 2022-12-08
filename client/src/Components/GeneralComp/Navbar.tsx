@@ -6,18 +6,19 @@ const Section = styled.div`
   width: 100%;
   height: 2.5rem;
   display: flex;
+  background-color: rgba(137,117,88,255);
 `;
 
 const Logo = styled.div`
   position: absolute;
   left: 0;
   margin-left: 7vw;
-  font-size: 1rem;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
-  height: 3rem;
+  height: 3.5rem;
   z-index: 10;
-  padding: 0rem 1rem;
+  padding: 0rem 1.5rem;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background-color:#3a421b;
@@ -42,7 +43,7 @@ cursor: auto;
 
 const MenuItem = styled.li`
 margin: 0 1rem;
-background-color: #3a421b;
+background-color: rgba(58, 66, 27,1);
 height: 3rem;
 color: #d6ec6f;
 display: flex;

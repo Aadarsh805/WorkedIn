@@ -9,7 +9,7 @@ import formatDistance from "date-fns/formatDistance";
 
 const Section = styled.div`
   /* border: 1px solid yellow; */
-  height: calc(100vh - 3rem);
+  height: calc(100vh - 2.5rem);
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -17,7 +17,7 @@ const Section = styled.div`
 `;
 
 const Messages = styled.div`
-  height: calc(99vh - 6rem);
+  height: calc(99vh - 5.5rem);
   /* border: 1px solid purple; */
   padding: 1rem;
   box-sizing: border-box;
@@ -88,7 +88,8 @@ const SendMessage = styled.div`
       font-size: 1.2rem;
       
       &::placeholder{
-        color: rgba(236,227,212,255);
+        color: rgba(236,227,212, 0.8);
+        font-weight: 300;
       }
     }
   }
