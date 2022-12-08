@@ -19,10 +19,8 @@ left: 50%;
 transform: translate(-50%, -55%);
 z-index: 10;
 border-radius: 10px;
-background-color: aliceblue;
 padding: 1.5rem 2rem;
 box-sizing: border-box;
-background-color: #FAF8F1;
 background-color: #735F32;
 
 h2{
@@ -51,7 +49,6 @@ form{
     margin-bottom: 0.5rem;
     font-size: 1rem;
     background: #FAF8F1;
-    color: #735F32;
     color: rgb(58, 66, 27);
 
     &::placeholder{

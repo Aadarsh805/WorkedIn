@@ -6,8 +6,12 @@ import { localStorageUser, userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`
-  height: 40vh;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  border-radius: 12px;
+  padding: 0.5rem;
+  padding-bottom: 0;
+  background-color: rgba(58, 66, 27,0.5);
+  margin-bottom: 1rem;
 
   form {
     display: flex;
@@ -19,20 +23,93 @@ const Section = styled.div`
   textarea {
     width: 100%;
     height: 25vh;
+    background-color: rgba(236, 227, 212, 255);
+    padding: 1rem;
+    box-sizing: border-box;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    border-radius: 12px;
+    margin-bottom: 1.7rem;
+    color: rgb(58, 66, 27);
+    resize: none;
+
+    &::placeholder {
+      color: rgb(58, 66, 27);
+    }
   }
 `;
 
 const Buttons = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin-bottom: 1rem;
   width: 100%;
+
+  button {
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 12px 24px;
+    background-color: #735F32;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #fff;
+    font-weight: 400;
+    border: 2px solid rgba(236, 227, 212, 255);
+    /* border: 2px solid #3a421b; */
+    box-shadow: 3px 3px 0px rgba(236, 227, 212, 255);
+    translate: -3px -3px;
+    transition: all 0.15s ease-in;
+    /* line-height: 0; */
+
+    &:hover {
+      translate: 0;
+      box-shadow: 0 0 0;
+    }
+  }
+
+  div.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    background-color: #735F32;
+    border: 2px solid rgba(236, 227, 212, 255);
+    box-shadow: 3px 3px 0px rgba(236, 227, 212, 255);
+    border-radius: 4px;
+    color: white;
+    font-weight: 400;
+    font-size: 1rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    translate: -3px -3px;
+    transition: all 0.15s ease-in;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      translate: 0;
+      box-shadow: 0 0 0;
+    }
+
+    input {
+      top: 0;
+      left: 0;
+      position: absolute;
+      z-index: 1000;
+      opacity: 0;
+      cursor: pointer;
+      font-size: 24px;
+      height: 100%;
+    }
+  }
 `;
 
 const CreatePost = () => {
   const [userData, setUserData] = useState<userProps>({});
 
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [image, setImage] = useState();
 
   useEffect(() => {
@@ -47,12 +124,16 @@ const CreatePost = () => {
 
   const createPostHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { data } = await axios.post(`${BASE_URL}${postEnd}`, {
-      description,
-      image
-    }, {
-      headers: getHeaders(userData.token ?? '')
-    })
+    const { data } = await axios.post(
+      `${BASE_URL}${postEnd}`,
+      {
+        description,
+        image,
+      },
+      {
+        headers: getHeaders(userData.token ?? ""),
+      }
+    );
     console.log(data);
   };
 
@@ -79,10 +160,9 @@ const CreatePost = () => {
           console.log(err);
         });
     } else {
-      console.log('errrrrrorrrr');
-      
+      console.log("errrrrrorrrr");
     }
-  }
+  };
 
   return (
     <Section>
@@ -93,11 +173,14 @@ const CreatePost = () => {
           onChange={(e) => setDescription(e.target.value)}
         />
         <Buttons>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => postDetails(e.target.files)}
-          />
+          <div className="input-container">
+            Choose a photo
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => postDetails(e.target.files)}
+            />
+          </div>
           <button type="submit">Create Post</button>
         </Buttons>
       </form>

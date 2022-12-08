@@ -8,6 +8,8 @@ import { useOutsideAlerter } from '../../utils/OutsideAlerter';
 
 const Menu = styled.div`
   position: absolute;
+  left: 1rem;
+  top: 0.5rem;
   width: fit-content;
   z-index: 2;
   min-width: 13vw;

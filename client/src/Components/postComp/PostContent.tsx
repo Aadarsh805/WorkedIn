@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { postEnd } from "../../utils/APIRoutes";
 import { Comment, Share, ThumbsUp, ThumbsUp2 } from "../generalComp/SVG";
@@ -95,16 +94,7 @@ interface postContentProps {
 }
 
 const PostContent = ({ post, commentBoxModal }: postContentProps) => {
-    const location = useLocation();
     let host = window.location.protocol + "//" + window.location.host
-    useEffect(() => {
-        // console.log('hash', location.hash);
-        // console.log('current URL 👉️', window.location.href);
-        // // var host = window.location.host; 
-        // host = ;
-        // console.log(host);
-        
-    }, [])
     
   return (
     post ? (
