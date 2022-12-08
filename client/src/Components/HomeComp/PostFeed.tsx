@@ -7,7 +7,6 @@ import {
   ThumbsUp,
   ThumbsUp2,
 } from "../../components/generalComp/SVG";
-import { BASE_URL, postEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
 import PostModal from "../postComp/PostModal";
 import CommentBox from "./CommentBox";
