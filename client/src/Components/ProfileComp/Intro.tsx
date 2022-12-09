@@ -6,29 +6,23 @@ import Socials from "./Socials";
 
 const Section = styled.div`
   /* border: 1px solid red; */
-  /* margin-bottom: 1rem; */
-  margin: 0 1vw;
-  margin-bottom: 1rem;
-  z-index: 1;
-`;
-
-const Header = styled.header`
-  border: 1px solid blue;
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative;
-  min-height: 12vw;
+  padding: 1rem 2rem;
+  margin-bottom: 1.5rem;
+  width: 45vw;
+  background-color: #3a421b;
+  border-radius: 10px;
 `;
 
 const ImageContainer = styled.div`
   position: relative;
   transition: all 0.2s linear;
-  height: 12vw;
-  border: 2px solid purple;
+  /* border: 1px solid red; */
+
   img {
-    width: 12vw;
-    height: 12vw;
+    width: 9rem;
+    height: 9rem;
     border-radius: 50%;
     cursor: pointer;
     z-index: 1;
@@ -36,9 +30,14 @@ const ImageContainer = styled.div`
 
   &:hover {
     &:after {
-      border: 1px solid red;
+      width: 9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* border: 1px solid red; */
       content: "View Photo";
       font-size: 15px;
+      font-weight: 600;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -48,55 +47,42 @@ const ImageContainer = styled.div`
 `;
 
 const DetailContainer = styled.div`
-  border: 2px solid green;
-  min-height: 12vw;
-  width: calc(100vw - 25vw);
-  padding-left: 1.5vw;
+  /* border: 2px solid green; */
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding-left: 1rem;
   display: flex;
   flex-direction: column;
+  /* padding-top: 0.2rem; */
   /* align-items: flex-start; */
   /* justify-content: center; */
 
+  div.userDatils{
+    display: flex;
+    padding-top: 1.7rem;
+    /* border: 1px solid white; */
+  }
+
   h1 {
-    font-size: 1.8rem;
-    margin-top: 0.3vw;
-    margin-bottom: 0.7vw;
+    /* margin-top: 2.5rem; */
+    font-size: 2rem;
+    /* margin-top: 0.3vw; */
+    margin-right: 1rem;
     text-transform: capitalize;
-    font-weight: 400;
-  }
-`;
-
-const EditDetails = styled.div`
-  position: absolute;
-  right: 1vw;
-  top: 1vw;
-  z-index: 2;
-  /* border: 1px solid red; */
-  padding: 5px;
-  border-radius: 4px;
-  transition: all 0.2s linear;
-
-  svg {
-    fill: rgba(24, 49, 83, 255);
-    width: 1.6vw;
-  }
-
-  &:hover {
-    svg {
-      fill: rgba(255, 255, 255, 255);
-    }
-    border-radius: 4px;
-    background-color: rgba(24, 49, 83, 255);
-    cursor: pointer;
+    font-weight: 600;
+    color: rgba(236,227,212,255);
   }
 `;
 
 const Designation = styled.h3`
-  border: 1px solid red;
-  width: 80%;
-  font-size: 1.3vw;
-
+  width: 100%;
+  height: auto;
+  font-size: 1rem;
   font-weight: 300;
+  color: rgba(236,227,212,255);
+  margin-top: 0.4rem;
+  /* border: 1px solid white; */
 `;
 
 interface introProps {
@@ -104,40 +90,35 @@ interface introProps {
 }
 
 const Intro = ({ user }: introProps) => {
-
   let socialProps;
 
   if (user !== undefined) {
-  socialProps = {
+    socialProps = {
       discord: user.discord,
       github: user.github,
       linkedin: user.linkedin,
-      portfolio: user.personalWebsite,
       twitter: user.twitter,
     };
   }
 
   return (
     <Section>
-      <Header>
-        <EditDetails>
-          <Pen />
-        </EditDetails>
-        <ImageContainer>
-          <img src={user.photo} alt="userPic" />
-        </ImageContainer>
-        <DetailContainer>
+      <ImageContainer>
+        <img src={user.photo} alt="userPic" />
+      </ImageContainer>
+      <DetailContainer>
+        <div className="userDatils" >
           <h1>{user.name}</h1>
-            <Socials {...socialProps}/>
-          <Designation>
-            {user.tagline ? user.tagline : "Your tagline ..."}
-          </Designation>
-        </DetailContainer>
-      </Header>
+          <Socials {...socialProps} />
+        </div>
+        <Designation>
+          {/* {user.tagline ? user.tagline : "Your Tagline ..."} */}
+          {user.tagline ? user.tagline : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo maiores ab ducimus iste incidunt perferendis?"}
+        </Designation>
+      </DetailContainer>
     </Section>
   );
 };
-
 // Name | Description | Socials | Photo | About
 
 export default Intro;

@@ -10,6 +10,8 @@ import {
   Twitter,
 } from "../generalComp/SVG";
 
+import svg from '../../assets/icons8-twitter.json'
+
 const animateSvg = keyframes`
     0%{
         rotate: calc(0);
@@ -21,24 +23,27 @@ const animateSvg = keyframes`
         rotate: calc(0);
     }
     75%{
-        rotate: calc(-90deg);
+        rotate: calc(-180deg);
     }
     100%{
-        rotate: calc(0);
+        rotate: calc(-360deg);
     }
 `;
 
 const Section = styled.div`
-  border: 1px solid red;
-  width: fit-content;
-  margin-bottom: 1rem;
+  /* width: fit-content; */
+  display: flex;
+  align-items: flex-end;
+  /* justify-content: center; */
+  /* margin-bottom: 0; */
 
   svg {
-    width: 2.2vw;
-    height: 2.2vw;
-    margin-right: 1.5rem;
-    /* margin: 0 1vw; */
-    border: 1px solid red;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: auto 0;
+    margin-right: 1rem;
+    fill: rgba(236,227,212,255);
+    /* border: 1px solid red; */
     &:hover {
       animation: ${animateSvg} 1s linear;
       animation-iteration-count: 1;
@@ -50,12 +55,11 @@ interface userSocials {
   discord?: string;
   github?: string;
   linkedin?: string;
-  portfolio?: string;
   twitter?: string;
 }
 
 const Socials = (props: userSocials) => {
-  const { discord, github, linkedin, portfolio, twitter } = props;
+  const { discord, github, linkedin, twitter } = props;
   const [socialArr, setSocialArr] = useState<[string, any][]>();
 
   useEffect(() => {
@@ -73,40 +77,26 @@ const Socials = (props: userSocials) => {
   return (
     <Section>
       {github !== undefined ? (
-        github !== "" ? (
-          <Link to={github}>
-            <Github />
-          </Link>
-        ) : null
+        <Link to={github !== "" ? github : "#"}>
+          <Github />
+        </Link>
       ) : null}
       {linkedin !== undefined ? (
-        linkedin !== "" ? (
-          <Link to={linkedin}>
-            <Linkedin />
-          </Link>
-        ) : null
+        <Link to={linkedin !== "" ? linkedin : "#"}>
+          <Linkedin />
+        </Link>
       ) : null}
       {discord !== undefined ? (
-        discord !== "" ? (
-          <Link to={discord}>
-            <Discord />
-          </Link>
-        ) : null
+        <Link to={discord !== "" ? discord : "#"}>
+          <Discord />
+        </Link>
       ) : null}
       {twitter !== undefined ? (
-        twitter !== "" ? (
-          <Link to={twitter}>
-            <Twitter />
-          </Link>
-        ) : null
+        <Link to={twitter !== "" ? twitter : "#"}>
+          <Twitter />
+        </Link>
       ) : null}
-      {portfolio !== undefined ? (
-        portfolio !== "" ? (
-          <Link to={portfolio}>
-            <Portfolio />
-          </Link>
-        ) : null
-      ) : null}
+      <svg/>
     </Section>
   );
 };

@@ -10,42 +10,44 @@ import Skills from "../components/profileComp/Skills";
 import axios from "axios";
 import { BASE_URL, userEnd } from "../utils/APIRoutes";
 import { getHeaders } from "../utils/helperFunction";
+import About from "../components/profileComp/About";
 
 const Section = styled.div`
-  /* border: 1px solid black; */
-  /* margin: 1vw; */
-  /* margin-top: 2rem; */
-  /* display: flex; */
-  padding-top: 2rem;
-  margin: 0 1vw;
-  `;
-
-const ProfileContainer = styled.div`
-/* background-color: ${props => props.theme.grey}; */
+  border: 5px solid black;
+  padding: 5rem 5vw 1rem;
+  box-sizing: border-box;
   width: 100%;
-  min-height: calc(100vh - 3rem);
-  color: ${props => props.theme.lightBlack};
-`
+  min-height: calc(100vh - 2.5rem);
+  background-color: rgba(207, 186, 148, 255);
+  display: flex;
+`;
+
+const UserContracts = styled.div`
+  border: 1px solid red;
+`;
+
+const UserDetails = styled.div`
+/* display: flex; */
+`;
 
 const Profile = () => {
-
-  const [localUser, setLocalUser] = useState<userProps>({})
-  const [user, setUser] = useState<userProps>({})
+  const [localUser, setLocalUser] = useState<userProps>({});
+  const [user, setUser] = useState<userProps>({});
 
   async function fetchUserData() {
     const data = await JSON.parse(
       localStorage.getItem(localStorageUser) || "{}"
-    );      
+    );
     setLocalUser(data);
   }
 
-  async function fetchMyDetails () {
-    const {data} = await axios.get(`${BASE_URL}${userEnd}me`, {
-      headers: getHeaders(localUser.token ?? '')
-    })
+  async function fetchMyDetails() {
+    const { data } = await axios.get(`${BASE_URL}${userEnd}me`, {
+      headers: getHeaders(localUser.token ?? ""),
+    });
     console.log(data.data.data);
-    const userData = data.data.data
-    setUser(userData)
+    const userData = data.data.data;
+    setUser(userData);
   }
 
   useEffect(() => {
@@ -55,24 +57,25 @@ const Profile = () => {
   useEffect(() => {
     console.log(localUser.token);
     if (Object.keys(localUser).length !== 0) {
-      fetchMyDetails()
+      fetchMyDetails();
     }
-  }, [localUser])
+  }, [localUser]);
 
   return (
     <>
       <Navbar />
-      <ProfileContainer>
-        <Section>
+      <Section>
+        <UserDetails>
           <Intro user={user} />
-          {
+          <About  />
+        </UserDetails>
+        <UserContracts></UserContracts>
+        {/* {
             user.skills?.length !== 0 ? 
             <Skills skillArr={user.skills} /> : 
             <NoSkill/>
-          }
-          <PastProjects />
-        </Section>
-        </ProfileContainer>
+          } */}
+      </Section>
     </>
   );
 };
