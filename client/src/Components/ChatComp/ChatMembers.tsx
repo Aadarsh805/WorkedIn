@@ -37,7 +37,7 @@ const Member = styled.div`
   /* border: 1px solid red; */
   display: flex;
   align-items: center;
-  padding: 0.3rem 0.4rem;
+  padding: 0.4rem 0.4rem;
   margin: 0 0.5rem 0.5rem;
   border-radius: 10px;
   background-color: rgba(236,227,212,255);
@@ -46,13 +46,16 @@ const Member = styled.div`
   }
 
   img {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     margin-right: 0.5rem;
     /* border: 2px solid rgba(137,117,88,255); */
     /* box-shadow: 4px 2.4px rgba(207,186,148,255); */
-    box-shadow: 4px 2.4px rgba(137,117,88,255);
+    /* box-shadow: 4px 2.4px rgba(137,117,88,255); */
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
   }
 
   h4{

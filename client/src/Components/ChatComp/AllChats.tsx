@@ -16,7 +16,7 @@ const Chat = styled.div`
   /* border: 1px solid red; */
   box-sizing: border-box;
   width: calc(16vw - 2rem);
-  margin: 0.2rem 1rem;
+  margin: 0rem 1rem 0.5rem;
   border-radius: 10px;
   padding: 0.5rem 0.2rem 0.5rem 0.5rem;
   cursor: pointer;
@@ -30,20 +30,24 @@ const Chat = styled.div`
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    border: 1px solid #fff;
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
   }
 
   h4 {
     font-size: 1rem;
     font-weight: 800;
-    color: #fff;
     color: #3a421b;
+  }
+
+  &:first-child{
+    margin-top: 0.5rem;
   }
 `;
 
 const GroupChatButton = styled.div`
   /* border: 1px solid red; */
-  
   width: calc(16vw - 2rem);
   margin: 0rem 1rem;
   display: flex;

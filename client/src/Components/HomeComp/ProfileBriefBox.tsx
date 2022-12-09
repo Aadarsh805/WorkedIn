@@ -50,8 +50,8 @@ const ProfileBriefBox = () => {
       <h3>{user?.name?.split(' ')[0]}</h3>
       <h3>🔥 4.3</h3>
       <ContractStats>
-        <h4>Successful Contracts</h4>
-        <h4>Total Contracts</h4>
+        <h4>🤝🏻 Successful Contracts</h4>
+        <h4>📜 Total Contracts</h4>
         <h4>Popularity</h4>
       </ContractStats>
     </Section>

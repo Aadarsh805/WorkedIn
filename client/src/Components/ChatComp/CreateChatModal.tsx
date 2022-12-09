@@ -12,8 +12,8 @@ const Section = styled.div`
 position: absolute;
 width: 50vw;
 min-height: 55vh;
-max-height: 70vh;
-transition: all 0.15s ease-in-out;
+max-height: 80vh;
+transition: all 0.15s linear;
 top: 50%;
 left: 50%;
 transform: translate(-50%, -55%);
@@ -22,6 +22,7 @@ border-radius: 10px;
 padding: 1.5rem 2rem;
 box-sizing: border-box;
 background-color: #735F32;
+overflow-y: auto;
 
 h2{
   color: #FAF8F1;
@@ -66,21 +67,32 @@ form{
     border: none;
     font-size: 1.2rem;
     box-sizing: border-box;
-    font-weight: 500;
+    font-weight: 600;
     width: 80%;
     margin: 0 auto;
     cursor: pointer;
+    color: rgb(58, 66, 27);
   }
 }
 `
 
 const UserBadges = styled.div`
+/* border: 1px solid white; */
 display: flex;
 flex-wrap: wrap;
-/* border: 1px solid ; */
 width: 100%;
-margin: 1rem auto;
-padding-left: 1rem;
+padding: 0 1rem;
+margin: 0.5rem auto 0;
+box-sizing: border-box;
+`
+
+const SearchedUsers = styled.div`
+  padding: 0.4rem 1rem;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: auto auto;
+  margin: 0.7rem 0 1rem;
 `
 
 interface chatModalProps {
@@ -154,13 +166,16 @@ const CreateChatModal = (props: chatModalProps) => {
               })
             }
             </UserBadges>
+            <SearchedUsers>
+
             {
               searchResult.map((result) => {
                 return (
                   <SearchedUser key={result._id} user={result} onClickFunc={handleGroup} />
-                )
-              })
-            }
+                  )
+                })
+              }
+            </SearchedUsers>
             <button type="submit">Create Group</button>
         </form>
     </Section>
