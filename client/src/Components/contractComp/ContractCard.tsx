@@ -1,25 +1,9 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import NoContracts from "../components/contractComp/NoContracts";
-import ShowContract from "../components/contractComp/ShowContract";
-import Navbar from "../components/generalComp/Navbar";
-import { BASE_URL, contractEnd } from "../utils/APIRoutes";
-import { localStorageUser, months, userProps } from "../utils/GlobalContants";
-import { getHeaders } from "../utils/helperFunction";
+import React from "react";
 import { BsArrow90DegRight } from "react-icons/bs";
-import ContractCard from "../components/contractComp/ContractCard";
+import styled from "styled-components";
+import { months } from "../../utils/GlobalContants";
 
 const Section = styled.div`
-  padding: 1rem;
-  padding-top: 4rem;
-  box-sizing: border-box;
-  position: relative;
-  min-height: calc(100vh - 2.5rem);
-  background-color: rgba(207, 186, 148, 255);
-`;
-
-const Contract = styled.div`
   position: relative;
   width: 80%;
   margin: 0 auto;
@@ -81,7 +65,7 @@ const ContractBrief = styled.div`
   /* border: 1px solid red; */
   display: flex;
   margin-top: 0.8rem;
-  
+
   p {
     width: 60%;
     text-indent: 2.75rem;
@@ -130,7 +114,7 @@ const ShowContractButton = styled.div`
     border-radius: 4px;
     cursor: pointer;
     padding: 12px 24px;
-    background-color: #735F32;
+    background-color: #735f32;
     box-sizing: border-box;
     font-size: 1rem;
     color: #fff;
@@ -147,7 +131,7 @@ const ShowContractButton = styled.div`
       box-shadow: 0 0 0;
     }
   }
-`
+`;
 
 interface member {
   name: string;
@@ -178,40 +162,12 @@ interface contractProps {
   _id: string;
 }
 
-const Contracts = () => {
-  const [userData, setUserData] = useState<userProps>({});
-  const [contracts, setContracts] = useState<Array<contractProps>>([]);
-  const [isShowContractModalOpen, setIsShowContractModalOpen] = useState(false);
+interface contractCardProps {
+  contract: contractProps;
+  showContract: any;
+}
 
-  const [clickedContract, setClickedContract] = useState<contractProps>();
-
-
-  async function fetchUserData() {
-    const data = await JSON.parse(
-      localStorage.getItem(localStorageUser) || "{}"
-    );
-    setUserData(data);
-  }
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  async function fetchContracts() {
-    const { data } = await axios.get(`${BASE_URL}${contractEnd}`, {
-      headers: getHeaders(userData.token ?? ""),
-    });
-    console.log(data);
-    setContracts(data.userContract);
-  }
-
-  useEffect(() => {
-    console.log(userData);
-    if (Object.keys(userData).length !== 0) {
-      fetchContracts();
-    }
-  }, [userData]);
-
+const ContractCard = ({ contract, showContract }: contractCardProps) => {
   const getReadableTime = (date: string) => {
     var readable = new Date(date);
     var m = readable.getMonth();
@@ -222,31 +178,33 @@ const Contracts = () => {
     var fulldate = mlong + " " + d + ", " + y;
     return fulldate;
   };
-
-  const showContract = (contract: contractProps) => {
-    setIsShowContractModalOpen(!isShowContractModalOpen);
-    setClickedContract(contract);
-  };
-
-  return contracts.length === 0 ? (
-    <NoContracts />
-  ) : (
-    <>
-      <Navbar />
-      <Section>
-        {contracts.map((contract, index) => {
-          return (
-            <>
-              <ContractCard contract={contract} showContract={showContract} key={index} />
-              {clickedContract && isShowContractModalOpen ? (
-                <ShowContract contract={clickedContract} userData={userData} />
-              ) : null}
-            </>
-          );
-        })}
-      </Section>
-    </>
+  return (
+    <Section>
+      <ContractName>
+        <h2>{contract.contractName}</h2>
+        <BsArrow90DegRight />
+      </ContractName>
+      <ContractDates>
+        {getReadableTime(contract.startDate.slice(0, 10))} -{" "}
+        {getReadableTime(contract.dueDate.slice(0, 10))}
+      </ContractDates>
+      <LeadBy>
+        Lead by
+        <h4>{contract.lead.name}</h4>
+      </LeadBy>
+      <ContractBrief>
+        <p>{contract.projectDescription}</p>
+        <MemberPics>
+          {contract.team.map((member) => {
+            return <img src={member.member.photo} alt="memberImg" />;
+          })}
+        </MemberPics>
+      </ContractBrief>
+      <ShowContractButton>
+        <button onClick={() => showContract(contract)}>Show Contract</button>
+      </ShowContractButton>
+    </Section>
   );
 };
 
-export default Contracts;
+export default ContractCard;

@@ -100,7 +100,7 @@ interface memberRolesProps {
   photo: string;
 }
 
-const ContractModal = ({ selectedChat, user, closeContractModal }: contractModalProps) => {
+const CreateContractModal = ({ selectedChat, user, closeContractModal }: contractModalProps) => {
   const [memberRoles, setMemberRoles] = useState<memberRolesProps[]>([]);
   const [contractName, setContractName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
@@ -239,12 +239,4 @@ const ContractModal = ({ selectedChat, user, closeContractModal }: contractModal
   );
 };
 
-export default ContractModal;
-
-// Top --> Lead -> pic, name
-
-// Members --> Pic, Name, Role, Responsibility
-
-// Start Date  | Due Date
-
-// Create
+export default CreateContractModal;

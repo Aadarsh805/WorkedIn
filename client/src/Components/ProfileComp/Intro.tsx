@@ -10,7 +10,8 @@ const Section = styled.div`
   display: flex;
   padding: 1rem 2rem;
   margin-bottom: 1.5rem;
-  width: 45vw;
+  /* width: 45vw; */
+  width: 100%;
   background-color: #3a421b;
   border-radius: 10px;
 `;
@@ -55,12 +56,12 @@ const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   /* padding-top: 0.2rem; */
-  /* align-items: flex-start; */
-  /* justify-content: center; */
+  align-items: flex-start;
+  justify-content: center;
 
   div.userDatils{
     display: flex;
-    padding-top: 1.7rem;
+    /* padding-top: 1.7rem; */
     /* border: 1px solid white; */
   }
 
@@ -76,7 +77,8 @@ const DetailContainer = styled.div`
 `;
 
 const Designation = styled.h3`
-  width: 100%;
+  width: 95%;
+  /* width: calc(55vw - 14rem); */
   height: auto;
   font-size: 1rem;
   font-weight: 300;
@@ -98,6 +100,7 @@ const Intro = ({ user }: introProps) => {
       github: user.github,
       linkedin: user.linkedin,
       twitter: user.twitter,
+      portfolio: user.personalWebsite
     };
   }
 
@@ -112,8 +115,7 @@ const Intro = ({ user }: introProps) => {
           <Socials {...socialProps} />
         </div>
         <Designation>
-          {/* {user.tagline ? user.tagline : "Your Tagline ..."} */}
-          {user.tagline ? user.tagline : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo maiores ab ducimus iste incidunt perferendis?"}
+          {user.tagline ? user.tagline : "Your Tagline ..."}
         </Designation>
       </DetailContainer>
     </Section>

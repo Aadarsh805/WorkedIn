@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
-import { userProps } from "../../utils/GlobalContants";
 import {
   Discord,
   Github,
@@ -10,23 +9,27 @@ import {
   Twitter,
 } from "../generalComp/SVG";
 
-import svg from '../../assets/icons8-twitter.json'
 
 const animateSvg = keyframes`
     0%{
         rotate: calc(0);
-    }
-    25%{
+        transform: scale(1);
+      }
+      25%{
         rotate: calc(90deg);
-    }
-    50%{
+        transform: scale(1.25);
+      }
+      50%{
         rotate: calc(0);
-    }
-    75%{
+        transform: scale(1.5);
+      }
+      75%{
         rotate: calc(-180deg);
-    }
-    100%{
+        transform: scale(1.25);
+      }
+      100%{
         rotate: calc(-360deg);
+        transform: scale(1);
     }
 `;
 
@@ -56,10 +59,11 @@ interface userSocials {
   github?: string;
   linkedin?: string;
   twitter?: string;
+  portfolio?: string;
 }
 
 const Socials = (props: userSocials) => {
-  const { discord, github, linkedin, twitter } = props;
+  const { discord, github, linkedin, twitter, portfolio } = props;
   const [socialArr, setSocialArr] = useState<[string, any][]>();
 
   useEffect(() => {
@@ -69,10 +73,6 @@ const Socials = (props: userSocials) => {
       setSocialArr(newArr);
     }
   }, []);
-
-  const llll = (social: string | undefined, ele: any) => {
-    return social !== undefined ? (social !== "" ? ele : null) : null;
-  };
 
   return (
     <Section>
@@ -94,6 +94,11 @@ const Socials = (props: userSocials) => {
       {twitter !== undefined ? (
         <Link to={twitter !== "" ? twitter : "#"}>
           <Twitter />
+        </Link>
+      ) : null}
+      {portfolio !== undefined ? (
+        <Link to={portfolio !== "" ? portfolio : "#"}>
+          <Portfolio />
         </Link>
       ) : null}
       <svg/>

@@ -13,20 +13,23 @@ import { getHeaders } from "../utils/helperFunction";
 import About from "../components/profileComp/About";
 
 const Section = styled.div`
-  border: 5px solid black;
+  /* border: 5px solid black; */
   padding: 5rem 5vw 1rem;
   box-sizing: border-box;
   width: 100%;
   min-height: calc(100vh - 2.5rem);
   background-color: rgba(207, 186, 148, 255);
   display: flex;
+  position: relative;
 `;
 
 const UserContracts = styled.div`
   border: 1px solid red;
-`;
+  `;
 
 const UserDetails = styled.div`
+/* border: 1px solid red; */
+width: 55vw;
 /* display: flex; */
 `;
 
@@ -67,14 +70,14 @@ const Profile = () => {
       <Section>
         <UserDetails>
           <Intro user={user} />
-          <About  />
-        </UserDetails>
-        <UserContracts></UserContracts>
-        {/* {
+          <About userAbout={user.about!} mail={user.email!} portfolio={user.personalWebsite!} />
+          {
             user.skills?.length !== 0 ? 
             <Skills skillArr={user.skills} /> : 
-            <NoSkill/>
-          } */}
+            <NoSkill />
+          }
+        </UserDetails>
+        <UserContracts></UserContracts>
       </Section>
     </>
   );

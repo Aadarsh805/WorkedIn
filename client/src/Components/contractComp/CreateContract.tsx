@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { userProps } from '../../utils/GlobalContants'
-import ContractModal from './CreateContractModal'
+import CreateContractModal from './CreateContractModal'
 
 const Section = styled.div`
     
@@ -51,7 +51,7 @@ const CreateContract = ({ selectedChat, user }: contractModalProps) => {
     <Section>
         <ContractBtn onClick={() => setContractModal(!contractModal)} >Create Contract</ContractBtn>
         {
-            contractModal ? <ContractModal selectedChat={selectedChat} user={user} closeContractModal={closeContractModal} /> : null
+            contractModal ? <CreateContractModal selectedChat={selectedChat} user={user} closeContractModal={closeContractModal} /> : null
         }
     </Section>
   )
