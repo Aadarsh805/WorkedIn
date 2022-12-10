@@ -77,27 +77,27 @@ const Socials = (props: userSocials) => {
   return (
     <Section>
       {github !== undefined ? (
-        <Link to={github !== "" ? github : "#"}>
+        <Link to={github !== "" ? github : "#"} target="_blank" >
           <Github />
         </Link>
       ) : null}
       {linkedin !== undefined ? (
-        <Link to={linkedin !== "" ? linkedin : "#"}>
+        <Link to={linkedin !== "" ? linkedin : "#"} target="_blank" >
           <Linkedin />
         </Link>
       ) : null}
       {discord !== undefined ? (
-        <Link to={discord !== "" ? discord : "#"}>
+        <Link to={discord !== "" ? discord : "#"} target="_blank" >
           <Discord />
         </Link>
       ) : null}
       {twitter !== undefined ? (
-        <Link to={twitter !== "" ? twitter : "#"}>
+        <Link to={twitter !== "" ? twitter : "#"} target="_blank" >
           <Twitter />
         </Link>
       ) : null}
       {portfolio !== undefined ? (
-        <Link to={portfolio !== "" ? portfolio : "#"}>
+        <Link to={portfolio !== "" ? portfolio : "#"} target="_blank" >
           <Portfolio />
         </Link>
       ) : null}

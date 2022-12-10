@@ -66,6 +66,16 @@ const contractModel = mongoose.Schema({
 { timestamps: true }
 )
 
+contractModel.pre(/^find/, function(next) {
+    this.populate({
+        path: 'team.member',
+        select: 'name photo'
+    }).populate({
+        path: 'lead',
+        select: 'name photo'
+    })
+    next();
+});
 
 const Contract = mongoose.model("Contract", contractModel);
 

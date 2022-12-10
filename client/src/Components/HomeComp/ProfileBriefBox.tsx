@@ -7,6 +7,8 @@ const Section = styled.div`
 width: 20vw;
 margin-top: 2rem;
 height: 50vh;
+height: fit-content;
+padding: 1rem 0;
 background-color: #fff;
 background-color: rgba(236,227,212,255);
 border-radius: 12px;
@@ -21,7 +23,8 @@ img{
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  margin: 1rem auto 0.7rem;
+  /* margin: 1rem auto 0.7rem; */
+  margin-bottom: 0.7rem;
   border: 1px solid white;
 }
 `

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { localStorageUser, userProps } from "../utils/GlobalContants";
+import {
+  contractProps,
+  localStorageUser, userProps,
+} from "../utils/GlobalContants";
 
 import Navbar from "../components/generalComp/Navbar";
 import Intro from "../components/profileComp/Intro";
@@ -11,6 +14,8 @@ import axios from "axios";
 import { BASE_URL, userEnd } from "../utils/APIRoutes";
 import { getHeaders } from "../utils/helperFunction";
 import About from "../components/profileComp/About";
+import ContractCard from "../components/contractComp/ContractCard";
+import RecentUserActivity from "../components/profileComp/RecentUserActivity";
 
 const Section = styled.div`
   /* border: 5px solid black; */
@@ -23,14 +28,30 @@ const Section = styled.div`
   position: relative;
 `;
 
-const UserContracts = styled.div`
-  border: 1px solid red;
-  `;
-
 const UserDetails = styled.div`
-/* border: 1px solid red; */
-width: 55vw;
-/* display: flex; */
+  /* border: 1px solid red; */
+  width: 55vw;
+  /* display: flex; */
+`;
+
+const MyProjects = styled.div`
+  box-sizing: border-box;
+  /* display: flex; */
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
+  /* padding: 1rem 2rem; */
+  /* margin-bottom: 1.5rem; */
+  /* width: 45vw; */
+  width: 100%;
+  background-color: #3a421b;
+  border-radius: 10px;
+
+  h2 {
+    color: rgba(236, 227, 212, 255);
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    padding: 0 2rem;
+  }
 `;
 
 const Profile = () => {
@@ -64,22 +85,40 @@ const Profile = () => {
     }
   }, [localUser]);
 
+  const showContract = (contract: contractProps) => {
+    console.log("jhebfb");
+  };
+
   return (
-    <>
-      <Navbar />
-      <Section>
-        <UserDetails>
-          <Intro user={user} />
-          <About userAbout={user.about!} mail={user.email!} portfolio={user.personalWebsite!} />
-          {
-            user.skills?.length !== 0 ? 
-            <Skills skillArr={user.skills} /> : 
-            <NoSkill />
-          }
-        </UserDetails>
-        <UserContracts></UserContracts>
-      </Section>
-    </>
+    user && (
+      <>
+        <Navbar />
+        <Section>
+          <UserDetails>
+            <Intro user={user} />
+            <About
+              userAbout={user.about!}
+              mail={user.email!}
+              portfolio={user.personalWebsite!}
+            />
+            {user.skills?.length !== 0 ? (
+              <Skills skillArr={user.skills} />
+            ) : (
+              <NoSkill />
+            )}
+            <MyProjects>
+              <h2>My Past Projects</h2>
+              {Object.keys(user).length !== 0 && (user.pastProjects as unknown as contractProps[]).map((project, index) => {
+              return (
+                <ContractCard key={index} contract={project} showContract={showContract} />
+              );
+            })}
+            </MyProjects>
+          </UserDetails> 
+          <RecentUserActivity />
+        </Section>
+      </>
+    )
   );
 };
 
