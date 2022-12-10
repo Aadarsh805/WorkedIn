@@ -11,21 +11,84 @@ const Section = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 60vw;
-  height: 70vh;
+  width: 50vw;
+  height: 60vh;
   background-color: antiquewhite;
   transform: translate(-50%, -50%);
-
+  transition: max-height 1s linear;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
+
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  box-sizing: border-box;
+  background-color: #735f32;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+    &-thumb {
+      background-color: #fff;
+      width: 0.1rem;
+      border-radius: 1rem;
+    }
+  }
+
+  h2 {
+    color: #faf8f1;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    background: #faf8f1;
+    color: rgb(58, 66, 27);
+
+    &::placeholder {
+      color: rgb(58, 66, 27);
+    }
+
+    &:first-child {
+      margin-bottom: 1rem;
+    }
+  }
+`;
+
+const SearchedUsers = styled.div`
+  /* padding: 0.4rem 1rem; */
+  box-sizing: border-box;
+
+  /* border: 1px solid white; */
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  margin: 0.7rem 0 0rem;
+`;
+
+const UserBadges = styled.div`
+  border: 1px solid white;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0 1rem;
+  margin: 0.5rem auto 1rem;
+  box-sizing: border-box;
 `;
 
 // userbadges
 // search
 // searchUserReault
 // add to group
+// remove from group
 
 interface groupMemberProps {
   _id: string;
@@ -48,90 +111,102 @@ interface chatObj {
   _id?: string;
   contractId?: string;
   contractAprovedBy: Array<string>;
-  contractApproved: Boolean
+  contractApproved: Boolean;
 }
 
 interface manageMemberProps {
   selectedChat: chatObj;
   user: userProps;
-  closeInvitePeopleModal: any
+  closeInvitePeopleModal: any;
 }
 
 interface searchResultProps {
-  _id: string,
-  name: string,
-  photo: string
+  _id: string;
+  name: string;
+  photo: string;
 }
 
-const ManageMembers = ({ selectedChat, user, closeInvitePeopleModal }: manageMemberProps) => {
-    // const [search, setSearch] = useState('')
-    const [searchResult, setSearchResult] = useState<Array<searchResultProps>>([]);
+const ManageMembers = ({
+  selectedChat,
+  user,
+  closeInvitePeopleModal,
+}: manageMemberProps) => {
+  const [searchResult, setSearchResult] = useState<Array<searchResultProps>>(
+    []
+  );
 
-    // const [chatMembers, setChatMembers] = useState<Array<groupMemberProps> | undefined >(selectedChat.users)
+  // let chatMembers = selectedChat.users;
 
-    let chatMembers = selectedChat.users
+  const [chatUsers, setChatUsers] = useState<groupMemberProps[]>(
+    selectedChat.users!
+  );
 
-    const [first, setfirst] = useState<groupMemberProps[] | undefined>(selectedChat.users)
-    // const [chatMembers, setChatMembers] = useState<Array<groupMemberProps | undefined>>(selectedChat.users)   
-    
-    const wrapperRef = useRef<HTMLDivElement | null>(null);
-  useOutsideAlerter(wrapperRef, closeInvitePeopleModal)
+  useEffect(() => {
+    console.log(chatUsers);
+  }, [chatUsers]);
 
-    useEffect(() => {
-      console.log("NEW MEMBERS :- " + first);
-    }, [first])
-    
-    // useEffect(() => {
-    //   setChatMembers(selectedChat.users)
-    // }, [])
-    
-    const handleSearch = async (query: string) => {
-        const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
-          headers: getHeaders(user.token ?? '')
-        })
-        setSearchResult(data)
+  const handleSearch = async (query: string) => {
+    const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
+      headers: getHeaders(user.token ?? ""),
+    });
+    setSearchResult(data);
+  };
+
+  const addToGroupHandler = async (userToAdd: groupMemberProps) => {
+    if (
+      (selectedChat.users as unknown as any[]).find(
+        (user) => user._id === userToAdd._id
+      )
+    ) {
+      return;
     }
 
-    const addToGroupHandler = async (userToAdd: groupMemberProps) => {
-
-        if ((selectedChat.users as unknown as any[]).find(user => user._id === userToAdd._id)) {
-          return;
-        }
-
-        if (selectedChat.groupAdmin?._id !== user._id) {
-          return;
-        }
-
-        const { data } = await axios.patch(`${BASE_URL}${chatEnd}${selectedChat._id}/groupadd`, {
-          userId: userToAdd._id
-        }, {
-          headers: getHeaders(user.token ?? '')
-        })
-
-        console.log(data);
-        console.log(first);
+    if (selectedChat.groupAdmin?._id !== user._id) {
+      return;
     }
+
+    const { data } = await axios.patch(
+      `${BASE_URL}${chatEnd}${selectedChat._id}/groupadd`,
+      {
+        userId: userToAdd._id,
+      },
+      {
+        headers: getHeaders(user.token ?? ""),
+      }
+    );
+
+    console.log(data);
+    setChatUsers(current => [...current, userToAdd])
+  };
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeInvitePeopleModal);
 
   return (
-    <Section ref={wrapperRef} >
-      <h1>{selectedChat.chatName}</h1>
-      {/* user badges --> handleRemoveUser */}
-      {
-        (first as unknown as any[]).map((user) => {
-            return (
-                <h5>{user.name}</h5>
-            )
-        })
-      }
-      {/* input search */}
-      <input type="text" placeholder="Add people" onChange={(e) => handleSearch(e.target.value)}  />
-      {
-        searchResult.map((result,index) => {
-            return (
-                <SearchedUser key={index} user={result} onClickFunc={addToGroupHandler} />
-            )
-        })
-      }
+    <Section ref={wrapperRef}>
+      <h2>{selectedChat.chatName}</h2>
+      <UserBadges>
+        {(chatUsers as unknown as groupMemberProps[]).map((user) => {
+          // return <UserBadges user={user} onClickFunc={() => alert('hjfbv')} />
+          return <h4>{user.name}</h4>;
+        })}
+      </UserBadges>
+      <input
+        type="text"
+        placeholder="Add people"
+        onChange={(e) => handleSearch(e.target.value)}
+      />
+      <SearchedUsers>
+        {searchResult.map((result, index) => {
+          return (
+            <SearchedUser
+              key={index}
+              user={result}
+              onClickFunc={addToGroupHandler}
+            />
+          );
+        })}
+      </SearchedUsers>
     </Section>
   );
 };

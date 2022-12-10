@@ -7,9 +7,8 @@ const Section = styled.div`
   top: 50%;
   left: 50%;
   width: 50vw;
-  min-height: 50vh;
+  max-height: 50vh;
   transform: translate(-50%, -50%);
-  padding: 2rem;
   box-sizing: border-box;
   border-radius: 10px;
   padding: 1.5rem 2rem;
@@ -129,10 +128,8 @@ const Upload = styled.div`
 `;
 
 const ServerName = styled.div`
-  /* border: 1px solid white; */
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   width: 50%;
-  /* height: 100%; */
 
   input {
     box-sizing: border-box;
@@ -159,7 +156,6 @@ const UpdateButton = styled.div`
   display: flex;
   justify-content: flex-end;
   justify-content: center;
-  padding-right: 2rem;
 
   button {
     width: 50%;

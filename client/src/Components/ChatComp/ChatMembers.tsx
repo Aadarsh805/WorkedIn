@@ -50,9 +50,6 @@ const Member = styled.div`
     height: 38px;
     border-radius: 50%;
     margin-right: 0.5rem;
-    /* border: 2px solid rgba(137,117,88,255); */
-    /* box-shadow: 4px 2.4px rgba(207,186,148,255); */
-    /* box-shadow: 4px 2.4px rgba(137,117,88,255); */
     -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);

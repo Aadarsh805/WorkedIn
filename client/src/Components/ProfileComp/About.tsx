@@ -10,15 +10,20 @@ const Section = styled.div`
   margin-bottom: 1.5rem;
   width: 100%;
   background-color: #3a421b;
+  /* background-color: rgba(58, 66, 27, 0.5); */
+  /* background-color: rgba(236, 227, 212, 255); */
+  /* background-color: #5c4510; */
   border-radius: 10px;
 
   h2 {
     color: rgba(236, 227, 212, 255);
+    /* color: black; */
     font-size: 1.4rem;
   }
-
+  
   h4 {
     color: rgba(236, 227, 212, 255);
+  /* color: black; */
     font-size: 1rem;
     font-weight: 300;
   }

@@ -19,7 +19,7 @@ interface statusStripProps {
 }
 
 const StatusStrip = ({ status }: statusStripProps) => {
-  const [stripColor, setStripColor] = useState("#6A6D08");
+  const [stripColor, setStripColor] = useState("#c9d849");
   switch (status) {
     case "delayed":
       setStripColor("#c9d849");

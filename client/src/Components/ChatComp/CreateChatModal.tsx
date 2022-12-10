@@ -11,7 +11,7 @@ import { useOutsideAlerter } from '../../utils/OutsideAlerter';
 const Section = styled.div`
 position: absolute;
 width: 50vw;
-min-height: 55vh;
+/* min-height: 55vh; */
 max-height: 80vh;
 transition: all 0.15s linear;
 top: 50%;
@@ -177,7 +177,6 @@ const CreateChatModal = (props: chatModalProps) => {
             }
             </UserBadges>
             <SearchedUsers>
-
             {
               searchResult.map((result) => {
                 return (
