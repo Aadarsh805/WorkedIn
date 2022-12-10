@@ -10,15 +10,6 @@ const Section = styled.div`
   border-right: 2px solid rgba(137, 117, 88, 255);
   width: 16vw;
   padding-top: 1.3rem;
-
-  &::-webkit-scrollbar {
-      width: 0.4rem;
-      &-thumb {
-        background-color: #fff;
-        width: 0.1rem;
-        border-radius: 1rem;
-      }
-  }
 `;
 
 const Chat = styled.div`
@@ -65,18 +56,26 @@ const GroupChatButton = styled.div`
   position: absolute;
   bottom: calc(1vh + 0.15rem);
 
-  button{
-    box-sizing: border-box;
+  button {
+    border-radius: 4px;
     cursor: pointer;
-    border-radius: 10px;
-    width: 100%;
-    height: 100%;
-    padding: 0.7rem 0;
-    border: none;
-    font-size: 1.1rem;
-    background-color: rgba(137,117,88,255);
+    padding: 12px 24px;
+    background-color: #735f32;
+    box-sizing: border-box;
+    font-size: 1rem;
     color: #fff;
-    font-weight: 500;
+    font-weight: 400;
+    border: 2px solid rgba(236, 227, 212, 255);
+    /* border: 2px solid #3a421b; */
+    box-shadow: 3px 3px 0px rgba(236, 227, 212, 255);
+    translate: -3px -3px;
+    transition: all 0.15s ease-in;
+    /* line-height: 0; */
+
+    &:hover {
+      translate: 0;
+      box-shadow: 0 0 0;
+    }
   }
 `;
 

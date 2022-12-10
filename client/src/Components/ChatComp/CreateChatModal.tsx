@@ -80,6 +80,7 @@ form{
     width: 80%;
     margin: 0 auto;
     cursor: pointer;
+    background: #FAF8F1;
     color: rgb(58, 66, 27);
   }
 }
