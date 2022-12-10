@@ -10,7 +10,7 @@ const Section = styled.div`
   border-radius: 12px;
   padding: 0.5rem;
   padding-bottom: 0;
-  background-color: rgba(58, 66, 27,0.5);
+  background-color: rgba(58, 66, 27, 0.5);
   margin-bottom: 1rem;
 
   form {
@@ -37,6 +37,15 @@ const Section = styled.div`
     &::placeholder {
       color: rgb(58, 66, 27);
     }
+
+    &::-webkit-scrollbar {
+      width: 0.3rem;
+      &-thumb {
+        background-color: rgb(58, 66, 27);
+        width: 0.1rem;
+        border-radius: 1rem;
+      }
+    }
   }
 `;
 
@@ -51,7 +60,7 @@ const Buttons = styled.div`
     border-radius: 4px;
     cursor: pointer;
     padding: 12px 24px;
-    background-color: #735F32;
+    background-color: #735f32;
     box-sizing: border-box;
     font-size: 1rem;
     color: #fff;
@@ -74,7 +83,7 @@ const Buttons = styled.div`
     justify-content: center;
     align-items: center;
     padding: 12px 24px;
-    background-color: #735F32;
+    background-color: #735f32;
     border: 2px solid rgba(236, 227, 212, 255);
     box-shadow: 3px 3px 0px rgba(236, 227, 212, 255);
     border-radius: 4px;

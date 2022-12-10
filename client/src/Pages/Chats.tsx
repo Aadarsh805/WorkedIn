@@ -19,6 +19,13 @@ const Section = styled.div`
     position: relative;
     z-index: 1;
     background-color: rgba(207,186,148,255);
+
+    overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+}
 `
 
 interface groupMemberProps {
@@ -57,7 +64,7 @@ const Chats = () => {
   return (
     <>
     <Navbar/>
-    <Section>
+    <Section className='chats' >
           <AllChats user={userData} setSelectedChat={setSelectedChat} />
           {
             selectedChat ? null : <NoSelectedChat/>

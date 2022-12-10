@@ -10,6 +10,15 @@ const Section = styled.div`
   border-right: 2px solid rgba(137, 117, 88, 255);
   width: 16vw;
   padding-top: 1.3rem;
+
+  &::-webkit-scrollbar {
+      width: 0.4rem;
+      &-thumb {
+        background-color: #fff;
+        width: 0.1rem;
+        border-radius: 1rem;
+      }
+  }
 `;
 
 const Chat = styled.div`

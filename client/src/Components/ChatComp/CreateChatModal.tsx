@@ -24,6 +24,15 @@ box-sizing: border-box;
 background-color: #735F32;
 overflow-y: auto;
 
+&::-webkit-scrollbar {
+    width: 0.4rem;
+    &-thumb {
+      background-color: #fff;
+      width: 0.1rem;
+      border-radius: 1rem;
+    }
+}
+
 h2{
   color: #FAF8F1;
   font-size: 2rem;
