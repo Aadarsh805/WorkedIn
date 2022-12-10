@@ -46,7 +46,7 @@ const MyProjects = styled.div`
   background-color: #3a421b;
   border-radius: 10px;
 
-  h2 {
+  h1 {
     color: rgba(236, 227, 212, 255);
     font-size: 1.4rem;
     margin-bottom: 1.5rem;
@@ -107,7 +107,7 @@ const Profile = () => {
               <NoSkill />
             )}
             <MyProjects>
-              <h2>My Past Projects</h2>
+              <h1>My Past Projects</h1>
               {Object.keys(user).length !== 0 && (user.pastProjects as unknown as contractProps[]).map((project, index) => {
               return (
                 <ContractCard key={index} contract={project} showContract={showContract} />

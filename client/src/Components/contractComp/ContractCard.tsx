@@ -2,6 +2,7 @@ import React from "react";
 import { BsArrow90DegRight } from "react-icons/bs";
 import styled from "styled-components";
 import { months } from "../../utils/GlobalContants";
+import StatusStrip from "./StatusStrip";
 
 const Section = styled.div`
   position: relative;
@@ -12,6 +13,7 @@ const Section = styled.div`
   box-sizing: border-box;
   border-radius: 10px;
   background-color: rgba(236, 227, 212, 255);
+  overflow: hidden;
 `;
 
 const ContractName = styled.div`
@@ -20,6 +22,7 @@ const ContractName = styled.div`
   /* border: 1px solid white; */
 
   h2 {
+    /* padding-top: 0.5rem; */
     display: inline;
     font-size: 1.7rem;
     margin-right: 0.6rem;
@@ -113,18 +116,16 @@ const ShowContractButton = styled.div`
   button {
     border-radius: 4px;
     cursor: pointer;
-    padding: 12px 24px;
+    padding: 8px 16px;
     background-color: #735f32;
     box-sizing: border-box;
     font-size: 1rem;
     color: #fff;
     font-weight: 400;
     border: 2px solid rgb(58, 66, 27);
-    /* border: 2px solid #3a421b; */
     box-shadow: 3px 3px 0px rgb(58, 66, 27);
     translate: -3px -3px;
     transition: all 0.15s ease-in;
-    /* line-height: 0; */
 
     &:hover {
       translate: 0;
@@ -181,6 +182,7 @@ const ContractCard = ({ contract, showContract }: contractCardProps) => {
   return (
     <Section>
       <ContractName>
+        <StatusStrip  status={contract.status} />
         <h2>{contract.contractName}</h2>
         <BsArrow90DegRight />
       </ContractName>
