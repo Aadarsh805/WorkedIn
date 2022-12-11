@@ -115,9 +115,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
       <Members divHeight={selectedChat.contractApproved} >
-        {user._id === selectedChat.groupAdmin?._id ? (
-          <ChatOptions selectedChat={selectedChat} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} updateServer={updateServer} invitePeople={invitePeople}/>
-        ) : null}
+          <ChatOptions selectedChat={selectedChat} user={user} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} updateServer={updateServer} invitePeople={invitePeople}/>
         {selectedChat.users !== undefined &&
           (selectedChat.users as unknown as any[]).map((user) => {
             return (

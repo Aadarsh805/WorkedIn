@@ -95,11 +95,11 @@ const ContractApproval = ({ selectedChat, user }: contractApprovalProps) => {
           }
         >
           {percentApproval !== 100
-            ? `${percentApproval}% Approved`
+            ? `${Math.round(percentApproval)}% Approved`
             : "Finalise Contract"}
         </button>
       ) : (
-        <button disabled>{percentApproval}%</button>
+        <button disabled>{Math.round(percentApproval)}%</button>
       )}
     </Section>
   );

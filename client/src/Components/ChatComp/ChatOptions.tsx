@@ -2,13 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
 import styled from "styled-components";
-import { InvitePeople } from "../../assets/InvitePeople";
-import { HiUserAdd } from 'react-icons/hi'
+import { HiUserAdd } from "react-icons/hi";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import { userProps } from "../../utils/GlobalContants";
+import { FaFileContract } from 'react-icons/fa'
+import { TfiWrite } from 'react-icons/tfi'
+import { BsFillFileEarmarkSpreadsheetFill } from 'react-icons/bs'
 
 const Section = styled.div`
   border-bottom: 1px solid #3a421b;
-  border-bottom: 2px solid rgba(137,117,88,255);
+  border-bottom: 2px solid rgba(137, 117, 88, 255);
   margin: 0.4rem 0rem 1rem;
   position: relative;
   padding: 0 0.5rem 0.4rem;
@@ -26,7 +29,7 @@ const Header = styled.div`
     cursor: pointer;
   }
 
-  h3{
+  h3 {
     font-size: 1.3rem;
     font-weight: 800;
     color: #fff;
@@ -35,7 +38,7 @@ const Header = styled.div`
 `;
 
 interface optionsProps {
-  events: Boolean
+  events: Boolean;
 }
 
 const OptionsMenu = styled.div`
@@ -52,7 +55,7 @@ const OptionsMenu = styled.div`
   /* margin: 0 auto; */
   right: 2.5%;
   border-radius: 10px;
-  pointer-events: ${(props:optionsProps) => props.events ? 'none' : 'auto'};
+  pointer-events: ${(props: optionsProps) => (props.events ? "none" : "auto")};
 
   li {
     cursor: pointer;
@@ -65,15 +68,15 @@ const OptionsMenu = styled.div`
     padding: 0 0.8rem;
     margin-bottom: 0.4rem;
     transition: all 0.15s linear;
-    &:hover{
-        background-color: antiquewhite;
-        background-color: #fff;
-        svg{
-          fill: #3a421b;
-        }
-        h5{
-          color: #3a421b;
-        }
+    &:hover {
+      background-color: antiquewhite;
+      background-color: #fff;
+      svg {
+        fill: #3a421b;
+      }
+      h5 {
+        color: #3a421b;
+      }
     }
 
     svg {
@@ -86,7 +89,7 @@ const OptionsMenu = styled.div`
       /* border: 1px solid red; */
     }
 
-    h5{
+    h5 {
       color: #fff;
     }
 
@@ -94,6 +97,14 @@ const OptionsMenu = styled.div`
       margin-bottom: 0;
     }
   }
+
+  li.contract{
+    svg{
+      /* margin-right: 0.1rem; */
+      width: 1.6rem;
+      height: 1rem;
+    }
+  } 
 `;
 
 interface groupMemberProps {
@@ -117,47 +128,103 @@ interface chatObj {
   _id?: string;
   contractId?: string;
   contractAprovedBy: Array<string>;
-  contractApproved: Boolean
+  contractApproved: Boolean;
 }
 
 interface chat {
-  selectedChat: chatObj,
-  setupdateServer: React.Dispatch<React.SetStateAction<boolean>>,
-  setInvitePeople: React.Dispatch<React.SetStateAction<boolean>>,
-  updateServer: boolean,
-  invitePeople: boolean
+  selectedChat: chatObj;
+  user: userProps;
+  setupdateServer: React.Dispatch<React.SetStateAction<boolean>>;
+  setInvitePeople: React.Dispatch<React.SetStateAction<boolean>>;
+  updateServer: boolean;
+  invitePeople: boolean;
 }
 
-const ChatOptions = ({ selectedChat, setupdateServer, setInvitePeople, updateServer, invitePeople }: chat) => {
+const ChatOptions = ({
+  selectedChat,
+  user,
+  setupdateServer,
+  setInvitePeople,
+  updateServer,
+  invitePeople,
+}: chat) => {
   const [chatOptions, setChatOptions] = useState(false);
 
   useEffect(() => {
-    setChatOptions(false)
-  }, [selectedChat])
+    setChatOptions(false);
+  }, [selectedChat]);
 
   const closeChatOptions = () => {
-    setChatOptions(false)
-  }
+    setChatOptions(false);
+  };
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  useOutsideAlerter(wrapperRef, closeChatOptions)
-  
+  useOutsideAlerter(wrapperRef, closeChatOptions);
+
   return (
-    <Section >
+    <Section>
       <Header onClick={() => setChatOptions(!chatOptions)}>
         <h3>{selectedChat.chatName}</h3>
-        {chatOptions ? <AiOutlineClose /> : <AiOutlineDown />}
+        {selectedChat.groupAdmin?._id === user._id ? (
+          chatOptions ? (
+            <AiOutlineClose />
+          ) : (
+            <AiOutlineDown />
+          )
+        ) : selectedChat.contracted ? (
+          chatOptions ? (
+            <AiOutlineClose />
+          ) : (
+            <AiOutlineDown />
+          )
+        ) : null}
       </Header>
-      {chatOptions ? (
-        <OptionsMenu events={updateServer || invitePeople} >
+      {chatOptions && selectedChat.groupAdmin?._id === user._id ? (
+        selectedChat.contractApproved ? (
+          <OptionsMenu events={updateServer || invitePeople}>
+            <ul>
+              <li onClick={() => setupdateServer(!updateServer)}>
+                <h5>Update Server</h5>
+                <MdModeEdit />
+              </li>
+              <li className="contract" onClick={() => setInvitePeople(!invitePeople)}>
+                <h5>Review Contract</h5>
+                <BsFillFileEarmarkSpreadsheetFill />
+              </li>
+              <li className="contract" onClick={() => alert('Update Contract')}>
+                <h5>Update Contract</h5>
+                <TfiWrite />
+              </li>
+            </ul>
+          </OptionsMenu>
+        ) : (
+          <OptionsMenu events={updateServer || invitePeople}>
+            <ul>
+              <li onClick={() => setupdateServer(!updateServer)}>
+                <h5>Update Server</h5>
+                <MdModeEdit />
+              </li>
+              <li onClick={() => setInvitePeople(!invitePeople)}>
+                <h5>Manage Members</h5>
+                <HiUserAdd />
+              </li>
+              <li className="contract"  onClick={() => alert('Review Contract')}>
+                <h5>Review Contract</h5>
+                <BsFillFileEarmarkSpreadsheetFill />
+              </li>
+              <li className="contract"   onClick={() => alert('Update Contract')}>
+                <h5>Update Contract</h5>
+                <TfiWrite />
+              </li>
+            </ul>
+          </OptionsMenu>
+        )
+      ) : chatOptions && selectedChat.contracted ? (
+        <OptionsMenu events={updateServer || invitePeople}>
           <ul>
-            <li onClick={() => setupdateServer(!updateServer)} >
-              <h5>Update Server</h5>
-              <MdModeEdit />
-            </li>
-            <li onClick={() => setInvitePeople(!invitePeople)} >
-              <h5>Invite People</h5>
-              <HiUserAdd />
+            <li className="contract"  onClick={() => alert("Review Contract")}>
+              <h5>Review Contract</h5>
+              <BsFillFileEarmarkSpreadsheetFill />
             </li>
           </ul>
         </OptionsMenu>

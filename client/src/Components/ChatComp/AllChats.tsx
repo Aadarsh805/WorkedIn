@@ -8,15 +8,36 @@ import CreateChatModal from "./CreateChatModal";
 
 const Section = styled.div`
   border-right: 2px solid rgba(137, 117, 88, 255);
-  width: 16vw;
-  padding-top: 1.3rem;
+  width: 25vw;
+  height: calc(100vh - 2.5rem);
 `;
+
+const Chats = styled.div`
+  /* border: 1px solid white; */
+  box-sizing: border-box;
+  padding-top: 1.3rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - 6.75rem);
+
+  &::-webkit-scrollbar {
+    width: 0.3rem;
+    &-thumb {
+      background-color: #fff;
+      background-color: rgba(137, 117, 88, 255);
+      width: 0.1rem;
+      border-radius: 1rem;
+    }
+}
+`
 
 const Chat = styled.div`
   /* border: 1px solid red; */
   box-sizing: border-box;
-  width: calc(16vw - 2rem);
-  margin: 0rem 1rem 0.5rem;
+  width: 90%;
+  /* width: calc(20vw - 4rem); */
+  /* margin: 0rem 0rem 0.5rem; */
+  margin: 0.5rem auto;
   border-radius: 10px;
   padding: 0.5rem 0.2rem 0.5rem 0.5rem;
   cursor: pointer;
@@ -49,12 +70,12 @@ const Chat = styled.div`
 const GroupChatButton = styled.div`
   /* border: 1px solid red; */
   width: calc(16vw - 2rem);
-  margin: 0rem 1rem;
+  margin: 0.8rem auto 0;
   display: flex;
   align-items: center;
 
-  position: absolute;
-  bottom: calc(1vh + 0.15rem);
+  /* position: absolute; */
+  /* bottom: calc(1vh + 0.15rem); */
 
   button {
     border-radius: 4px;
@@ -131,6 +152,9 @@ const AllChats = ({ user, setSelectedChat }: allChatProps) => {
 
   return (
     <Section>
+      <Chats>
+
+      
       {allChats.map((chat, index) => {
         if (chat.chatName === "one_On_one") {
           const chatUsers = chat.users;
@@ -155,6 +179,7 @@ const AllChats = ({ user, setSelectedChat }: allChatProps) => {
           </Chat>
         );
       })}
+      </Chats>
       <GroupChatButton>
         <button
           onClick={() => setIsCreateChatModalOpen(!isCreateChatModalOpen)}
