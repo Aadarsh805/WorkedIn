@@ -128,7 +128,7 @@ const CreateChatModal = (props: chatModalProps) => {
     const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
       headers: getHeaders(props.user.token ?? '')
     })
-    console.log(data);
+    // console.log(data);
     setSearchResult(data)
   }
 
@@ -157,7 +157,8 @@ const CreateChatModal = (props: chatModalProps) => {
       headers: getHeaders(props.user.token ?? '')
     })
 
-    console.log(data);
+    // console.log(data);
+    window.location.reload();
   }
 
   return (
@@ -169,9 +170,9 @@ const CreateChatModal = (props: chatModalProps) => {
             <input type="text" name="" id="" placeholder="Add members to group" onChange={(e) => handleSearch(e.target.value)} />
             <UserBadges>
             {
-              selectedUsers.map(user => {
+              selectedUsers.map((user,index) => {
                 return (
-                  <UserBadge key={user._id} user={user} onClickFunc={handleDelete} />
+                  <UserBadge key={index} user={user} onClickFunc={handleDelete} />
                 ) 
               })
             }

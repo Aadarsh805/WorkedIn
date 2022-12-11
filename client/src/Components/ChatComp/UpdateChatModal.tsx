@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
+import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
@@ -184,25 +187,63 @@ interface updateChatModalProps {
   selectedChatImage?: string;
   selectedChatName?: string;
   userId?: string;
+  userToken?: string;
   closeUpdateServerModal: any;
 }
 
 const UpdateChatModal = ({
   selectedChatId,
   userId,
+  userToken,
   selectedChatImage,
   selectedChatName,
   closeUpdateServerModal,
 }: updateChatModalProps) => {
-  const [newChatName, setNewChatName] = useState(selectedChatName);
+  const [newChatName, setNewChatName] = useState<string>('');
+
+  const [newChatImage, setNewChatImage] = useState(selectedChatImage)
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, closeUpdateServerModal);
 
-  const updateChatInfoHandler = (e: any) => {
-    e.preventDefault();
-    alert(newChatName);
-    // {{URL}}{{ChatEnd}}/638845f3d4536216311c2785/rename
+  const updateChatInfoHandler = async (e: any) => {
+    const { data } = await axios.patch(
+      `${BASE_URL}${chatEnd}${selectedChatId}/rename`, {
+        chatName: newChatName,
+        chatPhoto: newChatImage
+      }, {
+        headers: getHeaders(userToken ?? '')
+      }
+    )
+    console.log(data);
+    window.location.reload();
+  };
+
+  const postImage = (pics: FileList | null) => {
+    console.log(pics);
+    if (!pics) return;
+    const pic = pics[0];
+    if (pic.type === "image/jpeg" || pic.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pic);
+      data.append("upload_preset", "chat-app");
+      data.append("cloud_name", "dkgrvhkxb");
+      fetch("https://api.cloudinary.com/v1_1/dkgrvhkxb/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setNewChatImage(data.url.toString());
+          console.log(data);
+          console.log(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("errrrrrorrrr");
+    }
   };
 
   return (
@@ -221,13 +262,12 @@ const UpdateChatModal = ({
         <UpdateImage>
           <UpdateContainer>
             <ImageContainer>
-              <img src={selectedChatImage} alt="groupImage" />
+              <img src={newChatImage} alt="groupImage" />
             </ImageContainer>
             <Upload>
-              {/* <h5>Upload an image of atleast 512 X 512</h5> */}
               <div className="input-container">
                 Choose a photo
-                <input type="file" name="" id="" />
+                <input type="file" accept="image/*" onChange={(e) => postImage(e.target.files)}  />
               </div>
             </Upload>
           </UpdateContainer>

@@ -146,7 +146,7 @@ const CreatePost = () => {
     console.log(data);
   };
 
-  const postDetails = (pics: FileList | null) => {
+  const postImage = (pics: FileList | null) => {
     console.log(pics);
     if (!pics) return;
     const pic = pics[0];
@@ -187,7 +187,7 @@ const CreatePost = () => {
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => postDetails(e.target.files)}
+              onChange={(e) => postImage(e.target.files)}
             />
           </div>
           <button type="submit">Create Post</button>

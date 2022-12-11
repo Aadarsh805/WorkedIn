@@ -136,7 +136,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
       
       }
       {
-        updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} closeUpdateServerModal={closeUpdateServerModal} /> : null
+        updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} userToken={user.token} closeUpdateServerModal={closeUpdateServerModal} /> : null
       }
       {
         invitePeople ? <ManageMembers selectedChat={selectedChat} user={user} closeInvitePeopleModal={closeInvitePeopleModal} /> : null

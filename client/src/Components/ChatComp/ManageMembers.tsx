@@ -6,13 +6,15 @@ import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import SearchedUser from "./SearchedUser";
+import UserBadge from "./UserBadge";
 
 const Section = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
   width: 50vw;
-  height: 60vh;
+  /* height: 60vh; */
+  max-height: 60vh;
   background-color: antiquewhite;
   transform: translate(-50%, -50%);
   transition: max-height 1s linear;
@@ -75,12 +77,12 @@ const SearchedUsers = styled.div`
 `;
 
 const UserBadges = styled.div`
-  border: 1px solid white;
+  /* border: 1px solid white; */
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   padding: 0 1rem;
-  margin: 0.5rem auto 1rem;
+  margin: 0.7rem auto 1rem;
   box-sizing: border-box;
 `;
 
@@ -131,15 +133,13 @@ const ManageMembers = ({
   user,
   closeInvitePeopleModal,
 }: manageMemberProps) => {
-  const [searchResult, setSearchResult] = useState<Array<searchResultProps>>(
-    []
-  );
 
-  // let chatMembers = selectedChat.users;
+  const [searchResult, setSearchResult] = useState<Array<searchResultProps>>([]);
 
-  const [chatUsers, setChatUsers] = useState<groupMemberProps[]>(
-    selectedChat.users!
-  );
+  const [chatUsers, setChatUsers] = useState<searchResultProps[]>(selectedChat.users!);
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeInvitePeopleModal);
 
   useEffect(() => {
     console.log(chatUsers);
@@ -152,7 +152,26 @@ const ManageMembers = ({
     setSearchResult(data);
   };
 
-  const addToGroupHandler = async (userToAdd: groupMemberProps) => {
+  const removeFromGroupHandler = async (userToRemove: searchResultProps) => {
+    if (selectedChat.groupAdmin?._id !== user._id && userToRemove._id !== user._id) {
+      return
+    }
+
+    const { data } = await axios.patch(
+      `${BASE_URL}${chatEnd}${selectedChat._id}/groupremove`, {
+        userId: userToRemove._id
+      },
+      {
+        headers: getHeaders(user.token ?? '')
+      }
+    )
+
+    console.log(data);
+    setChatUsers(chatUsers => chatUsers.filter(user => user._id !== userToRemove._id))
+    
+  };
+
+  const addToGroupHandler = async (userToAdd: searchResultProps) => {
     if (
       (selectedChat.users as unknown as any[]).find(
         (user) => user._id === userToAdd._id
@@ -176,19 +195,15 @@ const ManageMembers = ({
     );
 
     console.log(data);
-    setChatUsers(current => [...current, userToAdd])
+    setChatUsers((current) => [...current, userToAdd]);
   };
-
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  useOutsideAlerter(wrapperRef, closeInvitePeopleModal);
 
   return (
     <Section ref={wrapperRef}>
       <h2>{selectedChat.chatName}</h2>
       <UserBadges>
-        {(chatUsers as unknown as groupMemberProps[]).map((user) => {
-          // return <UserBadges user={user} onClickFunc={() => alert('hjfbv')} />
-          return <h4>{user.name}</h4>;
+        {chatUsers.map((user) => {
+          return <UserBadge user={user} onClickFunc={removeFromGroupHandler} />;
         })}
       </UserBadges>
       <input
