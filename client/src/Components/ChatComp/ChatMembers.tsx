@@ -24,12 +24,12 @@ interface membersProps {
 }
 
 const Members = styled.div`
+  /* border: 1px solid white; */
   padding-top: 0.5rem;
   box-sizing: border-box;
-  /* border: 1px solid red; */
   
-  height: calc(100vh - 7rem);
-  /* height: ${(props:membersProps) => props.divHeight ? 'calc(100vh - 7rem)' : 'calc(100vh - 3rem)' }; */
+  /* height: calc(100vh - 7rem); */
+  height: ${(props:membersProps) => props.divHeight ? 'calc(100vh - 3rem)' : 'calc(100vh - 7rem)' };
   overflow: auto;
 `;
 
@@ -114,7 +114,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
 
   return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
-      <Members divHeight={selectedChat.groupAdmin?._id === user._id} >
+      <Members divHeight={selectedChat.contractApproved} >
         {user._id === selectedChat.groupAdmin?._id ? (
           <ChatOptions selectedChat={selectedChat} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} updateServer={updateServer} invitePeople={invitePeople}/>
         ) : null}
@@ -130,7 +130,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
           })}
       </Members>
       {
-        selectedChat.contractApproved ? <ReviewContract user={user} contractId={selectedChat.contractId} /> : selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 
+        selectedChat.contractApproved ? null : selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 
         selectedChat.groupAdmin?._id === user._id ?
         <CreateContract selectedChat={selectedChat} user={user}/> : null
       
