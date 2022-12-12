@@ -93,6 +93,7 @@ interface chat {
 const ChatMembers = ({ selectedChat, user }: chat) => {
   const [updateServer, setupdateServer] = useState(false)
   const [invitePeople, setInvitePeople] = useState(false)
+  const [reviewContract, setReviewContract] = useState(false)
 
   useEffect(() => {
     setupdateServer(false)
@@ -113,7 +114,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
       <Members divHeight={selectedChat.contractApproved} >
-          <ChatOptions selectedChat={selectedChat} user={user} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} updateServer={updateServer} invitePeople={invitePeople}/>
+          <ChatOptions selectedChat={selectedChat} user={user} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} />
         {selectedChat.users !== undefined &&
           (selectedChat.users as unknown as any[]).map((user) => {
             return (
@@ -129,13 +130,15 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         selectedChat.contractApproved ? null : selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 
         selectedChat.groupAdmin?._id === user._id ?
         <CreateContract selectedChat={selectedChat} user={user}/> : null
-      
       }
       {
         updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} userToken={user.token} closeUpdateServerModal={closeUpdateServerModal} /> : null
       }
       {
         invitePeople ? <ManageMembers selectedChat={selectedChat} user={user} closeInvitePeopleModal={closeInvitePeopleModal} /> : null
+      }
+      {
+        reviewContract ? <ReviewContract user={user} contractId={selectedChat.contractId} /> : null
       }
     </Section>
 };

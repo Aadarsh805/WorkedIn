@@ -1,10 +1,9 @@
 import axios from "axios";
-import React, { useEffect } from "react";
 import styled from "styled-components";
-import { BASE_URL, contractEnd, userEnd } from "../../utils/APIRoutes";
+import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
-import TeamMemberCard from "./TeamMemberCard";
+import ContractBody from "./ContractBody";
 
 const Section = styled.div`
   position: absolute;
@@ -21,9 +20,9 @@ const Section = styled.div`
   padding: 2rem 2.5rem 2.5rem;
 
   &::-webkit-scrollbar {
-      width: 0.4rem;
-      /* background-color: #735f32; */
-      /* border-radius: 10px; */
+    width: 0.4rem;
+    /* background-color: #735f32; */
+    /* border-radius: 10px; */
     &-thumb {
       background-color: #fff;
       width: 0.1rem;
@@ -35,86 +34,43 @@ const Section = styled.div`
     color: #faf8f1;
     font-size: 1.2rem;
     font-weight: 600;
-}
-`;
-
-const Header = styled.div`
-  /* border: 1px solid red; */
-  h1,
-  h3,
-  h4 {
-    color: #faf8f1;
-    display: inline;
-  }
-
-  h1 {
-    font-weight: 300;
-    margin-right: 0.6rem;
-    text-transform: capitalize;
-    font-size: 2rem;
-  }
-
-  h3 {
-    font-weight: 300;
-    text-decoration: underline;
-    font-size: 1.2rem;
-  }
-
-  h4 {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-right: 0.2rem;
   }
 `;
 
-const Description = styled.p`
-    /* border: 1px solid red; */
-    /* margin: 0 auto; */
-    padding: 1rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    color: rgb(58, 66, 27);
-    font-weight: 600;
-    width: 95%;
-    box-sizing: border-box;
-    line-height: 160%;
-    background-color: #faf8f1;
-`
-
-const MyRole = styled.div`
-/* border: 1px solid red; */
-margin: 1.5rem 0;
-
-h2 {
-    color: #faf8f1;
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-`
-
-const MyCardContainer = styled.div`
-    /* border: 1px solid red; */
-    width: 50%;
-    margin: 0.5rem auto 0.5rem;
-`
-
-const TeamRoles = styled.div`
-
-    h2{
-        margin-bottom: 1rem;
-    }
-`
-
-
-const TeamRolesContainer = styled.div`
-    display: grid;
-    grid-template-columns: auto auto;
-`
 
 const Buttons = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-end;
+  /* justify-content: space-around; */
+  margin-top: 3rem;
+
+  button {
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 12px 24px;
+    background-color: #735f32;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #fff;
+    font-weight: 400;
+    border: 2px solid rgba(236, 227, 212, 255);
+    /* border: 2px solid #3a421b; */
+    box-shadow: 3px 3px 0px rgba(236, 227, 212, 255);
+    translate: -3px -3px;
+    transition: all 0.15s ease-in;
+    /* line-height: 0; */
+
+    &:hover {
+      translate: 0;
+      box-shadow: 0 0 0;
+    }
+
+    &:first-child {
+      margin-right: 2.5rem;
+    }
+  }
 `;
 
 interface member {
@@ -159,9 +115,6 @@ interface contractModalProps {
 
 const ShowContract = ({ contract, userData }: contractModalProps) => {
 
-    const currentUser = contract.team.find((member) => member.member._id === userData._id);
-
-
   const acceptContractHandler = async () => {
     const { data } = await axios.patch(
       `${BASE_URL}${contractEnd}${contract._id}/accept`,
@@ -190,41 +143,7 @@ const ShowContract = ({ contract, userData }: contractModalProps) => {
   };
   return (
     <Section>
-      <Header>
-        <h1>{contract.contractName}</h1>
-        <h4>Created by</h4>
-        <h3>{contract.lead.name}</h3>
-      </Header>
-      <Description>
-      {contract.projectDescription}
-      </Description>
-      <MyRole>
-      <h2>
-        My Role :-{" "}
-        </h2>
-        <MyCardContainer>
-        <TeamMemberCard currentUser={currentUser!} />
-        </MyCardContainer>
-      </MyRole>
-      
-      <TeamRoles>
-        <h2>Team Member's Role :-</h2>
-      <TeamRolesContainer>
-        
-        
-      {contract.team
-        .filter((member) => {
-          if (member.member._id !== userData._id) {
-            return member;
-          } else return null;
-        })
-        .map((member) => {
-          return (
-            <TeamMemberCard currentUser={member} />
-          );
-        })}
-        </TeamRolesContainer>
-        </TeamRoles>
+      <ContractBody contract={contract} userData={userData} />
       {contract.team.filter((member) => {
         if (member.member._id === userData._id) {
           return member;

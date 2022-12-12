@@ -136,8 +136,10 @@ interface chat {
   user: userProps;
   setupdateServer: React.Dispatch<React.SetStateAction<boolean>>;
   setInvitePeople: React.Dispatch<React.SetStateAction<boolean>>;
+  setReviewContract: React.Dispatch<React.SetStateAction<boolean>>;
   updateServer: boolean;
   invitePeople: boolean;
+  reviewContract: boolean
 }
 
 const ChatOptions = ({
@@ -145,8 +147,10 @@ const ChatOptions = ({
   user,
   setupdateServer,
   setInvitePeople,
+  setReviewContract,
   updateServer,
   invitePeople,
+  reviewContract
 }: chat) => {
   const [chatOptions, setChatOptions] = useState(false);
 
@@ -187,7 +191,7 @@ const ChatOptions = ({
                 <h5>Update Server</h5>
                 <MdModeEdit />
               </li>
-              <li className="contract" onClick={() => setInvitePeople(!invitePeople)}>
+              <li className="contract" onClick={() => setReviewContract(!reviewContract)}>
                 <h5>Review Contract</h5>
                 <BsFillFileEarmarkSpreadsheetFill />
               </li>
@@ -208,11 +212,11 @@ const ChatOptions = ({
                 <h5>Manage Members</h5>
                 <HiUserAdd />
               </li>
-              <li className="contract"  onClick={() => alert('Review Contract')}>
+              <li className="contract" onClick={() => setReviewContract(!reviewContract)}>
                 <h5>Review Contract</h5>
                 <BsFillFileEarmarkSpreadsheetFill />
               </li>
-              <li className="contract"   onClick={() => alert('Update Contract')}>
+              <li className="contract" onClick={() => alert('Update Contract')}>
                 <h5>Update Contract</h5>
                 <TfiWrite />
               </li>
@@ -222,7 +226,7 @@ const ChatOptions = ({
       ) : chatOptions && selectedChat.contracted ? (
         <OptionsMenu events={updateServer || invitePeople}>
           <ul>
-            <li className="contract"  onClick={() => alert("Review Contract")}>
+            <li className="contract" onClick={() => setReviewContract(!reviewContract)}>
               <h5>Review Contract</h5>
               <BsFillFileEarmarkSpreadsheetFill />
             </li>

@@ -1,10 +1,42 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { AiOutlineFileText } from "react-icons/ai";
 import styled from "styled-components";
 import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
+import ContractBody from "./ContractBody";
+
+const Section = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60vw;
+  height: 80vh;
+  background-color: #735f32;
+  transform: translate(-50%, -53.5%);
+  overflow: auto;
+  border-radius: 10px;
+
+  box-sizing: border-box;
+  padding: 2rem 2.5rem 2.5rem;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+    /* background-color: #735f32; */
+    /* border-radius: 10px; */
+    &-thumb {
+      background-color: #fff;
+      width: 0.1rem;
+      border-radius: 1rem;
+    }
+  }
+
+  h2 {
+    color: #faf8f1;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+`;
 
 interface reviewContractProps {
   user: userProps;
@@ -41,6 +73,7 @@ interface contractProps {
 }
 
 const ReviewContract = ({ user, contractId }: reviewContractProps) => {
+
   const [contract, setContract] = useState<contractProps>();
 
   async function fetchContract() {
@@ -48,7 +81,6 @@ const ReviewContract = ({ user, contractId }: reviewContractProps) => {
       headers: getHeaders(user.token ?? ""),
     });
     console.log(data.contract);
-    
     const contractData = data.contract;
     setContract(contractData);
   }
@@ -60,9 +92,12 @@ const ReviewContract = ({ user, contractId }: reviewContractProps) => {
   }, []);
 
   return (
-    <div>
-      <AiOutlineFileText />
-    </div>
+    <Section>
+      {
+        contract &&
+      <ContractBody userData={user} contract={contract!} />
+      }
+    </Section>
   );
 };
 

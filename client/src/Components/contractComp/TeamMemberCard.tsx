@@ -21,7 +21,7 @@ const MemberDetails = styled.div`
     /* border: 1px solid red; */
     width: 3rem;
     height: 3rem;
-    margin-right: 0.6rem;
+    margin-right: 0.7rem;
     border-radius: 50%;
     -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
@@ -42,13 +42,14 @@ const MemberDetails = styled.div`
       font-size: 0.9rem;
       padding: 0;
       margin: 0;
+      margin-bottom: 0.2rem;
       /* line-height: 0; */
       line-height: 100%;
     }
 
     h3 {
       /* border: 1px solid red; */
-      font-size: 1.1rem;
+      font-size: 1rem;
       line-height: 100%;
     }
   }
