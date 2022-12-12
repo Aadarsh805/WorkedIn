@@ -17,6 +17,7 @@ const Section = styled.div`
   position: relative;
   min-height: calc(100vh - 2.5rem);
   background-color: rgba(207, 186, 148, 255);
+  /* background-color: #735f32; */
 `;
 
 const Contract = styled.div`

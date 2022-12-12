@@ -5,10 +5,11 @@ import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
 import { getHeaders, getUserData } from "../../utils/helperFunction";
 import CreateChatModal from "./CreateChatModal";
+import { BsFillUnlockFill, BsFillLockFill } from 'react-icons/bs'
 
 const Section = styled.div`
   border-right: 2px solid rgba(137, 117, 88, 255);
-  width: 25vw;
+  width: 16vw;
   height: calc(100vh - 2.5rem);
 `;
 
@@ -35,8 +36,6 @@ const Chat = styled.div`
   /* border: 1px solid red; */
   box-sizing: border-box;
   width: 90%;
-  /* width: calc(20vw - 4rem); */
-  /* margin: 0rem 0rem 0.5rem; */
   margin: 0.5rem auto;
   border-radius: 10px;
   padding: 0.5rem 0.2rem 0.5rem 0.5rem;
@@ -60,6 +59,29 @@ const Chat = styled.div`
     font-size: 1rem;
     font-weight: 800;
     color: #3a421b;
+    width: calc(14.4vw - 1.2rem - 40px - 1.15rem - 0.8rem);
+    white-space: nowrap;
+    overflow: hidden;
+    /* border: 1px solid #000; */
+  }
+  
+  svg{
+    fill: #3a421b;
+    margin-right: 0.15rem;
+    width: 1rem;
+    /* border: 1px solid #000; */
+  }
+  
+  div{
+    /* border: 1px solid #000; */
+    overflow: hidden;
+    /* height: 1rem; */
+    white-space: nowrap;
+    display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(14.4vw - 1.2rem - 40px);
   }
 
   &:first-child{
@@ -124,6 +146,9 @@ interface chatsArr {
   isGroupChat: Boolean;
   users: groupMemberProps;
   _id: string;
+  contractId: string;
+  contractAprovedBy: Array<string>;
+  contractApproved: Boolean
 }
 
 const AllChats = ({ user, setSelectedChat }: allChatProps) => {
@@ -175,7 +200,12 @@ const AllChats = ({ user, setSelectedChat }: allChatProps) => {
         return (
           <Chat key={index} onClick={() => setSelectedChat(chat)}>
             <img src={chat.chatPhoto} alt="" />
+            <div>
             <h4>{chat.chatName}</h4>
+            {
+              chat.contractApproved ? <BsFillLockFill/> : <BsFillUnlockFill/>
+            }
+            </div>
           </Chat>
         );
       })}

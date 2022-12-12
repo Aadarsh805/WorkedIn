@@ -11,12 +11,10 @@ import ContractApproval from "../contractComp/ContractApproval";
 import ReviewContract from "../contractComp/ReviewContract";
 
 const Section = styled.div`
-  border-left: 2px solid #3a421b;
   border-left: 2px solid rgba(137,117,88,255);
-  width: 25vw;
+  width: 16vw;
   overflow: hidden;
   padding-top: 0.5rem;
-  /* border: 1px solid red; */
 `;
 
 interface membersProps {

@@ -9,22 +9,15 @@ body {
   overflow-y: auto;
 }
 
-/* body::-webkit-scrollbar{
-  width: 0.7rem;
-  border-radius: 1rem;
-  background-color: rgba(207,186,148,255);
-  
+body::-webkit-scrollbar{
+  width: 0.5rem;
+  background-color: #735f32;
 }
 
 body::-webkit-scrollbar-thumb{
   border-radius: 1rem;
   background-color: rgba(236,227,212,255);
 }
-
-body > div.chats::-webkit-scrollbar{
-  display: none;
-  width: 0;
-} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

@@ -67,9 +67,8 @@ const Section = styled.div`
 
 const SearchedUsers = styled.div`
   /* padding: 0.4rem 1rem; */
-  box-sizing: border-box;
-
   /* border: 1px solid white; */
+  box-sizing: border-box;
   width: 100%;
   display: grid;
   grid-template-columns: auto auto;

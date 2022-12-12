@@ -84,22 +84,26 @@ const ContractBrief = styled.div`
 
 const MemberPics = styled.div`
   /* border: 1px solid red; */
-  width: 40%;
+  width: 35%;
   box-sizing: border-box;
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
 
   display: flex;
   flex-wrap: wrap;
 
   img {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
     margin: 0 0.5rem 0.5rem;
     border-radius: 50%;
     -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     cursor: pointer;
+
+    &:first-child {
+      margin-left: 0;
+    }
   }
 `;
 
@@ -118,12 +122,17 @@ const ShowContractButton = styled.div`
     cursor: pointer;
     padding: 8px 16px;
     background-color: #735f32;
+    /* background-color: rgba(236, 227, 212, 255); */
     box-sizing: border-box;
     font-size: 1rem;
-    color: #fff;
-    font-weight: 400;
+    color: rgba(236, 227, 212, 255);
+    /* color: #735f32; */
+    font-weight: 500;
     border: 2px solid rgb(58, 66, 27);
-    box-shadow: 3px 3px 0px rgb(58, 66, 27);
+    border: 2px solid #735f32;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0px #735f32;
+    box-shadow: 3px 3px 0px #000;
     translate: -3px -3px;
     transition: all 0.15s ease-in;
 
@@ -182,7 +191,7 @@ const ContractCard = ({ contract, showContract }: contractCardProps) => {
   return (
     <Section>
       <ContractName>
-        <StatusStrip  status={contract.status} />
+        <StatusStrip status={contract.status} />
         <h2>{contract.contractName}</h2>
         <BsArrow90DegRight />
       </ContractName>
@@ -195,7 +204,10 @@ const ContractCard = ({ contract, showContract }: contractCardProps) => {
         <h4>{contract.lead.name}</h4>
       </LeadBy>
       <ContractBrief>
-        <p>{contract.projectDescription}</p>
+        <p>
+          {contract.projectDescription.slice(0, 300)}
+          {contract.projectDescription.length > 300 ? "...." : null}
+        </p>
         <MemberPics>
           {contract.team.map((member) => {
             return <img src={member.member.photo} alt="memberImg" />;

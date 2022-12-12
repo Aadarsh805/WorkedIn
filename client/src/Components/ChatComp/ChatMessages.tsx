@@ -10,7 +10,8 @@ import formatDistance from "date-fns/formatDistance";
 const Section = styled.div`
   /* border: 1px solid yellow; */
   height: calc(100vh - 2.5rem);
-  width: 100%;
+  /* width: 100%; */
+  width: 68vw;
   position: relative;
   overflow: hidden;
   overflow-y: hidden;

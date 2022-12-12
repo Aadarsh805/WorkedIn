@@ -177,7 +177,7 @@ const MemberRole = styled.div`
     border: none;
     width: 100%;
     box-sizing: border-box;
-    height: 6rem;
+    height: 8rem;
     margin: 0.6rem 0 0rem;
     font-size: 0.8rem;
     color: #faf8f1;
@@ -193,7 +193,7 @@ const MemberRole = styled.div`
     &::-webkit-scrollbar {
       width: 0.3rem;
       &-thumb {
-        background-color: rgb(58, 66, 27);
+        background-color: #faf8f1;
         width: 0.1rem;
         border-radius: 1rem;
       }
@@ -363,8 +363,6 @@ const CreateContractModal = ({
   }, [startDate]);
 
   const initializeContractHandler = async (e: any) => {
-    e.preventDefault();
-
     const { data } = await axios.post(
       `${BASE_URL}${contractEnd}`,
       {

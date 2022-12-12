@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Section = styled.div`
-border: 1px solid red;
+/* border: 1px solid red; */
 width: 84vw;
 padding: 2rem;
 box-sizing: border-box;
