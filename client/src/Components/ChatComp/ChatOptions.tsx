@@ -5,9 +5,8 @@ import styled from "styled-components";
 import { HiUserAdd } from "react-icons/hi";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import { userProps } from "../../utils/GlobalContants";
-import { FaFileContract } from 'react-icons/fa'
-import { TfiWrite } from 'react-icons/tfi'
-import { BsFillFileEarmarkSpreadsheetFill } from 'react-icons/bs'
+import { TfiWrite } from "react-icons/tfi";
+import { BsFillFileEarmarkSpreadsheetFill } from "react-icons/bs";
 
 const Section = styled.div`
   border-bottom: 1px solid #3a421b;
@@ -98,13 +97,13 @@ const OptionsMenu = styled.div`
     }
   }
 
-  li.contract{
-    svg{
+  li.contract {
+    svg {
       /* margin-right: 0.1rem; */
       width: 1.6rem;
       height: 1rem;
     }
-  } 
+  }
 `;
 
 interface groupMemberProps {
@@ -139,7 +138,7 @@ interface chat {
   setReviewContract: React.Dispatch<React.SetStateAction<boolean>>;
   updateServer: boolean;
   invitePeople: boolean;
-  reviewContract: boolean
+  reviewContract: boolean;
 }
 
 const ChatOptions = ({
@@ -150,7 +149,7 @@ const ChatOptions = ({
   setReviewContract,
   updateServer,
   invitePeople,
-  reviewContract
+  reviewContract,
 }: chat) => {
   const [chatOptions, setChatOptions] = useState(false);
 
@@ -191,11 +190,34 @@ const ChatOptions = ({
                 <h5>Update Server</h5>
                 <MdModeEdit />
               </li>
-              <li className="contract" onClick={() => setReviewContract(!reviewContract)}>
+              <li
+                className="contract"
+                onClick={() => setReviewContract(!reviewContract)}
+              >
                 <h5>Review Contract</h5>
                 <BsFillFileEarmarkSpreadsheetFill />
               </li>
-              <li className="contract" onClick={() => alert('Update Contract')}>
+              <li className="contract" onClick={() => alert("Update Contract")}>
+                <h5>Update Contract</h5>
+                <TfiWrite />
+              </li>
+            </ul>
+          </OptionsMenu>
+        ) : selectedChat.contracted ? (
+          <OptionsMenu events={updateServer || invitePeople}>
+            <ul>
+              <li onClick={() => setupdateServer(!updateServer)}>
+                <h5>Update Server</h5>
+                <MdModeEdit />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setReviewContract(!reviewContract)}
+              >
+                <h5>Review Contract</h5>
+                <BsFillFileEarmarkSpreadsheetFill />
+              </li>
+              <li className="contract" onClick={() => alert("Update Contract")}>
                 <h5>Update Contract</h5>
                 <TfiWrite />
               </li>
@@ -212,21 +234,16 @@ const ChatOptions = ({
                 <h5>Manage Members</h5>
                 <HiUserAdd />
               </li>
-              <li className="contract" onClick={() => setReviewContract(!reviewContract)}>
-                <h5>Review Contract</h5>
-                <BsFillFileEarmarkSpreadsheetFill />
-              </li>
-              <li className="contract" onClick={() => alert('Update Contract')}>
-                <h5>Update Contract</h5>
-                <TfiWrite />
-              </li>
             </ul>
           </OptionsMenu>
         )
       ) : chatOptions && selectedChat.contracted ? (
         <OptionsMenu events={updateServer || invitePeople}>
           <ul>
-            <li className="contract" onClick={() => setReviewContract(!reviewContract)}>
+            <li
+              className="contract"
+              onClick={() => setReviewContract(!reviewContract)}
+            >
               <h5>Review Contract</h5>
               <BsFillFileEarmarkSpreadsheetFill />
             </li>
