@@ -6,7 +6,7 @@ import {
   Share,
   ThumbsUp,
   ThumbsUp2,
-} from "../../components/generalComp/SVG";
+} from "../generalComp/SVG";
 import { userProps } from "../../utils/GlobalContants";
 import PostModal from "../postComp/PostModal";
 import CommentBox from "./CommentBox";

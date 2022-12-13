@@ -19,17 +19,35 @@ exports.getAllContracts = catchAsync(async (req, res) => {
 exports.getUserContracts = catchAsync(async (req, res) => {
   const userId = req.user.id;
 
-  const contract = await Contract.find({
+  const contracts = await Contract.find({
     "team.member": userId,
   })
     .populate("lead", "name photo")
     .populate("team.member", "name photo")
     .sort("-createdAt");
 
+    const date = new Date();
+
+  // we get an array 
+  // iterate through every contract
+  // if in-progress -> compare due date and current date and update to `delayed` if required
+
+  contracts.forEach(async contract => {
+    const contractDueDate = contract.dueDate;
+    if (contract.status === 'in-progress') {
+      if (date >= contractDueDate) {
+        let updatedContract = await Contract.findByIdAndUpdate(contract.id, {
+          status: 'delayed'
+        })
+        contract = updatedContract;
+      }
+    }
+  });
+
   res.status(200).json({
     status: "success",
-    totalContracts: contract.length,
-    userContract: contract,
+    totalContracts: contracts.length,
+    userContracts: contracts,
   });
 });
 
@@ -40,10 +58,36 @@ exports.getContract = catchAsync(async (req, res) => {
     .populate("lead", "name photo")
     .populate("team.member", "name photo");
 
-  res.status(200).json({
-    status: "success",
-    contract,
-  });
+    // chek if contract is in-progress
+    // if in-progress --> compare due date and current date and update to `delayed` if required
+
+    const contractDueDate = contract.dueDate; 
+    console.log(contract.dueDate);
+
+    let date = new Date();
+    
+    console.log(date);
+    console.log(date >= contractDueDate);
+    console.log(typeof(date));
+    console.log(typeof(contractDueDate));
+
+    if (contract.status === 'in-progress') {
+      if (contractDueDate <= date) {
+        const updatedContract = await Contract.findByIdAndUpdate(contract.id, {
+              status: 'delayed'
+        })
+
+        res.status(200).json({
+          status: 'success',
+          updatedContract
+        })
+      } 
+    } else { 
+      res.status(200).json({
+        status: "success",
+        contract
+      });
+    }
 });
 
 exports.initializeContract = catchAsync(async (req, res) => {
