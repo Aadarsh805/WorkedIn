@@ -134,20 +134,24 @@ interface chat {
   selectedChat: chatObj;
   user: userProps;
   setupdateServer: React.Dispatch<React.SetStateAction<boolean>>;
+  setUpdateContract: React.Dispatch<React.SetStateAction<boolean>>;
   setInvitePeople: React.Dispatch<React.SetStateAction<boolean>>;
   setReviewContract: React.Dispatch<React.SetStateAction<boolean>>;
   updateServer: boolean;
   invitePeople: boolean;
   reviewContract: boolean;
+  updateContract: boolean
 }
 
 const ChatOptions = ({
   selectedChat,
   user,
   setupdateServer,
+  setUpdateContract,
   setInvitePeople,
   setReviewContract,
   updateServer,
+  updateContract,
   invitePeople,
   reviewContract,
 }: chat) => {
@@ -197,7 +201,7 @@ const ChatOptions = ({
                 <h5>Review Contract</h5>
                 <BsFillFileEarmarkSpreadsheetFill />
               </li>
-              <li className="contract" onClick={() => alert("Update Contract")}>
+              <li className="contract" onClick={() => setUpdateContract(!updateContract)}>
                 <h5>Update Contract</h5>
                 <TfiWrite />
               </li>
@@ -217,7 +221,7 @@ const ChatOptions = ({
                 <h5>Review Contract</h5>
                 <BsFillFileEarmarkSpreadsheetFill />
               </li>
-              <li className="contract" onClick={() => alert("Update Contract")}>
+              <li className="contract" onClick={() => setUpdateContract(!updateContract)}>
                 <h5>Update Contract</h5>
                 <TfiWrite />
               </li>

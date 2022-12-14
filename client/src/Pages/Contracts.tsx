@@ -5,9 +5,8 @@ import NoContracts from "../components/contractComp/NoContracts";
 import ShowContract from "../components/contractComp/ShowContract";
 import Navbar from "../components/generalComp/Navbar";
 import { BASE_URL, contractEnd } from "../utils/APIRoutes";
-import { localStorageUser, months, userProps } from "../utils/GlobalContants";
+import { localStorageUser, userProps } from "../utils/GlobalContants";
 import { getHeaders } from "../utils/helperFunction";
-import { BsArrow90DegRight } from "react-icons/bs";
 import ContractCard from "../components/contractComp/ContractCard";
 
 const Section = styled.div`
@@ -20,135 +19,6 @@ const Section = styled.div`
   /* background-color: #735f32; */
 `;
 
-const Contract = styled.div`
-  position: relative;
-  width: 80%;
-  margin: 0 auto;
-  margin-bottom: 1.5rem;
-  padding: 1rem 2rem;
-  box-sizing: border-box;
-  border-radius: 10px;
-  background-color: rgba(236, 227, 212, 255);
-`;
-
-const ContractName = styled.div`
-  display: inline;
-  position: relative;
-  /* border: 1px solid white; */
-
-  h2 {
-    display: inline;
-    font-size: 1.7rem;
-    margin-right: 0.6rem;
-  }
-
-  svg {
-    /* border: 1px solid white; */
-    position: absolute;
-    top: 1.7rem;
-    left: 0.25rem;
-    transform: rotateX(180deg);
-    width: 2rem;
-    height: 2rem;
-  }
-`;
-
-const ContractDates = styled.div`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-`;
-
-const LeadBy = styled.div`
-  display: inline;
-  font-size: 0.8rem;
-  font-weight: 500;
-  /* border: 1px solid white; */
-
-  h4 {
-    margin-left: 0.2rem;
-    /* border: 1px solid white; */
-    display: inline;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-`;
-
-const ContractBrief = styled.div`
-  /* border: 1px solid red; */
-  display: flex;
-  margin-top: 0.8rem;
-  
-  p {
-    width: 60%;
-    text-indent: 2.75rem;
-    line-height: 160%;
-    font-size: 1rem;
-    /* border-right: 2px solid rgba(137, 117, 88, 255); */
-    /* border-bottom: 2px solid rgba(137, 117, 88, 255); */
-    box-sizing: border-box;
-    padding-right: 1rem;
-    padding-bottom: 0.4rem;
-  }
-`;
-
-const MemberPics = styled.div`
-  /* border: 1px solid red; */
-  width: 40%;
-  box-sizing: border-box;
-  padding: 0 1rem;
-
-  display: flex;
-  flex-wrap: wrap;
-
-  img {
-    width: 2.5rem;
-    height: 2.5rem;
-    margin: 0 0.5rem 0.5rem;
-    border-radius: 50%;
-    -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
-    -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
-    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
-    cursor: pointer;
-  }
-`;
-
-const ShowContractButton = styled.div`
-  /* border: 1px solid red; */
-  /* position: absolute; */
-  /* bottom: 1rem; */
-  /* right: 1rem; */
-  display: flex;
-  margin-top: 0.5rem;
-  /* align-items: flex-end; */
-  justify-content: flex-end;
-
-  button {
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 12px 24px;
-    background-color: #735F32;
-    box-sizing: border-box;
-    font-size: 1rem;
-    color: #fff;
-    font-weight: 400;
-    border: 2px solid rgb(58, 66, 27);
-    /* border: 2px solid #3a421b; */
-    box-shadow: 3px 3px 0px rgb(58, 66, 27);
-    translate: -3px -3px;
-    transition: all 0.15s ease-in;
-    /* line-height: 0; */
-
-    &:hover {
-      translate: 0;
-      box-shadow: 0 0 0;
-    }
-  }
-`
 
 interface member {
   name: string;
@@ -196,38 +66,34 @@ const Contracts = () => {
 
   useEffect(() => {
     fetchUserData();
+    console.log('brvvub');
+    
   }, []);
 
   async function fetchContracts() {
     const { data } = await axios.get(`${BASE_URL}${contractEnd}`, {
       headers: getHeaders(userData.token ?? ""),
     });
-    console.log(data);
-    setContracts(data.userContract);
+    console.log(data.userContracts);
+    setContracts(data.userContracts);
   }
 
   useEffect(() => {
-    console.log(userData);
+    // console.log(userData);
     if (Object.keys(userData).length !== 0) {
       fetchContracts();
     }
   }, [userData]);
 
-  const getReadableTime = (date: string) => {
-    var readable = new Date(date);
-    var m = readable.getMonth();
-    var d = readable.getDay();
-    var y = readable.getFullYear();
-
-    var mlong = months[m];
-    var fulldate = mlong + " " + d + ", " + y;
-    return fulldate;
-  };
-
   const showContract = (contract: contractProps) => {
     setIsShowContractModalOpen(!isShowContractModalOpen);
     setClickedContract(contract);
   };
+
+  useEffect(() => {
+    console.log('garvit');
+  }, [contracts])
+  
 
   return contracts.length === 0 ? (
     <NoContracts />
@@ -240,7 +106,7 @@ const Contracts = () => {
             <>
               <ContractCard contract={contract} showContract={showContract} key={index} />
               {clickedContract && isShowContractModalOpen ? (
-                <ShowContract contract={clickedContract} userData={userData} />
+                <ShowContract key={index} contract={clickedContract} userData={userData} />
               ) : null}
             </>
           );

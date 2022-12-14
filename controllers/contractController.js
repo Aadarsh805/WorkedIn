@@ -51,7 +51,7 @@ exports.getUserContracts = catchAsync(async (req, res) => {
   });
 });
 
-exports.getContract = catchAsync(async (req, res) => {
+exports.getContract = catchAsync(async (req, res, next) => {
   const contractId = req.params.contractId;
 
   const contract = await Contract.findById(contractId)
@@ -61,27 +61,35 @@ exports.getContract = catchAsync(async (req, res) => {
   // chek if contract is in-progress
   // if in-progress --> compare due date and current date and update to `delayed` if required
 
+  if (!contract) {
+    console.log('No contract');
+    return next(new AppError('No contract on this ID exist'))
+  }
+
   const contractDueDate = contract.dueDate;
+
   console.log(contract.dueDate);
 
   let date = new Date();
 
   console.log(date);
   console.log(date >= contractDueDate);
-  console.log(typeof date);
-  console.log(typeof contractDueDate);
+  // console.log(typeof date);
+  // console.log(typeof contractDueDate);
 
   if (contract.status === "in-progress") {
+
     if (contractDueDate <= date) {
-      const updatedContract = await Contract.findByIdAndUpdate(contract.id, {
+      contract = await Contract.findByIdAndUpdate(contract.id, {
         status: "delayed",
       });
-
-      res.status(200).json({
-        status: "success",
-        updatedContract,
-      });
     }
+
+    res.status(200).json({
+      status: "success",
+      contract,
+    });
+
   } else {
     res.status(200).json({
       status: "success",

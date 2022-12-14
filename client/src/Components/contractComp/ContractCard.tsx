@@ -191,7 +191,7 @@ const ContractCard = ({ contract, showContract }: contractCardProps) => {
   return (
     <Section>
       <ContractName>
-        <StatusStrip status={contract.status} />
+        {/* <StatusStrip status={contract.status} /> */}
         <h2>{contract.contractName}</h2>
         <BsArrow90DegRight />
       </ContractName>
@@ -209,8 +209,8 @@ const ContractCard = ({ contract, showContract }: contractCardProps) => {
           {contract.projectDescription.length > 300 ? "...." : null}
         </p>
         <MemberPics>
-          {contract.team.map((member) => {
-            return <img src={member.member.photo} alt="memberImg" />;
+          {contract.team.map((member,index) => {
+            return <img src={member.member.photo} alt="memberImg" key={index} />;
           })}
         </MemberPics>
       </ContractBrief>

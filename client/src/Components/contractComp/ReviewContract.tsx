@@ -1,9 +1,10 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
+import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import ContractBody from "./ContractBody";
 
 const Section = styled.div`
@@ -41,6 +42,7 @@ const Section = styled.div`
 interface reviewContractProps {
   user: userProps;
   contractId?: string;
+  closeReviewContractModal: any
 }
 
 interface member {
@@ -72,15 +74,18 @@ interface contractProps {
   _id: string;
 }
 
-const ReviewContract = ({ user, contractId }: reviewContractProps) => {
+const ReviewContract = ({ user, contractId, closeReviewContractModal }: reviewContractProps) => {
 
   const [contract, setContract] = useState<contractProps>();
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeReviewContractModal);
 
   async function fetchContract() {
     const { data } = await axios.get(`${BASE_URL}${contractEnd}${contractId}`, {
       headers: getHeaders(user.token ?? ""),
     });
-    console.log(data.contract);
+    console.log(data);
     const contractData = data.contract;
     setContract(contractData);
   }
@@ -92,7 +97,7 @@ const ReviewContract = ({ user, contractId }: reviewContractProps) => {
   }, []);
 
   return (
-    <Section>
+    <Section ref={wrapperRef} >
       {
         contract &&
       <ContractBody userData={user} contract={contract!} />

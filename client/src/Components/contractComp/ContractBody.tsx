@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components';
-import { userProps } from '../../utils/GlobalContants';
+import { months, userProps } from '../../utils/GlobalContants';
 import TeamMemberCard from './TeamMemberCard';
 
 
 const Header = styled.div`
   /* border: 1px solid red; */
+  position: relative;
   h1,
   h3,
   h4 {
@@ -75,6 +76,15 @@ const TeamRolesContainer = styled.div`
   grid-template-columns: auto auto;
 `;
 
+const ContractDates = styled.div`
+  position: absolute;
+  top: -0.8rem;
+  right: 0rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #faf8f1;
+`;
+
 interface member {
     name: string;
     _id: string;
@@ -113,12 +123,28 @@ const ContractBody = ({contract, userData}: contractBodyProps) => {
     const currentUser = contract.team.find(
         (member) => member.member._id === userData._id
       );
+
+      const getReadableTime = (ISODate: string) => {
+        const readable = new Date(ISODate);        
+        const month = readable.getMonth();
+        const date = readable.getDate();        
+        const year = readable.getFullYear();
+    
+        const monthLong = months[month];
+        const fulldate = monthLong + " " + date + ", " + year;
+        return fulldate;
+      };
+
   return (
     <>
     <Header>
         <h1>{contract.contractName}</h1>
         <h4>Created by</h4>
         <h3>{contract.lead.name}</h3>
+        <ContractDates>
+        {getReadableTime(contract.startDate.slice(0, 10))} -{" "}
+        {getReadableTime(contract.dueDate.slice(0, 10))}
+      </ContractDates>
       </Header>
       <Description>{contract.projectDescription}</Description>
       <MyRole>

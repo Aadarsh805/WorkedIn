@@ -9,6 +9,7 @@ import ManageMembers from "./ManageMembers";
 import CreateContract from "../contractComp/CreateContract";
 import ContractApproval from "../contractComp/ContractApproval";
 import ReviewContract from "../contractComp/ReviewContract";
+import UpdateContractModal from "../contractComp/UpdateContractModal";
 
 const Section = styled.div`
   border-left: 2px solid rgba(137,117,88,255);
@@ -94,6 +95,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const [updateServer, setupdateServer] = useState(false)
   const [invitePeople, setInvitePeople] = useState(false)
   const [reviewContract, setReviewContract] = useState(false)
+  const [updateContract, setUpdateContract] = useState(false)
 
   useEffect(() => {
     setupdateServer(false)
@@ -109,12 +111,20 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const closeInvitePeopleModal = () => {
     setInvitePeople(false)
   }
+
+  const closeReviewContractModal = () => {
+    setReviewContract(false)
+  }
+
+  const closeUpdateContractModal = () => {
+    setUpdateContract(false)
+  }
   
 
   return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
       <Members divHeight={selectedChat.contractApproved} >
-          <ChatOptions selectedChat={selectedChat} user={user} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} />
+          <ChatOptions selectedChat={selectedChat} user={user} setUpdateContract={setUpdateContract} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} updateContract={updateContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} />
         {selectedChat.users !== undefined &&
           (selectedChat.users as unknown as any[]).map((user) => {
             return (
@@ -138,7 +148,10 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         invitePeople ? <ManageMembers selectedChat={selectedChat} user={user} closeInvitePeopleModal={closeInvitePeopleModal} /> : null
       }
       {
-        reviewContract ? <ReviewContract user={user} contractId={selectedChat.contractId} /> : null
+        reviewContract ? <ReviewContract user={user} contractId={selectedChat.contractId} closeReviewContractModal={closeReviewContractModal} /> : null
+      }
+      {
+        updateContract ? <UpdateContractModal user={user} contractId={selectedChat.contractId!} closeUpdateContractModal={closeUpdateContractModal} /> : null
       }
     </Section>
 };

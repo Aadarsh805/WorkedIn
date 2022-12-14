@@ -19,22 +19,16 @@ interface statusStripProps {
 }
 
 const StatusStrip = ({ status }: statusStripProps) => {
-  const [stripColor, setStripColor] = useState("#c9d849");
-  switch (status) {
-    case "delayed":
-      setStripColor("#c9d849");
-      break;
-    case "completed":
-      setStripColor("green");
-      break;
-    case "broken":
-      setStripColor("red");
-      break;
-    default:
-      break;
+
+  const [stripColor, setStripColor] = useState("brown");
+
+  const pickColor = () => {
+    // let color;
+
+    
   }
 
-  return <Section stripColor={stripColor}></Section>;
+  return (<Section stripColor={stripColor}></Section>);
 };
 
 export default StatusStrip;
