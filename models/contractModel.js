@@ -32,6 +32,7 @@ const contractModel = mongoose.Schema({
                 default: false
             },
             review: {
+                //  ref data --> rating, description, userId, contractId, ratedUserId
                 type: Number,
                 default: 4.5,
                 min: [1, 'Rating must be above 1.0'],
@@ -49,7 +50,10 @@ const contractModel = mongoose.Schema({
     },
     prevDueDates: [
         {
-            prevDate: Date,
+            prevDate: {
+                type: Date,
+                default: Date.now() + 172800000
+            },
             delayReason: String
         }
     ],
@@ -61,7 +65,21 @@ const contractModel = mongoose.Schema({
     chatId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Chat',
-    }
+    },
+    githubLink: {
+        type: String,
+        default: ''
+    },
+    liveLink: {
+        type: String,
+        default: ''
+    },
+    projectImages: [
+        {
+            type: String,
+            default: ''
+        }
+    ]
 },
 { timestamps: true }
 )

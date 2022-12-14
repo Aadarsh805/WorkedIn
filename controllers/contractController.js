@@ -1,7 +1,7 @@
 const Chat = require("../models/chatModel");
 const Contract = require("../models/contractModel");
-const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
+const AppError = require('../utils/appError')
 
 exports.getAllContracts = catchAsync(async (req, res) => {
   const contracts = await Contract.find()
@@ -26,19 +26,19 @@ exports.getUserContracts = catchAsync(async (req, res) => {
     .populate("team.member", "name photo")
     .sort("-createdAt");
 
-    const date = new Date();
+  const date = new Date();
 
-  // we get an array 
+  // we get an array
   // iterate through every contract
   // if in-progress -> compare due date and current date and update to `delayed` if required
 
-  contracts.forEach(async contract => {
+  contracts.forEach(async (contract) => {
     const contractDueDate = contract.dueDate;
-    if (contract.status === 'in-progress') {
+    if (contract.status === "in-progress") {
       if (date >= contractDueDate) {
         let updatedContract = await Contract.findByIdAndUpdate(contract.id, {
-          status: 'delayed'
-        })
+          status: "delayed",
+        });
         contract = updatedContract;
       }
     }
@@ -58,41 +58,41 @@ exports.getContract = catchAsync(async (req, res) => {
     .populate("lead", "name photo")
     .populate("team.member", "name photo");
 
-    // chek if contract is in-progress
-    // if in-progress --> compare due date and current date and update to `delayed` if required
+  // chek if contract is in-progress
+  // if in-progress --> compare due date and current date and update to `delayed` if required
 
-    const contractDueDate = contract.dueDate; 
-    console.log(contract.dueDate);
+  const contractDueDate = contract.dueDate;
+  console.log(contract.dueDate);
 
-    let date = new Date();
-    
-    console.log(date);
-    console.log(date >= contractDueDate);
-    console.log(typeof(date));
-    console.log(typeof(contractDueDate));
+  let date = new Date();
 
-    if (contract.status === 'in-progress') {
-      if (contractDueDate <= date) {
-        const updatedContract = await Contract.findByIdAndUpdate(contract.id, {
-              status: 'delayed'
-        })
+  console.log(date);
+  console.log(date >= contractDueDate);
+  console.log(typeof date);
+  console.log(typeof contractDueDate);
 
-        res.status(200).json({
-          status: 'success',
-          updatedContract
-        })
-      } 
-    } else { 
+  if (contract.status === "in-progress") {
+    if (contractDueDate <= date) {
+      const updatedContract = await Contract.findByIdAndUpdate(contract.id, {
+        status: "delayed",
+      });
+
       res.status(200).json({
         status: "success",
-        contract
+        updatedContract,
       });
     }
+  } else {
+    res.status(200).json({
+      status: "success",
+      contract,
+    });
+  }
 });
 
 exports.initializeContract = catchAsync(async (req, res) => {
-
-  const { team, startDate, dueDate, contractName, projectDescription, chatId } = req.body;
+  const { team, startDate, dueDate, contractName, projectDescription, chatId } =
+    req.body;
   const userId = req.user.id;
 
   const contract = await Contract.create({
@@ -148,7 +148,6 @@ exports.initializeContract = catchAsync(async (req, res) => {
 });
 
 exports.acceptContract = catchAsync(async (req, res) => {
-
   const userId = req.user._id;
   const { chatId } = req.body;
 
@@ -204,9 +203,8 @@ exports.acceptContract = catchAsync(async (req, res) => {
 });
 
 exports.denyContract = catchAsync(async (req, res) => {
-
   const contractId = req.params.contractId;
-  const userId = req.user.id
+  const userId = req.user.id;
 
   const deniedContract = await Contract.updateOne(
     {
@@ -230,14 +228,34 @@ exports.denyContract = catchAsync(async (req, res) => {
   res.send(updatedContract);
 });
 
-exports.updateContract = catchAsync(async (req, res) => {
-
+exports.updateDueContract = catchAsync(async (req, res, next) => {
   const { newDueDate, reason } = req.body;
   const contractId = req.params.contractId;
-
+  
   const contract = await Contract.findById(contractId);
+    
 
-  console.log(contract.dueDate);
+  let date = new Date();
+
+  console.log(Date.parse(newDueDate) > Date.parse(date));
+  
+  const parsedNewDueDate = Date.parse(newDueDate);
+  const parsedCurrentDate = Date.parse(date)
+  const parsedStartingDate = Date.parse(contract.startDate)
+  const parsedDueDate = Date.parse(contract.dueDate)
+
+  console.log(parsedDueDate);
+  console.log(parsedNewDueDate);
+  
+  // check if prevDueDate and newDueDate arent similar
+  if (parsedNewDueDate === parsedDueDate) {
+    return next(new AppError("Enter a new Due Date"));
+  }
+
+  if (parsedNewDueDate < parsedCurrentDate || parsedNewDueDate < parsedStartingDate) {
+    return next(new AppError("Enter a logical new Due Date 🙄"));
+  }
+
 
   const newDueObj = {
     prevDate: contract.dueDate,
@@ -247,17 +265,63 @@ exports.updateContract = catchAsync(async (req, res) => {
   let newprevDueDatesArr = contract.prevDueDates;
   newprevDueDatesArr.push(newDueObj);
 
-  const updatedContract = await Contract.findByIdAndUpdate(
-    contractId,
-    {
-      dueDate: newDueDate,
-      prevDueDates: newprevDueDatesArr,
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  let updatedContract;
 
-  res.send(updatedContract);
+  if (contract.status === "delayed") {
+    updatedContract = await Contract.findByIdAndUpdate(
+      contractId,
+      {
+        dueDate: newDueDate,
+        prevDueDates: newprevDueDatesArr,
+        status: "in-progress",
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+  } else {
+    updatedContract = await Contract.findByIdAndUpdate(
+      contractId,
+      {
+        dueDate: newDueDate,
+        prevDueDates: newprevDueDatesArr,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+  }
+
+  res.status(200).json({
+    status: "success",
+    updatedContract,
+  });
 });
+
+exports.finishContract = catchAsync(async (req,res) => {
+  const { githubLink, liveLink, projectImages } = req.body;
+  const contractId = req.params.contractId;
+
+  if (!githubLink || !liveLink || !projectImages) {
+    return next(new AppError('Provide sufficient details to finish the project'))
+  }
+
+  const finishedContract = await Contract.findByIdAndUpdate(contractId, {
+    githubLink,
+    liveLink,
+    projectImages
+  })
+
+  res.status(200).json({
+    status: 'success',
+    finishedContract
+  })
+})
+
+// contractId --> 
+
+//  n members -- (n-1)*n
+
+//  After Finishing review, contract will ask to revoiew the members
