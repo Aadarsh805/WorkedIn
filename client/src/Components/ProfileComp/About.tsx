@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaPencilAlt } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
+import UpdateAboutModal from "./UpdateAboutModal";
 
 const Section = styled.div`
   box-sizing: border-box;
@@ -87,16 +88,26 @@ interface aboutProps {
 }
 
 const About = ({ userAbout, mail, portfolio }: aboutProps) => {
+
   const aboutSocialHandler = (social: string) => {
     navigator.clipboard.writeText(social)
   };
+
+  const [updateAbout, setUpdateAbout] = useState(false)
+
+  const closeUpdateAboutModal = () => {
+    setUpdateAbout(false)
+  }
+
 
   return (
     <Section>
       <AboutSection>
         <Header>
           <h2>About</h2>
+          <div onClick={() => setUpdateAbout(!updateAbout)} >
           <FaPencilAlt />
+          </div>
         </Header>
         <h4>{userAbout ? userAbout : "Tell us more about yourself"}</h4>
       </AboutSection>
@@ -126,6 +137,9 @@ const About = ({ userAbout, mail, portfolio }: aboutProps) => {
           </div>
         </div>
       </AboutHandlers>
+      {
+        updateAbout ? <UpdateAboutModal closeUpdateAboutModal={closeUpdateAboutModal} userAbout={userAbout} /> : null
+      }
     </Section>
   );
 };
