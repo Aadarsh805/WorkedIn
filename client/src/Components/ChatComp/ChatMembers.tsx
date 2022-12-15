@@ -49,6 +49,7 @@ const Member = styled.div`
     height: 38px;
     border-radius: 50%;
     margin-right: 0.5rem;
+    object-fit: cover;
     -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);

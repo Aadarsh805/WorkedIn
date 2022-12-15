@@ -79,9 +79,10 @@ const SkillBadge = styled.div`
 
 interface skillProps {
   skillArr: Array<string>;
+  userToken: string
 }
 
-const Skills = ({ skillArr }: skillProps) => {
+const Skills = ({ skillArr, userToken }: skillProps) => {
   const [updateSkils, setUpdateSkils] = useState(false);
 
   const closeUpdateSkillHandler = () => {
@@ -107,7 +108,7 @@ const Skills = ({ skillArr }: skillProps) => {
           })}
       </SkillBadges>
       {
-        updateSkils ? <UpdateSkills modalFunction={closeUpdateSkillHandler} userSkills={skillArr}  /> : null
+        updateSkils ? <UpdateSkills userToken={userToken} modalFunction={closeUpdateSkillHandler} userSkills={skillArr}  /> : null
       }
     </Section>
   );

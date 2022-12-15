@@ -85,9 +85,10 @@ interface aboutProps {
   userAbout: string;
   mail: string;
   portfolio: string;
+  userToken: string
 }
 
-const About = ({ userAbout, mail, portfolio }: aboutProps) => {
+const About = ({ userAbout, mail, portfolio, userToken }: aboutProps) => {
 
   const aboutSocialHandler = (social: string) => {
     navigator.clipboard.writeText(social)
@@ -138,7 +139,7 @@ const About = ({ userAbout, mail, portfolio }: aboutProps) => {
         </div>
       </AboutHandlers>
       {
-        updateAbout ? <UpdateAboutModal closeUpdateAboutModal={closeUpdateAboutModal} userAbout={userAbout} mail={mail} /> : null
+        updateAbout ? <UpdateAboutModal userToken={userToken} closeUpdateAboutModal={closeUpdateAboutModal} userAbout={userAbout} mail={mail} /> : null
       }
     </Section>
   );

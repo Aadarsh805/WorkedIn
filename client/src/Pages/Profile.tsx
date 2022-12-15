@@ -95,16 +95,17 @@ const Profile = () => {
         <Navbar />
         <Section>
           <UserDetails>
-            <Intro user={user} />
+            <Intro user={user} userToken={localUser.token!} />
             <About
               userAbout={user.about!}
+              userToken={localUser.token!}
               mail={user.email!}
               portfolio={user.personalWebsite!}
             />
             {user.skills?.length !== 0 ? (
-              <Skills skillArr={user.skills!} />
+              <Skills skillArr={user.skills!} userToken={localUser.token!} />
             ) : (
-              <NoSkill />
+              <NoSkill userToken={localUser.token!} />
             )}
             <MyProjects>
               <h1>My Past Projects</h1>

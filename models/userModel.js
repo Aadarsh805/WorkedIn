@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   tagline: {
     type: String,
     default: '',
-    maxlength: [25, 'A Users tagline must have less or equal then 25 characters'],
+    maxlength: [50, 'A Users tagline must have less or equal then 25 characters'],
   },
   about: {
     type: String,

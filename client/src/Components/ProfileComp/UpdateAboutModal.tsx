@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import { BASE_URL, userEnd } from "../../utils/APIRoutes";
+import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
@@ -119,19 +122,33 @@ const UpdateBtn = styled.div`
 interface updateAboutProps {
   closeUpdateAboutModal: any;
   userAbout: string;
-  mail: string
+  mail: string;
+  userToken: string
 }
 
 const UpdateAboutModal = ({
   closeUpdateAboutModal,
   userAbout,
-  mail
+  mail,
+  userToken
 }: updateAboutProps) => {
+
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, closeUpdateAboutModal);
 
-  const [updateAbout, setUpdateAbout] = useState(userAbout !== '' ? userAbout : '');
+  const [about, setAbout] = useState(userAbout !== '' ? userAbout : '');
   const [email, setEmail] = useState(mail !== '' ? mail : '');
+
+  const updateAboutHandler = async () => {
+    const { data } = await axios.patch(`${BASE_URL}${userEnd}me/about`, {
+      email,
+      about
+    }, {
+      headers: getHeaders(userToken)
+    })
+    console.log(data);
+    window.location.reload();
+  } 
 
   return (
     <Section ref={wrapperRef}>
@@ -139,13 +156,13 @@ const UpdateAboutModal = ({
       <h2>About</h2>
       <textarea
         placeholder="Tell us more about yourself"
-        value={updateAbout}
-        onChange={(e) => setUpdateAbout(e.target.value)}
+        value={about}
+        onChange={(e) => setAbout(e.target.value)}
       />
       <h2>Email</h2>
       <input type="email" placeholder="workedin@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
       <UpdateBtn>
-        <button>Update About</button>
+        <button onClick={updateAboutHandler} >Update About</button>
       </UpdateBtn>
     </Section>
   );

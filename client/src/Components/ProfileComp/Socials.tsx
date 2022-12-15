@@ -46,6 +46,7 @@ const Section = styled.div`
     margin: auto 0;
     margin-right: 1rem;
     fill: rgba(236,227,212,255);
+    /* fill: #3a421b; */
     /* border: 1px solid red; */
     &:hover {
       animation: ${animateSvg} 1s linear;

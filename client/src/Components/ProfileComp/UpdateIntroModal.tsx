@@ -1,6 +1,9 @@
+import axios from "axios";
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
+import { BASE_URL, userEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
+import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
@@ -14,7 +17,7 @@ const Section = styled.div`
   transform: translate(-50%, -53.5%);
   border-radius: 10px;
   overflow-y: auto;
-
+  z-index: 2;
   box-sizing: border-box;
   padding: 2rem 2rem 1.5rem;
 
@@ -91,6 +94,7 @@ const UpdateImage = styled.div`
     height: 8rem;
     border-radius: 50%;
     margin-bottom: 1.25rem;
+    object-fit: cover;
   }
 `;
 
@@ -196,16 +200,19 @@ const Upload = styled.div`
 
 interface updateIntroProps {
   user: userProps;
+  userToken: string;
   closeUpdateIntroModal: any;
 }
 
 const UpdateIntroModal = ({
   user,
+  userToken,
   closeUpdateIntroModal,
 }: updateIntroProps) => {
 
   const [name, setName] = useState(user.name);
   const [tagline, setTagline] = useState(user.tagline !== '' ? user.tagline : '')
+  const [photo, setPhoto] = useState(user.photo)
   const [github, setGithub] = useState(user.github !== '' ? user.github : '')
   const [linkedin, setLinkedin] = useState(user.linkedin !== '' ? user.linkedin : '')
   const [discord, setDiscord] = useState(user.discord !== '' ? user.discord : '')
@@ -215,16 +222,61 @@ const UpdateIntroModal = ({
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, closeUpdateIntroModal);
 
+  const postImage = (pics: FileList | null) => {
+    console.log(pics);
+    if (!pics) return;
+    const pic = pics[0];
+    if (pic.type === "image/jpeg" || pic.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pic);
+      data.append("upload_preset", "chat-app");
+      data.append("cloud_name", "dkgrvhkxb");
+      fetch("https://api.cloudinary.com/v1_1/dkgrvhkxb/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPhoto(data.url.toString());
+          console.log(data);
+          console.log(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("errrrrrorrrr");
+    }
+  };
+
+  const updateProfileHandler = async () => {
+    const { data } = await axios.patch(`${BASE_URL}${userEnd}me/profile`, {
+      name,
+      photo,
+      tagline,
+      github,
+      linkedin,
+      discord,
+      twitter,
+      personalWebsite
+    }, {
+      headers: getHeaders(userToken)
+    })
+
+    console.log(data);
+    window.location.reload();
+  }
+
   return (
     <Section ref={wrapperRef}>
       <h1>Update Profile</h1>
       <UpdateProfile>
         <UpdateImage>
-          <img src={user.photo} alt="" />
+          <img src={photo} alt="" />
           <Upload>
             <div className="input-container">
               Choose a photo
-              <input type="file" accept="image/*" />
+              <input type="file" accept="image/*" onChange={(e) => postImage(e.target.files)}/>
             </div>
           </Upload>
         </UpdateImage>
@@ -262,7 +314,7 @@ const UpdateIntroModal = ({
         </UpdateSocial>
       </UpdateSocials>
       <UpdateBtn>
-        <button>Update Profile</button>
+        <button onClick={updateProfileHandler} >Update Profile</button>
       </UpdateBtn>
     </Section>
   );

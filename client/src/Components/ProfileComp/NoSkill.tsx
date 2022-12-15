@@ -52,7 +52,11 @@ const AddSkill = styled.div`
   }
 `;
 
-const NoSkill = () => {
+interface noSkillProps {
+  userToken: string
+}
+
+const NoSkill = ({userToken}: noSkillProps) => {
 
   const [updateSkillModal, setUpdateSkillModal] = useState(false);
 
@@ -67,7 +71,7 @@ const NoSkill = () => {
         <GrAddCircle />
       </AddSkill>
       {
-        updateSkillModal ? <UpdateSkills modalFunction={closeUpdateSkillHandler} userSkills={[]}  /> : null
+        updateSkillModal ? <UpdateSkills userToken={userToken} modalFunction={closeUpdateSkillHandler} userSkills={[]}  /> : null
       }
     </Section>
   );

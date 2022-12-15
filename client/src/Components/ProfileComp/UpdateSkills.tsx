@@ -1,6 +1,9 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import { GrFormClose } from "react-icons/gr";
 import styled from "styled-components";
+import { BASE_URL, userEnd } from "../../utils/APIRoutes";
+import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
@@ -131,10 +134,11 @@ const UpdateBtn = styled.div`
 
 interface skillModalProps {
   modalFunction: any;
-  userSkills: Array<string>
+  userSkills: Array<string>;
+  userToken: string
 }
 
-const UpdateSkills = ({ modalFunction, userSkills }: skillModalProps) => {
+const UpdateSkills = ({ modalFunction, userSkills, userToken }: skillModalProps) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, modalFunction);
 
@@ -147,6 +151,17 @@ const UpdateSkills = ({ modalFunction, userSkills }: skillModalProps) => {
       setSkill("");
     }
   };
+
+  const updateSkillHandler = async () => {
+    const { data } = await axios.patch(`${BASE_URL}${userEnd}me/skills`, {
+      skills: skillArr
+    }, {
+      headers: getHeaders(userToken)
+    })
+    console.log(data);
+    window.location.reload();    
+  }
+
   return (
     <Section ref={wrapperRef}>
       <h1>Add Skills</h1>
@@ -170,7 +185,7 @@ const UpdateSkills = ({ modalFunction, userSkills }: skillModalProps) => {
         onKeyDown={skillHandler}
       />
       <UpdateBtn>
-        <button>Update Skills</button>
+        <button onClick={updateSkillHandler} >Update Skills</button>
       </UpdateBtn>
     </Section>
   );

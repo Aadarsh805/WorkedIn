@@ -96,6 +96,7 @@ const MemberPics = styled.div`
     height: 3rem;
     margin: 0 0.5rem 0.5rem;
     border-radius: 50%;
+    object-fit: cover;
     -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
