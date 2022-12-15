@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { FaPencilAlt } from "react-icons/fa";
 import styled from "styled-components";
 import { userProps } from "../../utils/GlobalContants";
-import { Pen } from "../generalComp/SVG";
 import Socials from "./Socials";
+import UpdateIntroModal from "./UpdateIntroModal";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -14,12 +15,13 @@ const Section = styled.div`
   width: 100%;
   background-color: #3a421b;
   border-radius: 10px;
+  /* position: relative; */
 `;
 
 const ImageContainer = styled.div`
   position: relative;
   transition: all 0.2s linear;
-  /* border: 1px solid red; */
+  /* border: 1px solid reds; */
 
   img {
     width: 9rem;
@@ -67,7 +69,9 @@ const DetailContainer = styled.div`
 
   h1 {
     /* margin-top: 2.5rem; */
-    font-size: 2rem;
+    font-size: 1.6rem;
+    white-space: nowrap;
+    overflow: hidden;
     /* margin-top: 0.3vw; */
     margin-right: 1rem;
     text-transform: capitalize;
@@ -87,13 +91,33 @@ const Designation = styled.h3`
   /* border: 1px solid white; */
 `;
 
+const UpdateIntro = styled.div`
+    /* border: 1px solid white; */
+  svg{
+    padding: 4px;
+    width: 1.4rem;
+    border-radius: 4px;
+    height: 1.4rem;
+    fill: rgba(236, 227, 212, 255);
+    transition: all 0.15s linear;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(236, 227, 212, 255);
+      fill: #3a421b;
+    }
+  }
+`
+
 interface introProps {
   user: userProps;
 }
 
 const Intro = ({ user }: introProps) => {
-  let socialProps;
 
+  const [updateIntro, setUpdateIntro] = useState(false)
+  
+  let socialProps;
   if (user !== undefined) {
     socialProps = {
       discord: user.discord,
@@ -102,6 +126,10 @@ const Intro = ({ user }: introProps) => {
       twitter: user.twitter,
       portfolio: user.personalWebsite
     };
+  }
+
+  const closeUpdateIntroModal = () => {
+    setUpdateIntro(false)
   }
 
   return (
@@ -118,6 +146,12 @@ const Intro = ({ user }: introProps) => {
           {user.tagline ? user.tagline : "Your Tagline ..."}
         </Designation>
       </DetailContainer>
+      <UpdateIntro onClick={() => setUpdateIntro(!updateIntro)} >
+      <FaPencilAlt />
+      </UpdateIntro>
+      {
+        updateIntro ? <UpdateIntroModal user={user} closeUpdateIntroModal={closeUpdateIntroModal} /> : null
+      }
     </Section>
   );
 };
