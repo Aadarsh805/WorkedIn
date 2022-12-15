@@ -102,7 +102,7 @@ const Profile = () => {
               portfolio={user.personalWebsite!}
             />
             {user.skills?.length !== 0 ? (
-              <Skills skillArr={user.skills} />
+              <Skills skillArr={user.skills!} />
             ) : (
               <NoSkill />
             )}

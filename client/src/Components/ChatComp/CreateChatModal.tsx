@@ -167,7 +167,7 @@ const CreateChatModal = (props: chatModalProps) => {
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet qui accusantium, quibusdam quam neque magnam.</p>
         <form onSubmit={handleSubmit} >
             <input type="text" placeholder='Chat Name' value={chatName} onChange={(e) => setChatName(e.target.value)} />
-            <input type="text" name="" id="" placeholder="Add members to group" onChange={(e) => handleSearch(e.target.value)} />
+            <input type="text" placeholder="Add members to group" onChange={(e) => handleSearch(e.target.value)} />
             <UserBadges>
             {
               selectedUsers.map((user,index) => {

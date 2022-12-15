@@ -26,6 +26,7 @@ exports.searchUser = catchAsync(async (req,res,next) => {
 exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User, 'pastProjects pastProjects.team.member');
 exports.updateProfile = factory.updateUser(excludedFields.excludeForProfile);
+exports.updateAbout = factory.updateUser(excludedFields.excludeForAbout);
 exports.updateSkills = factory.updateUser(excludedFields.excludeForSkills);
 
 //  for dev only
@@ -36,11 +37,3 @@ exports.deleteUsers = async (req,res) => {
     status: 'success',
   })
 }
-
-// Name | pic | tagline |  socials | contracts | skills 
-
-//  update profile
-// update skills
-
-
-//  skills --> 

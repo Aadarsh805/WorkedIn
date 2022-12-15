@@ -53,19 +53,21 @@ const AddSkill = styled.div`
 `;
 
 const NoSkill = () => {
-  const [updateSkillModal, setUpdateSkillModal] = useState(false)
-  const updateSkillHandler = () => {
-    setUpdateSkillModal(!updateSkillModal)
+
+  const [updateSkillModal, setUpdateSkillModal] = useState(false);
+
+  const closeUpdateSkillHandler = () => {
+    setUpdateSkillModal(false)
   }
 
   return (
     <Section>
       <h2>Show your skills to people</h2>
-      <AddSkill onClick={updateSkillHandler} >
+      <AddSkill onClick={() => setUpdateSkillModal(!updateSkillModal)} >
         <GrAddCircle />
       </AddSkill>
       {
-        updateSkillModal ? <UpdateSkills modalFunction={updateSkillHandler}  /> : null
+        updateSkillModal ? <UpdateSkills modalFunction={closeUpdateSkillHandler} userSkills={[]}  /> : null
       }
     </Section>
   );

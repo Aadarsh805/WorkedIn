@@ -138,7 +138,7 @@ const About = ({ userAbout, mail, portfolio }: aboutProps) => {
         </div>
       </AboutHandlers>
       {
-        updateAbout ? <UpdateAboutModal closeUpdateAboutModal={closeUpdateAboutModal} userAbout={userAbout} /> : null
+        updateAbout ? <UpdateAboutModal closeUpdateAboutModal={closeUpdateAboutModal} userAbout={userAbout} mail={mail} /> : null
       }
     </Section>
   );

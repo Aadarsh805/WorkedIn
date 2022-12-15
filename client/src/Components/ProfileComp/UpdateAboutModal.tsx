@@ -7,7 +7,7 @@ const Section = styled.div`
   top: 50%;
   left: 50%;
   width: 60vw;
-  max-height: 70vh;
+  height: 75vh;
   box-sizing: border-box;
   background-color: #735f32;
   /* background-color: #faf8f1; */
@@ -27,11 +27,18 @@ const Section = styled.div`
     }
   }
 
-  h2 {
+  h1 {
     color: #faf8f1;
     font-size: 1.8rem;
     font-weight: 600;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  h2 {
+    color: #faf8f1;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
   }
 
   textarea {
@@ -39,10 +46,10 @@ const Section = styled.div`
     border-radius: 10px;
     outline: none;
     border: none;
-    width: 100%;
+    width: 90%;
     box-sizing: border-box;
     height: 10rem;
-    margin: 0.6rem 0 0rem;
+    margin: 0rem 0 0.6rem;
     font-size: 1.1rem;
     background-color: #faf8f1;
     color: rgb(58, 66, 27);
@@ -63,10 +70,27 @@ const Section = styled.div`
       }
     }
   }
+
+  input {
+    box-sizing: border-box;
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    width: 90%;
+    background: #faf8f1;
+    color: rgb(58, 66, 27);
+
+    &::placeholder {
+      color: rgb(58, 66, 27);
+    }
+  }
 `;
 
 const UpdateBtn = styled.div`
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -95,27 +119,33 @@ const UpdateBtn = styled.div`
 interface updateAboutProps {
   closeUpdateAboutModal: any;
   userAbout: string;
+  mail: string
 }
 
 const UpdateAboutModal = ({
   closeUpdateAboutModal,
   userAbout,
+  mail
 }: updateAboutProps) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, closeUpdateAboutModal);
 
-  const [updateAbout, setUpdateAbout] = useState(userAbout);
+  const [updateAbout, setUpdateAbout] = useState(userAbout !== '' ? userAbout : '');
+  const [email, setEmail] = useState(mail !== '' ? mail : '');
 
   return (
     <Section ref={wrapperRef}>
+      <h1>Update About</h1>
       <h2>About</h2>
       <textarea
         placeholder="Tell us more about yourself"
         value={updateAbout}
         onChange={(e) => setUpdateAbout(e.target.value)}
       />
+      <h2>Email</h2>
+      <input type="email" placeholder="workedin@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
       <UpdateBtn>
-        <button>Update</button>
+        <button>Update About</button>
       </UpdateBtn>
     </Section>
   );
