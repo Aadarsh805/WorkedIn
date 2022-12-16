@@ -11,6 +11,16 @@ const Section = styled.div`
 width: 84vw;
 padding: 2rem;
 box-sizing: border-box;
+overflow: auto;
+
+&::-webkit-scrollbar {
+    width: 0.4rem;
+    &-thumb {
+      background-color: #fff;
+      width: 0.1rem;
+      border-radius: 1rem;
+    }
+}
 `
 
 const SearchUser = styled.div`
@@ -42,7 +52,7 @@ input{
 `
 
 const SuggestedUsers = styled.div`
-  border: 1px solid #fff;
+  /* border: 1px solid #fff; */
 `
 
 const Users = styled.div`
@@ -51,8 +61,12 @@ const Users = styled.div`
 `
 
 const Searches = styled.div`
-  /* display: ; */
-  border: 1px solid white;
+  /* border: 1px solid white; */
+  width: 80%;
+  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: auto auto;
+
 `
 
 interface searchResultProps {
@@ -99,6 +113,13 @@ const NoSelectedChat = ({user, setAccessedChat, setSelectedChat, setAllChats, al
 
 
   const handleSearch = async (query: string) => {
+    console.log(query === '');
+    
+    if (query === '') {
+      setSearchResult([])  
+      return;
+    }
+
     const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
       headers: getHeaders(user.token ?? '')
     })
@@ -136,6 +157,7 @@ const NoSelectedChat = ({user, setAccessedChat, setSelectedChat, setAllChats, al
         </SearchUser>
         <SuggestedUsers>
           <h2>Suggested Devs for you</h2>
+          <h3>🛠️ API In Progress 🛠️</h3>
           <Users>
             
           </Users>

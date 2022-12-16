@@ -7,52 +7,94 @@ import { getHeaders } from "../../utils/helperFunction";
 
 import formatDistance from "date-fns/formatDistance";
 
+interface ChatMessageStylesProps {
+  singleChat: boolean
+}
+
 const Section = styled.div`
   /* border: 1px solid yellow; */
   height: calc(100vh - 2.5rem);
-  /* width: 100%; */
-  width: 68vw;
+  width: ${(props: ChatMessageStylesProps) => props.singleChat ? '84vw' : '68vw'};
   position: relative;
   overflow: hidden;
   overflow-y: hidden;
 `;
 
 const Messages = styled.div`
+  /* border: 4px solid purple; */
   height: calc(99vh - 5.5rem);
-  /* border: 1px solid purple; */
   padding: 1rem;
+  padding-top: 1.5rem;
   box-sizing: border-box;
   overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+    &-thumb {
+      background-color: #fff;
+      /* background-color: rgba(236, 227, 212, 255); */
+      width: 0.1rem;
+      border-radius: 1rem;
+    }
+}
 `;
 
 const Message = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
+  width: 95%;
   /* align-items: center; */
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 `;
 
 const ImageContainer = styled.div`
   margin-right: 0.7rem;
+  /* border: 1px solid blue; */
   img {
+    /* border: 1px solid red; */
     border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
+    width: 2.6rem;
+    height: 2.6rem;
     object-fit: cover;
   }
 `;
 
 const SenderDetails = styled.div`
-  border: 1px solid red;
-
+  /* border: 1px solid red; */
+  
   div {
+    /* border: 1px solid red; */
     display: flex;
-    align-items: center;
-    /* justify-content: center; */
+
+    /* align-items: flex-end; */
 
     h4 {
-      margin-right: 0.6rem;
+      margin: 0;
+      padding: 0;
+      font-size: 1rem;
+      line-height: 100%;
+      margin-right: 0.7rem;
+      /* border: 1px solid red; */
     }
+    
+    h6{
+      display: flex;
+      /* font-weight: 400; */
+      line-height: 100%;
+      align-items: flex-end;
+      /* border: 1px solid red; */
+    }
+  }
+
+  h5{
+    /* border: 1px solid red; */
+    margin-top: 0.2rem;
+    /* color: ; */
+    /* color: rgba(236, 227, 212, 255); */
+    /* color:#735F32; */
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 160%;
   }
 `;
 
@@ -169,7 +211,7 @@ const ChatMessages = ({ user, selectedChat }: chatMessageProps) => {
   };
 
   return (
-    <Section>
+    <Section singleChat={selectedChat.chatName === "one_On_one"} >
       <Messages>
         {messages.map((message) => {
           const date = formatDistance(new Date(message.createdAt), new Date());
@@ -181,7 +223,7 @@ const ChatMessages = ({ user, selectedChat }: chatMessageProps) => {
               <SenderDetails>
                 <div>
                   <h4>{message.sender.name}</h4>
-                  <h6>{date}</h6>
+                  <h6>{date} ago</h6>
                 </div>
                 <h5>{message.content}</h5>
               </SenderDetails>

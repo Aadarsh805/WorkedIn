@@ -125,6 +125,11 @@ const CreateChatModal = (props: chatModalProps) => {
   useOutsideAlerter(wrapperRef, props.closeCreatChatModal)
 
   const handleSearch = async (query: string) => {
+    if (query === '') {
+      setSearchResult([])  
+      return;
+    }
+    
     const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
       headers: getHeaders(props.user.token ?? '')
     })
