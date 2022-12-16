@@ -51,8 +51,8 @@ const chatModel = mongoose.Schema(
       {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    },
-  ],
+      },
+    ],
     contractSuccessful: {
       type: Boolean,
       default: false

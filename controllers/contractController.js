@@ -321,6 +321,43 @@ exports.updateDueContract = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.deleteContract = catchAsync(async (req,res,next) => {
+
+  const contractId = req.params.contractId;
+
+  const contract = await Contract.findById(contractId)
+
+  if (contract.lead.id !== req.user.id) {
+    return next(new AppError('Only Contract Lead can delete the contract'))
+  }
+
+  const chatId = contract.chatId;
+  const chat = await Chat.findById(chatId);
+  const contractApproved = chat.contractApproved;
+
+  if (contractApproved) {
+    return next(new AppError('An Approved Contract cannot be deleted'))
+  }
+
+  const updatedChat = await Chat.findByIdAndUpdate(chatId, {
+    contracted: false,
+    contractId: undefined,
+    contractAprovedBy: [],
+    contractApproved: false,
+    contractFinishedApprovedBy: [],
+  })
+
+  const deletedContract = await Contract.findByIdAndDelete(contractId)
+
+  res.json({
+    status: 'success',
+    updatedChat,
+    deletedContract
+  })
+})
+
+
+
 exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
   const { githubLink, liveLink, projectImages } = req.body;
   const contractId = req.params.contractId;
@@ -423,11 +460,31 @@ exports.finishContract = catchAsync(async (req,res) => {
   })
 })
 
-// exports.leaveContract = await catchAsync(async (req,res) => {
-// get info --> why leaving (reason) | what you didnt liked in the group | 
-// update contract status --> broken
-// 
-// })
+// leave contract
+
+exports.leaveContract = await catchAsync(async (req,res) => {
+  const { reason, chatId } = req.body;
+  const contractId = req.params.contractId;
+
+  const brokenContract = await Contract.findByIdAndUpdate(contractId, {
+    contractBroken: {
+      brokenBy: req.user.id,
+      reason
+    },
+    status: 'broken'
+  })
+
+  const updatedChat = await Chat.findByIdAndUpdate(chatId, {
+    contractApproved: false
+  })
+
+  res.status(200).json({
+    status: 'success',
+    updatedChat,
+    brokenContract
+  })
+
+})
 
 // exports.denyFinishContract = catchAsync(async (req,res) => {
 // // feature to be added in future
