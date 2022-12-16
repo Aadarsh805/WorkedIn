@@ -157,7 +157,7 @@ const CreateChatModal = (props: chatModalProps) => {
       headers: getHeaders(props.user.token ?? '')
     })
 
-    // console.log(data);
+    console.log(data);
     window.location.reload();
   }
 

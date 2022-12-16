@@ -1,5 +1,10 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { BASE_URL, chatEnd, searchUserEnd } from '../../utils/APIRoutes'
+import { userProps } from '../../utils/GlobalContants'
+import { getHeaders } from '../../utils/helperFunction'
+import SearchedUser from './SearchedUser'
 
 const Section = styled.div`
 /* border: 1px solid red; */
@@ -45,11 +50,89 @@ const Users = styled.div`
   grid-template-columns: auto auto;
 `
 
-const NoSelectedChat = () => {
+const Searches = styled.div`
+  /* display: ; */
+  border: 1px solid white;
+`
+
+interface searchResultProps {
+  _id: string,
+  name: string,
+  photo: string
+}
+
+interface groupMemberProps {
+  _id: string;
+  name: string;
+  photo: string;
+}
+
+interface chatObj {
+  chatName?: string;
+  contracted?: Boolean;
+  chatPhoto?: string;
+  createdAt?: string;
+  groupAdmin?: {
+    _id?: string;
+    name?: string;
+    photo?: string;
+  };
+  isGroupChat?: Boolean;
+  users?: Array<groupMemberProps>;
+  _id?: string;
+  contractId?: string;
+  contractAprovedBy: Array<string>;
+  contractApproved: Boolean
+}
+
+interface noSelectedChatProps {
+  user: userProps,
+  setAccessedChat: React.Dispatch<React.SetStateAction<chatObj | undefined>>,
+  setSelectedChat: React.Dispatch<React.SetStateAction<chatObj | undefined>>,
+  setAllChats:  React.Dispatch<React.SetStateAction<chatObj[]>>,
+  allChats: Array<chatObj>
+}
+
+const NoSelectedChat = ({user, setAccessedChat, setSelectedChat, setAllChats, allChats}: noSelectedChatProps) => {
+
+  const [searchResult, setSearchResult] = useState<Array<searchResultProps>>([]);
+
+
+  const handleSearch = async (query: string) => {
+    const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
+      headers: getHeaders(user.token ?? '')
+    })
+    console.log(data);
+    setSearchResult(data)
+  }
+
+
+  const accessChat = async (userToAccess: searchResultProps) => {
+
+      const { data } = await axios.post(`${BASE_URL}${chatEnd}`, { 
+        userId: userToAccess._id
+       }, {
+        headers: getHeaders(user.token ?? '')
+      });
+
+      console.log(data.chat);
+
+      setAccessedChat(data.chat)
+      setSelectedChat(data.chat)
+      if (!allChats.find((chat) => chat._id === data.chat.id)) setAllChats([data.chat, ...allChats]);  
+  };
+
   return (
     <Section>
         <SearchUser>
-        <input type="text" placeholder='Search Users ...'/>
+        <input type="text" placeholder='Search Users ...' onChange={(e) => handleSearch(e.target.value)} />
+        <Searches>
+          {
+            searchResult.map((user,index) => {
+              return <SearchedUser key={index} user={user} onClickFunc={accessChat} />
+            })
+          }
+        </Searches>
         </SearchUser>
         <SuggestedUsers>
           <h2>Suggested Devs for you</h2>

@@ -126,6 +126,7 @@ const GroupChatButton = styled.div`
 interface allChatProps {
   user: userProps;
   setSelectedChat: any;
+  allChats: Array<chatObj>
 }
 
 interface groupMemberProps {
@@ -134,42 +135,27 @@ interface groupMemberProps {
   photo: string;
 }
 
-interface chatsArr {
-  chatName: string;
-  contracted: Boolean;
-  chatPhoto: string;
-  createdAt: string;
-  groupAdmin: {
-    _id: string;
-    name: string;
-    photo: string;
+interface chatObj {
+  chatName?: string;
+  contracted?: Boolean;
+  chatPhoto?: string;
+  createdAt?: string;
+  groupAdmin?: {
+    _id?: string;
+    name?: string;
+    photo?: string;
   };
-  isGroupChat: Boolean;
-  users: groupMemberProps;
-  _id: string;
-  contractId: string;
+  isGroupChat?: Boolean;
+  users?: Array<groupMemberProps>;
+  _id?: string;
+  contractId?: string;
   contractAprovedBy: Array<string>;
   contractApproved: Boolean
 }
 
-const AllChats = ({ user, setSelectedChat }: allChatProps) => {
-  const [allChats, setAllChats] = useState<Array<chatsArr>>([]);
+const AllChats = ({ user, setSelectedChat, allChats }: allChatProps) => {
+
   const [isCreateChatModalOpen, setIsCreateChatModalOpen] = useState(false);
-
-  async function fetchUserChats() {
-    const { data } = await axios.get(`${BASE_URL}${chatEnd}`, {
-      headers: getHeaders(user.token ?? ""),
-    });
-    // console.log(data.chats);
-    setAllChats(data.chats);
-  }
-
-  useEffect(() => {
-    // console.log(user.token);
-    if (user.token) {
-      fetchUserChats();
-    }
-  }, [user.token]);
 
   const closeCreatChatModal = () => {
     console.log("Lol");
@@ -180,7 +166,6 @@ const AllChats = ({ user, setSelectedChat }: allChatProps) => {
     <Section>
       <Chats>
 
-      
       {allChats.map((chat, index) => {
         if (chat.chatName === "one_On_one") {
           const chatUsers = chat.users;
