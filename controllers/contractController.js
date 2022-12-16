@@ -427,12 +427,6 @@ exports.acceptFinishContract = catchAsync(async (req,res,next) => {
 exports.finishContract = catchAsync(async (req,res) => {
   const contractId = req.params.contractId;
 
-  // check if every contract user has approved approval
-  // if true --> 
-  // update -->
-  // chat --> contractSuccessful --> true 
-  // contract --> status --> success
-
   const contract = await Contract.findById(contractId)
 
   if (req.user.id !== contract.lead.id) {
@@ -460,7 +454,6 @@ exports.finishContract = catchAsync(async (req,res) => {
   })
 })
 
-// leave contract
 
 exports.leaveContract = await catchAsync(async (req,res) => {
   const { reason, chatId } = req.body;
