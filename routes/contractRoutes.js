@@ -17,7 +17,10 @@ router.route('/:contractId').get(contractController.getContract)
 router.route('/:contractId').patch(contractController.updateDueContract)
 router.route('/:contractId/accept').patch(contractController.acceptContract)
 router.route('/:contractId/deny').patch(contractController.denyContract)
-router.route('/:contractId/finish').patch(contractController.initialiseFinishContract)
+router.route('/:contractId/finish/initialise').patch(contractController.initialiseFinishContract)
+router.route('/:contractId/finish/accept').patch(contractController.acceptFinishContract)
+router.route('/:contractId/finish/complete').patch(contractController.finishContract)
+
 
 module.exports = router;
 

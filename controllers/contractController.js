@@ -335,36 +335,34 @@ exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
     return next(new AppError('Only the Contract lead the initialise to finish contract'))
   }
 
-  // take chat id
-  // if contract is not contract Approved return
   const chatId = contract.chatId;
-
   const chat = await Chat.findById(chatId);
 
   if(!chat.contractApproved){
     return next(new AppError('The contract isnt approved by members'))
   }
 
-  console.log('Lolllllllll');
-
   const finishedContract = await Contract.findByIdAndUpdate(contractId, {
     githubLink,
     liveLink,
     projectImages,
     finishContractInitiated: true,
-    $push: { finishedApprovedBy: req.user.id }
+  });
+  
+  const updatedChat = await Chat.findByIdAndUpdate(chatId, {
+    $push: { contractFinishedApprovedBy: req.user.id }
   })
-
-  console.log(finishedContract);
 
   res.status(200).json({
     status: 'success',
+    updatedChat,
     finishedContract
   })
 });
 
+
 exports.acceptFinishContract = catchAsync(async (req,res,next) => {
-  
+
   const contractId = req.params.contractId;
   
   const contract = await contract.findById(contractId);
@@ -376,17 +374,60 @@ exports.acceptFinishContract = catchAsync(async (req,res,next) => {
     return next(new AppError('User has already approved the contract finish!!'))
   }
 
+  const chatId = contract.chatId;
 
-  const updatedContract = await Contract.findByIdAndUpdate(contractId, {
-    $push: { finishedApprovedBy: req.user.id }
+  const updatedChat = await Chat.findByIdAndUpdate(chatId, {
+    $push: { contractFinishedApprovedBy: req.user.id }
   })
 
   res.status(200).json({
     status: 'success',
-    updatedContract
+    updatedChat
   })
 
 })
+
+exports.finishContract = catchAsync(async (req,res) => {
+  const contractId = req.params.contractId;
+
+  // check if every contract user has approved approval
+  // if true --> 
+  // update -->
+  // chat --> contractSuccessful --> true 
+  // contract --> status --> success
+
+  const contract = await Contract.findById(contractId)
+
+  if (req.user.id !== contract.lead.id) {
+    return next(new AppError('Only the Contract lead can finish contract'))
+  }
+
+  if (contract.team.length !== contract.finishedApprovedBy.length) {
+    return next(new AppError('Everyone hasnt approved the contract finish yet!!'))
+  }
+
+  const chatId = contract.chatId;
+
+  const updateChat = await Chat.findByIdAndUpdate(chatId, {
+    contractSuccessful: true
+  })
+
+  const updatedContract = await Contract.findByIdAndUpdate(contractId, {
+    status: 'completed'
+  })
+
+  res.status(200).json({
+    status: 'success',
+    updateChat,
+    updatedContract
+  })
+})
+
+// exports.leaveContract = await catchAsync(async (req,res) => {
+// get info --> why leaving (reason) | what you didnt liked in the group | 
+// update contract status --> broken
+// 
+// })
 
 // exports.denyFinishContract = catchAsync(async (req,res) => {
 // // feature to be added in future

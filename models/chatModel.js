@@ -46,6 +46,16 @@ const chatModel = mongoose.Schema(
     contractApproved: {
       type: Boolean,
       default: false,
+    },
+    contractFinishedApprovedBy: [
+      {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+    contractSuccessful: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

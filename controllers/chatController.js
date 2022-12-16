@@ -140,9 +140,13 @@ exports.contractProtection = catchAsync(async (req,res,next) => {
 
   const chat = await Chat.findById(chatId);
   const contractApproved = chat.contractApproved;
+  const contractCompleted = chat.contractSuccessful
+
 
   if (contractApproved) {
-    return next(new AppError('Cannot change Group members after contract is created'))  
+    if (!contractCompleted) {
+      return next(new AppError('Cannot change Group members after contract is created'))  
+    }
   }
 
   next()
