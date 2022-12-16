@@ -79,7 +79,17 @@ const contractModel = mongoose.Schema({
             type: String,
             default: ''
         }
-    ]
+    ],
+    finishedApprovedBy: [
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    finishContractInitiated: {
+        type: Boolean,
+        default: false
+    },
 },
 { timestamps: true }
 )

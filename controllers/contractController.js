@@ -16,6 +16,7 @@ exports.getAllContracts = catchAsync(async (req, res) => {
   });
 });
 
+
 exports.getUserContracts = catchAsync(async (req, res) => {
   const userId = req.user.id;
 
@@ -24,6 +25,7 @@ exports.getUserContracts = catchAsync(async (req, res) => {
   })
     .populate("lead", "name photo")
     .populate("team.member", "name photo")
+    .populate("chatId", "chatName")
     .sort("-createdAt");
 
   const date = new Date();
@@ -50,6 +52,7 @@ exports.getUserContracts = catchAsync(async (req, res) => {
     userContracts: contracts,
   });
 });
+
 
 exports.getContract = catchAsync(async (req, res, next) => {
   const contractId = req.params.contractId;
@@ -98,10 +101,17 @@ exports.getContract = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.initializeContract = catchAsync(async (req, res) => {
+
+exports.initializeContract = catchAsync(async (req, res, next) => {
   const { team, startDate, dueDate, contractName, projectDescription, chatId } =
     req.body;
   const userId = req.user.id;
+
+  const chat = await Chat.findById(chatId);
+
+  if (chat.contractId) {
+    return next(new AppError('Multiple Contracts cant be initialized from one group chat'))
+  }
 
   const contract = await Contract.create({
     contractName,
@@ -154,6 +164,7 @@ exports.initializeContract = catchAsync(async (req, res) => {
     contract: fullContract,
   });
 });
+
 
 exports.acceptContract = catchAsync(async (req, res) => {
   const userId = req.user._id;
@@ -210,6 +221,7 @@ exports.acceptContract = catchAsync(async (req, res) => {
   }
 });
 
+
 exports.denyContract = catchAsync(async (req, res) => {
   const contractId = req.params.contractId;
   const userId = req.user.id;
@@ -235,6 +247,7 @@ exports.denyContract = catchAsync(async (req, res) => {
 
   res.send(updatedContract);
 });
+
 
 exports.updateDueContract = catchAsync(async (req, res, next) => {
   const { newDueDate, reason } = req.body;
@@ -308,25 +321,76 @@ exports.updateDueContract = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.finishContract = catchAsync(async (req,res) => {
+exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
   const { githubLink, liveLink, projectImages } = req.body;
   const contractId = req.params.contractId;
 
-  if (!githubLink || !liveLink || !projectImages) {
+  if (!githubLink || !projectImages) {
     return next(new AppError('Provide sufficient details to finish the project'))
   }
+
+  const contract = await Contract.findById(contractId)
+
+  if (req.user.id !== contract.lead.id) {
+    return next(new AppError('Only the Contract lead the initialise to finish contract'))
+  }
+
+  // take chat id
+  // if contract is not contract Approved return
+  const chatId = contract.chatId;
+
+  const chat = await Chat.findById(chatId);
+
+  if(!chat.contractApproved){
+    return next(new AppError('The contract isnt approved by members'))
+  }
+
+  console.log('Lolllllllll');
 
   const finishedContract = await Contract.findByIdAndUpdate(contractId, {
     githubLink,
     liveLink,
-    projectImages
+    projectImages,
+    finishContractInitiated: true,
+    $push: { finishedApprovedBy: req.user.id }
   })
+
+  console.log(finishedContract);
 
   res.status(200).json({
     status: 'success',
     finishedContract
   })
+});
+
+exports.acceptFinishContract = catchAsync(async (req,res,next) => {
+  
+  const contractId = req.params.contractId;
+  
+  const contract = await contract.findById(contractId);
+  const finishApprovalArr = contract.finishedApprovedBy;
+
+  console.log(finishApprovalArr.find(user => user === req.user.id));
+
+  if (finishApprovalArr.find(user => user === req.user.id)) {
+    return next(new AppError('User has already approved the contract finish!!'))
+  }
+
+
+  const updatedContract = await Contract.findByIdAndUpdate(contractId, {
+    $push: { finishedApprovedBy: req.user.id }
+  })
+
+  res.status(200).json({
+    status: 'success',
+    updatedContract
+  })
+
 })
+
+// exports.denyFinishContract = catchAsync(async (req,res) => {
+// // feature to be added in future
+// })
 
 // contractId --> 
 

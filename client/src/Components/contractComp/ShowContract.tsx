@@ -107,11 +107,6 @@ interface contractModalProps {
   userData: userProps;
 }
 
-// const memberCard = () => {
-//     return (
-
-//     )
-// }
 
 const ShowContract = ({ contract, userData }: contractModalProps) => {
 
