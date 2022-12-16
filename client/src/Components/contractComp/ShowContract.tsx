@@ -126,6 +126,7 @@ const ShowContract = ({ contract, userData }: contractModalProps) => {
       }
     );
     console.log(data);
+    window.location.reload();
   };
 
   const denyContractHandler = async () => {
@@ -140,6 +141,7 @@ const ShowContract = ({ contract, userData }: contractModalProps) => {
     );
 
     console.log(data);
+    window.location.reload();
   };
   return (
     <Section>

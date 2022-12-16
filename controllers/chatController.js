@@ -135,6 +135,19 @@ exports.renameGroup = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.contractProtection = catchAsync(async (req,res,next) => {
+  const chatId = req.params.chatId;
+
+  const chat = await Chat.findById(chatId);
+  const contractApproved = chat.contractApproved;
+
+  if (contractApproved) {
+    return next(new AppError('Cannot change Group members after contract is created'))  
+  }
+
+  next()
+})
+
 exports.removeFromGroup = catchAsync(async (req, res) => {
   const chatId = req.params.chatId;
   const { userId } = req.body;

@@ -8,7 +8,6 @@ import {
 import Navbar from "../components/generalComp/Navbar";
 import Intro from "../components/profileComp/Intro";
 import NoSkill from "../components/profileComp/NoSkill";
-import PastProjects from "../components/profileComp/PastProjects";
 import Skills from "../components/profileComp/Skills";
 import axios from "axios";
 import { BASE_URL, userEnd } from "../utils/APIRoutes";
@@ -36,12 +35,8 @@ const UserDetails = styled.div`
 
 const MyProjects = styled.div`
   box-sizing: border-box;
-  /* display: flex; */
   padding-top: 1.5rem;
   padding-bottom: 0.5rem;
-  /* padding: 1rem 2rem; */
-  /* margin-bottom: 1.5rem; */
-  /* width: 45vw; */
   width: 100%;
   background-color: #3a421b;
   border-radius: 10px;
@@ -53,6 +48,12 @@ const MyProjects = styled.div`
     padding: 0 2rem;
   }
 `;
+
+const Contracts = styled.div`
+  /* border: 1px solid white; */
+  display: flex;
+  flex-direction: column-reverse;
+`
 
 const Profile = () => {
   const [localUser, setLocalUser] = useState<userProps>({});
@@ -109,11 +110,14 @@ const Profile = () => {
             )}
             <MyProjects>
               <h1>My Past Projects</h1>
+              <Contracts>
+
               {Object.keys(user).length !== 0 && (user.pastProjects as unknown as contractProps[]).map((project, index) => {
-              return (
-                <ContractCard key={index} contract={project} showContract={showContract} />
-              );
-            })}
+                return (
+                  <ContractCard key={index} contract={project} showContract={showContract} descLength={150} />
+                  );
+                })}
+              </Contracts>
             </MyProjects>
           </UserDetails> 
           <RecentUserActivity />

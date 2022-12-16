@@ -25,7 +25,7 @@ const Section = styled.div`
     font-weight: 500;
   }
 
-  h3{
+  h3 {
     color: rgba(236, 227, 212, 255);
     font-size: 1rem;
     margin-bottom: 1rem;
@@ -35,13 +35,13 @@ const Section = styled.div`
 `;
 
 const UpdateChatForm = styled.div`
-width: 100%;
-box-sizing: border-box;
-/* border: 2px solid white; */
-display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  /* border: 2px solid white; */
+  display: flex;
 
-/* align-items: center; */
-justify-content: center;
+  /* align-items: center; */
+  justify-content: center;
 `;
 
 const UpdateContainer = styled.div`
@@ -73,11 +73,8 @@ const ImageContainer = styled.div`
     border-radius: 50%;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    /* -webkit-box-shadow: 0px 0px 16px 2px rgba(0,0,0,1); */
-/* -moz-box-shadow: 0px 0px 16px 2px rgba(0,0,0,1); */
-/* box-shadow: 0px 0px 16px 2px rgba(0,0,0,1); */
-border: 2px solid rgba(236, 227, 212, 255);;
+    object-fit: cover;
+    border: 2px solid rgba(236, 227, 212, 255);
   }
 `;
 
@@ -199,22 +196,24 @@ const UpdateChatModal = ({
   selectedChatName,
   closeUpdateServerModal,
 }: updateChatModalProps) => {
-  const [newChatName, setNewChatName] = useState<string>('');
+  const [newChatName, setNewChatName] = useState<string>("");
 
-  const [newChatImage, setNewChatImage] = useState(selectedChatImage)
+  const [newChatImage, setNewChatImage] = useState(selectedChatImage);
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, closeUpdateServerModal);
 
   const updateChatInfoHandler = async (e: any) => {
     const { data } = await axios.patch(
-      `${BASE_URL}${chatEnd}${selectedChatId}/rename`, {
+      `${BASE_URL}${chatEnd}${selectedChatId}/rename`,
+      {
         chatName: newChatName,
-        chatPhoto: newChatImage
-      }, {
-        headers: getHeaders(userToken ?? '')
+        chatPhoto: newChatImage,
+      },
+      {
+        headers: getHeaders(userToken ?? ""),
       }
-    )
+    );
     console.log(data);
     window.location.reload();
   };
@@ -267,7 +266,11 @@ const UpdateChatModal = ({
             <Upload>
               <div className="input-container">
                 Choose a photo
-                <input type="file" accept="image/*" onChange={(e) => postImage(e.target.files)}  />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => postImage(e.target.files)}
+                />
               </div>
             </Upload>
           </UpdateContainer>

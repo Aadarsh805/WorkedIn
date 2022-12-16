@@ -176,17 +176,18 @@ interface contractProps {
 interface contractCardProps {
   contract: contractProps;
   showContract: any;
+  descLength: number
 }
 
-const ContractCard = ({ contract, showContract }: contractCardProps) => {
-  const getReadableTime = (date: string) => {
-    var readable = new Date(date);
-    var m = readable.getMonth();
-    var d = readable.getDay();
-    var y = readable.getFullYear();
+const ContractCard = ({ contract, showContract, descLength }: contractCardProps) => {
+  const getReadableTime = (ISODate: string) => {
+    const readable = new Date(ISODate);        
+    const month = readable.getMonth();
+    const date = readable.getDate();        
+    const year = readable.getFullYear();
 
-    var mlong = months[m];
-    var fulldate = mlong + " " + d + ", " + y;
+    const monthLong = months[month];
+    const fulldate = monthLong + " " + date + ", " + year;
     return fulldate;
   };
   return (
@@ -206,8 +207,8 @@ const ContractCard = ({ contract, showContract }: contractCardProps) => {
       </LeadBy>
       <ContractBrief>
         <p>
-          {contract.projectDescription.slice(0, 300)}
-          {contract.projectDescription.length > 300 ? "...." : null}
+          {contract.projectDescription.slice(0, descLength)}
+          {contract.projectDescription.length > descLength ? "...." : null}
         </p>
         <MemberPics>
           {contract.team.map((member,index) => {

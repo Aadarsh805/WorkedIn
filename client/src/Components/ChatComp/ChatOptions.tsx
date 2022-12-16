@@ -205,6 +205,10 @@ const ChatOptions = ({
                 <h5>Update Contract</h5>
                 <TfiWrite />
               </li>
+              <li className="contract" onClick={() => alert('Contract Finished')}>
+                <h5>Fisnish Contract</h5>
+                <TfiWrite />
+              </li>
             </ul>
           </OptionsMenu>
         ) : selectedChat.contracted ? (
@@ -213,6 +217,10 @@ const ChatOptions = ({
               <li onClick={() => setupdateServer(!updateServer)}>
                 <h5>Update Server</h5>
                 <MdModeEdit />
+              </li>
+              <li onClick={() => setInvitePeople(!invitePeople)}>
+                <h5>Manage Members</h5>
+                <HiUserAdd />
               </li>
               <li
                 className="contract"
@@ -251,9 +259,28 @@ const ChatOptions = ({
               <h5>Review Contract</h5>
               <BsFillFileEarmarkSpreadsheetFill />
             </li>
+            <li
+              className="contract"
+              onClick={() => alert('Leave Group')}
+            >
+              <h5>Leave Group</h5>
+              <BsFillFileEarmarkSpreadsheetFill />
+            </li>
           </ul>
         </OptionsMenu>
-      ) : null}
+      ) : chatOptions && (
+        <OptionsMenu events={updateServer || invitePeople}>
+          <ul>
+            <li
+              className="contract"
+              onClick={() => alert('leave group')}
+            >
+              <h5>Leave Group</h5>
+              <BsFillFileEarmarkSpreadsheetFill />
+            </li>
+          </ul>
+        </OptionsMenu>
+      )}
     </Section>
   );
 };

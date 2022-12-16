@@ -15,6 +15,9 @@ router.route('/group').post(chatController.creatGroupChat)
 
 router.route('/:chatId/finalisecontract').patch(chatController.finaliseContract)
 router.route('/:chatId/rename').patch(chatController.renameGroup)
+
+router.use(chatController.contractProtection)
+
 router.route('/:chatId/groupremove').patch(chatController.removeFromGroup)
 router.route('/:chatId/groupadd').patch(chatController.addInGroup)
 

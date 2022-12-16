@@ -104,7 +104,7 @@ const Contracts = () => {
         {contracts.map((contract, index) => {
           return (
             <>
-              <ContractCard contract={contract} showContract={showContract} key={index} />
+              <ContractCard key={index} contract={contract} showContract={showContract} descLength={300} />
               {clickedContract && isShowContractModalOpen ? (
                 <ShowContract key={index} contract={clickedContract} userData={userData} />
               ) : null}
