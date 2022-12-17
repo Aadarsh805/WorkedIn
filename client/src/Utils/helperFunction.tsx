@@ -1,5 +1,5 @@
 import axios from "axios";
-import { localStorageUser } from "./GlobalContants";
+import { localStorageUser, months } from "./GlobalContants";
 
 export const apiProvider = axios.create({});
 
@@ -12,3 +12,14 @@ export const getHeaders = (token: string) => {
         'Authorization': `Bearer ${token}`
     }
 }
+
+export const getReadableTime = (ISODate: string) => {
+  const readable = new Date(ISODate);        
+  const month = readable.getMonth();
+  const date = readable.getDate();        
+  const year = readable.getFullYear();
+
+  const monthLong = months[month];
+  const fulldate = monthLong + " " + date + ", " + year;
+  return fulldate;
+};

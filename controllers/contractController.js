@@ -455,7 +455,7 @@ exports.finishContract = catchAsync(async (req,res) => {
 })
 
 
-exports.leaveContract = await catchAsync(async (req,res) => {
+exports.leaveContract = catchAsync(async (req,res) => {
   const { reason, chatId } = req.body;
   const contractId = req.params.contractId;
 

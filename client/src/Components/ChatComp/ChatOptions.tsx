@@ -7,6 +7,7 @@ import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import { userProps } from "../../utils/GlobalContants";
 import { TfiWrite } from "react-icons/tfi";
 import { BsFillFileEarmarkSpreadsheetFill } from "react-icons/bs";
+import { IoIosMedal } from 'react-icons/io'
 
 const Section = styled.div`
   border-bottom: 1px solid #3a421b;
@@ -137,10 +138,12 @@ interface chat {
   setUpdateContract: React.Dispatch<React.SetStateAction<boolean>>;
   setInvitePeople: React.Dispatch<React.SetStateAction<boolean>>;
   setReviewContract: React.Dispatch<React.SetStateAction<boolean>>;
+  setFinishContract: React.Dispatch<React.SetStateAction<boolean>>;
   updateServer: boolean;
   invitePeople: boolean;
   reviewContract: boolean;
-  updateContract: boolean
+  updateContract: boolean;
+  finishContract: boolean;
 }
 
 const ChatOptions = ({
@@ -150,10 +153,12 @@ const ChatOptions = ({
   setUpdateContract,
   setInvitePeople,
   setReviewContract,
+  setFinishContract,
   updateServer,
   updateContract,
   invitePeople,
   reviewContract,
+  finishContract
 }: chat) => {
   const [chatOptions, setChatOptions] = useState(false);
 
@@ -188,6 +193,7 @@ const ChatOptions = ({
       </Header>
       {chatOptions && selectedChat.groupAdmin?._id === user._id ? (
         selectedChat.contractApproved ? (
+          // contract is approved
           <OptionsMenu events={updateServer || invitePeople}>
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
@@ -205,13 +211,14 @@ const ChatOptions = ({
                 <h5>Update Contract</h5>
                 <TfiWrite />
               </li>
-              <li className="contract" onClick={() => alert('Contract Finished')}>
-                <h5>Fisnish Contract</h5>
-                <TfiWrite />
+              <li className="contract" onClick={() => setFinishContract(!finishContract)}>
+                <h5>Finish Contract</h5>
+                <IoIosMedal />
               </li>
             </ul>
           </OptionsMenu>
         ) : selectedChat.contracted ? (
+          // contract not approved but contracted
           <OptionsMenu events={updateServer || invitePeople}>
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
@@ -233,9 +240,14 @@ const ChatOptions = ({
                 <h5>Update Contract</h5>
                 <TfiWrite />
               </li>
+              <li className="contract" onClick={() => setUpdateContract(!updateContract)}>
+                <h5>Delete Contract</h5>
+                <TfiWrite />
+              </li>
             </ul>
           </OptionsMenu>
         ) : (
+          // not contrated
           <OptionsMenu events={updateServer || invitePeople}>
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
@@ -249,7 +261,7 @@ const ChatOptions = ({
             </ul>
           </OptionsMenu>
         )
-      ) : chatOptions && selectedChat.contracted ? (
+      ) : chatOptions && selectedChat.contractApproved ? (
         <OptionsMenu events={updateServer || invitePeople}>
           <ul>
             <li
@@ -263,24 +275,24 @@ const ChatOptions = ({
               className="contract"
               onClick={() => alert('Leave Group')}
             >
-              <h5>Leave Group</h5>
+              <h5>Leave Contract</h5>
               <BsFillFileEarmarkSpreadsheetFill />
             </li>
           </ul>
         </OptionsMenu>
-      ) : chatOptions && (
+      ) : chatOptions && selectedChat.contracted ? (
         <OptionsMenu events={updateServer || invitePeople}>
           <ul>
             <li
               className="contract"
-              onClick={() => alert('leave group')}
+              onClick={() => setReviewContract(!reviewContract)}
             >
-              <h5>Leave Group</h5>
+              <h5>Review Contract</h5>
               <BsFillFileEarmarkSpreadsheetFill />
             </li>
           </ul>
         </OptionsMenu>
-      )}
+      ) : null}
     </Section>
   );
 };
