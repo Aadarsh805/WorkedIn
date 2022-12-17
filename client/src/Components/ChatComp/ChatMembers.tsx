@@ -165,7 +165,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         updateContract ? <UpdateContractModal user={user} contractId={selectedChat.contractId!} closeUpdateContractModal={closeUpdateContractModal} /> : null
       }
       {
-        deleteContract ? <DeleteContract closeDeleteContractModal={closeDeleteContractModal}  /> : null
+        deleteContract ? <DeleteContract closeDeleteContractModal={closeDeleteContractModal} contractId={selectedChat.contractId!} userToken={user.token!} /> : null
       }
       {
         finishContract ? <FinishContract user={user} contractId={selectedChat.contractId!} closeFinishContractModal={closeFinishContractModal} /> : null

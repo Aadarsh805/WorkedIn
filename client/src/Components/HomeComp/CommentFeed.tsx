@@ -43,7 +43,7 @@ const AboutAuthor = styled.div`
 h4{
   font-size: 0.8rem;
   font-weight: 600;
-  width: 95%;
+  width: 93.5%;
   overflow: hidden;
   white-space: nowrap;
   /* border: 1px solid red; */
@@ -51,12 +51,12 @@ h4{
 `;
 
 const AuthorName = styled.div`
-display: flex;
 /* border: 1px solid red; */
+display: flex;
 text-align: center;
 align-items: center;
 justify-content: space-between;
-width: calc(37vw - 6.1rem + 0.5rem);
+width: calc(37vw - 4rem);
 
 h3{
   font-size: 1rem;
@@ -87,6 +87,15 @@ p{
   font-size: 0.9rem;
   line-height: 150%;
 }
+
+input{
+width: 90%;
+outline: none;
+padding: 12px;
+border-radius: 10px;
+border: none;
+}
+
 `
 
 interface commentType {
@@ -147,7 +156,7 @@ const CommentFeed = ({ comment, userData, postId }: commentProps) => {
       {
         updateComment ?
         <form onSubmit={updateCommentHandler}>
-         <input type="text" value={commentContent} onChange={(e) => setCommentContent(e.target.value)} autoFocus/>
+         <input type="text" placeholder="Update your comment" value={commentContent} onChange={(e) => setCommentContent(e.target.value)} autoFocus/>
         </form>
         : <p>{commentContent}</p>
       }

@@ -107,7 +107,7 @@ const Contracts = () => {
     <>
       <Navbar />
       <Section>
-        {contracts.map((contract, index) => {
+        {contracts.map(contract => {
           return (
             <>
               <ContractCard key={contract.contractName} contract={contract} showContract={showContract} descLength={300} />

@@ -155,7 +155,7 @@ const ShowContract = ({ contract, userData, closeContractModal }: contractModalP
   };
 
   return (
-    <Section ref={wrapperRef} >
+    <Section >
       <ContractBody contract={contract} userData={userData} />
       {contract.team.filter((member) => {
         if (member.member._id === userData._id) {

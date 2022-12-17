@@ -1,12 +1,15 @@
+import axios from "axios";
 import React, { useRef } from "react";
 import styled from "styled-components";
+import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
+import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 60vw;
+  width: 50vw;
   height: 50vh;
   box-sizing: border-box;
   background-color: #735f32;
@@ -74,21 +77,30 @@ const Buttons = styled.div`
 `;
 
 interface deleteContractProps {
-    closeDeleteContractModal: any
+    closeDeleteContractModal: any,
+    contractId: string,
+    userToken: string
 }
 
-const DeleteContract = ({closeDeleteContractModal} : deleteContractProps) => {
+const DeleteContract = ({closeDeleteContractModal, contractId, userToken} : deleteContractProps) => {
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, closeDeleteContractModal);
 
+  const deleteContractHandler = async () => {
+    const { data } = await axios.delete(`${BASE_URL}${contractEnd}${contractId}/delete`, {
+      headers: getHeaders(userToken)
+    })
+    console.log(data);
+  }
+
   return (
     <Section ref={wrapperRef} >
       <h1>Delete Contract</h1>
-      <p>Are you sure you want to delete this contract ?? Once deleted you will loose this contract but you can creatre another one anytime. Also it wont be shown in your profile as the contract hasn't started.</p>
+      <p>Are you sure you want to delete this contract ?? Once deleted you will loose this contract but you can create another one anytime. Also it wont be shown in your profile as the contract hasn't started.</p>
       <Buttons>
-        <button>Yes, Delete It</button>
-        <button>No, Go Back</button>
+        <button onClick={deleteContractHandler} >Yes, Delete It</button>
+        <button onClick={closeDeleteContractModal} >No, Go Back</button>
       </Buttons>
     </Section>
   );

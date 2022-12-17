@@ -30,10 +30,6 @@ exports.getUserContracts = catchAsync(async (req, res) => {
 
   const date = new Date();
 
-  // we get an array
-  // iterate through every contract
-  // if in-progress -> compare due date and current date and update to `delayed` if required
-
   contracts.forEach(async (contract) => {
     const contractDueDate = contract.dueDate;
     if (contract.status === "in-progress") {
@@ -61,9 +57,6 @@ exports.getContract = catchAsync(async (req, res, next) => {
     .populate("lead", "name photo")
     .populate("team.member", "name photo");
 
-  // chek if contract is in-progress
-  // if in-progress --> compare due date and current date and update to `delayed` if required
-
   if (!contract) {
     console.log('No contract');
     return next(new AppError('No contract on this ID exist'))
@@ -77,8 +70,6 @@ exports.getContract = catchAsync(async (req, res, next) => {
 
   console.log(date);
   console.log(date >= contractDueDate);
-  // console.log(typeof date);
-  // console.log(typeof contractDueDate);
 
   if (contract.status === "in-progress") {
 
@@ -321,6 +312,7 @@ exports.updateDueContract = catchAsync(async (req, res, next) => {
   });
 });
 
+
 exports.deleteContract = catchAsync(async (req,res,next) => {
 
   const contractId = req.params.contractId;
@@ -341,7 +333,7 @@ exports.deleteContract = catchAsync(async (req,res,next) => {
 
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
     contracted: false,
-    contractId: undefined,
+    contractId: null,
     contractAprovedBy: [],
     contractApproved: false,
     contractFinishedApprovedBy: [],
@@ -362,7 +354,7 @@ exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
   const { githubLink, liveLink, projectImages } = req.body;
   const contractId = req.params.contractId;
 
-  if (!githubLink || !projectImages) {
+  if (!githubLink || projectImages.length < 3) {
     return next(new AppError('Provide sufficient details to finish the project'))
   }
 
@@ -379,12 +371,23 @@ exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
     return next(new AppError('The contract isnt approved by members'))
   }
 
-  const finishedContract = await Contract.findByIdAndUpdate(contractId, {
+  // const finishedContract = await Contract.findByIdAndUpdate(contractId, {
+  //   githubLink,
+  //   liveLink,
+  //   projectImages,
+  //   finishContractInitiated: true,
+  // });
+
+  const finishedContract = await Contract.updateOne({
+    id: contractId,
+    "team.member": req.user.id
+  }, {
     githubLink,
     liveLink,
     projectImages,
     finishContractInitiated: true,
-  });
+    "team.$.finishedApproved": true
+  })
   
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
     $push: { contractFinishedApprovedBy: req.user.id }

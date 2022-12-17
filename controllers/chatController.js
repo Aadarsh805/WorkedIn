@@ -139,9 +139,12 @@ exports.contractProtection = catchAsync(async (req,res,next) => {
   const chatId = req.params.chatId;
 
   const chat = await Chat.findById(chatId);
+  console.log(chat);
   const contractApproved = chat.contractApproved;
-  const contractCompleted = chat.contractSuccessful
+  const contractCompleted = chat.contractSuccessful;
 
+  console.log(contractApproved);
+  console.log(contractCompleted);
 
   if (contractApproved) {
     if (!contractCompleted) {

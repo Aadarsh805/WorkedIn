@@ -6,7 +6,7 @@ import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`
-  margin: 1rem 0.6rem 1.2rem;
+  margin: 1rem 0.6rem 2rem;
   border-radius: 12px;
   box-sizing: border-box;
   /* border: 1px solid blue; */

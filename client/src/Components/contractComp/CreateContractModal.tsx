@@ -147,6 +147,7 @@ const MemberRole = styled.div`
       height: 3rem;
       margin-right: 0.6rem;
       border-radius: 50%;
+      object-fit: cover;
       -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
       -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
       box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
@@ -166,7 +167,7 @@ const MemberRole = styled.div`
     box-sizing: border-box;
 
     &::placeholder {
-      color: #faf8f1;
+      color: rgba(250, 248, 241, 0.7);
     }
   }
 
@@ -186,7 +187,7 @@ const MemberRole = styled.div`
 
     &::placeholder {
       font-size: 0.8rem;
-      color: #faf8f1;
+      color: rgba(250, 248, 241, 0.7);;
       font-weight: 500;
     }
 
@@ -378,6 +379,7 @@ const CreateContractModal = ({
       }
     );
     console.log(data);
+    window.location.reload();
   };
 
   return (

@@ -5,18 +5,20 @@ import { Comment, Share, ThumbsUp, ThumbsUp2 } from "../generalComp/SVG";
 import { userProps } from "../../utils/GlobalContants";
 import PostModal from "../postComp/PostModal";
 import CommentBox from "./CommentBox";
+import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
+import { FaRegThumbsUp } from "react-icons/fa";
 
 const Section = styled.div`
   width: 100%;
   margin-bottom: 1rem;
   border-radius: 10px;
   padding-top: 1rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.2rem;
   background-color: rgba(236, 227, 212, 255);
 
   hr {
     width: 100%;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     border: none;
     height: 1px;
     background-color: grey;
@@ -109,11 +111,20 @@ const PostStats = styled.div`
 
   h5 {
     font-size: 0.8rem;
+
+    span{
+      font-weight: 500;
+    }
   }
 
   div {
+    /* border: 1px solid red; */
     display: flex;
     align-items: flex-end;
+
+    h5{
+      line-height: 80%;
+    }
 
     svg {
       width: 1rem;
@@ -126,12 +137,17 @@ const PostBottom = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  border: 1px solid red;
-
+  /* border: 1px solid red; */
+  /* height: fit-content; */
+  
   svg {
-    width: 20px;
+    /* border: 1px solid red; */
+    width: 1.6rem;
+    height: 1.4rem;
     cursor: pointer;
-    /* fill: blue; */
+    /* padding: 4px; */
+    /* border-radius: 10px; */
+    /* fill: rgba(137,117,88,255); */
   }
 `;
 
@@ -206,20 +222,22 @@ const PostFeed = ({ post, user }: postFeedProps) => {
           <ThumbsUp />
           <h5>{totalLikes}</h5>
         </div>
-        <h5>{post.comments} comments</h5>
+        <h5>{post.comments} <span>comments</span></h5>
       </PostStats>
-      <hr />
+      <hr/>
       <PostBottom>
-        <ThumbsUp2 />
+        <div>
+        <FaRegThumbsUp />
+        </div>
         <div onClick={() => setIsCommentBoxOpen(!isCommentBoxOpen)}>
-          <Comment />
+          <BiCommentDetail />
         </div>
         <div
           onClick={() => {
             navigator.clipboard.writeText(`${host}/posts/${post._id}`);
           }}
         >
-          <Share />
+          <BiShareAlt />
         </div>
       </PostBottom>
       <CommentBox
