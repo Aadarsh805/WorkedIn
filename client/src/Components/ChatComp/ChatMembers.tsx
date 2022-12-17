@@ -12,6 +12,7 @@ import ReviewContract from "../contractComp/ReviewContract";
 import UpdateContractModal from "../contractComp/UpdateContractModal";
 import FinishContract from "../contractComp/FinishContract";
 import DeleteContract from "../contractComp/DeleteContract";
+import FinishApprovalBtn from "../contractComp/FinishApprovalBtn";
 
 const Section = styled.div`
   border-left: 2px solid rgba(137,117,88,255);
@@ -25,11 +26,9 @@ interface membersProps {
 }
 
 const Members = styled.div`
-  /* border: 1px solid white; */
+  border: 1px solid white;
   padding-top: 0.5rem;
   box-sizing: border-box;
-  
-  /* height: calc(100vh - 7rem); */
   height: ${(props:membersProps) => props.divHeight ? 'calc(100vh - 3rem)' : 'calc(100vh - 7rem)' };
   overflow: auto;
 `;
@@ -86,8 +85,12 @@ interface chatObj {
   _id?: string;
   contractId?: string;
   contractAprovedBy: Array<string>;
-  contractApproved: Boolean
+  contractApproved: Boolean;
+  contractSuccessful: boolean;
+  contractFinishedApprovedBy: Array<string>
 }
+
+
 
 interface chat {
   selectedChat: chatObj;
@@ -134,7 +137,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
 
   return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
-      <Members divHeight={selectedChat.contractApproved} >
+      <Members divHeight={selectedChat.contractSuccessful ? true : (selectedChat.contractApproved && selectedChat.contractFinishedApprovedBy.length === 0 )} >
           <ChatOptions selectedChat={selectedChat} user={user} setUpdateContract={setUpdateContract} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} setDeleteContract={setDeleteContract} setFinishContract={setFinishContract} updateContract={updateContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} finishContract={finishContract} deleteContract={deleteContract} />
         {selectedChat.users !== undefined &&
           (selectedChat.users as unknown as any[]).map((user) => {
@@ -147,6 +150,9 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
             );
           })}
       </Members>
+      {
+        selectedChat.contractSuccessful ? null : ( selectedChat.contractFinishedApprovedBy.length !== 0 ? <FinishApprovalBtn selectedChat={selectedChat} user={user} /> : null )
+      }
       {
         selectedChat.contractApproved ? null : selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 
         selectedChat.groupAdmin?._id === user._id ?

@@ -68,8 +68,8 @@ exports.getContract = catchAsync(async (req, res, next) => {
 
   let date = new Date();
 
-  console.log(date);
-  console.log(date >= contractDueDate);
+  // console.log(date);
+  // console.log(date >= contractDueDate);
 
   if (contract.status === "in-progress") {
 
@@ -178,7 +178,7 @@ exports.acceptContract = catchAsync(async (req, res) => {
       }
     );
 
-    console.log(contract);
+    // console.log(contract);
 
     const updatedContract = await Contract.findById(req.params.contractId)
       .populate("lead", "name")
@@ -349,7 +349,6 @@ exports.deleteContract = catchAsync(async (req,res,next) => {
 })
 
 
-
 exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
   const { githubLink, liveLink, projectImages } = req.body;
   const contractId = req.params.contractId;
@@ -371,22 +370,17 @@ exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
     return next(new AppError('The contract isnt approved by members'))
   }
 
-  // const finishedContract = await Contract.findByIdAndUpdate(contractId, {
-  //   githubLink,
-  //   liveLink,
-  //   projectImages,
-  //   finishContractInitiated: true,
-  // });
-
   const finishedContract = await Contract.updateOne({
-    id: contractId,
+    _id: contractId,
     "team.member": req.user.id
   }, {
     githubLink,
     liveLink,
     projectImages,
     finishContractInitiated: true,
-    "team.$.finishedApproved": true
+    $set: {
+      "team.$.finishedApproved": true
+    }
   })
   
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
@@ -401,29 +395,36 @@ exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
 });
 
 
-// need to make it right
 exports.acceptFinishContract = catchAsync(async (req,res,next) => {
 
   const contractId = req.params.contractId;
-  
-  const contract = await contract.findById(contractId);
-  const finishApprovalArr = contract.finishedApprovedBy;
 
-  console.log(finishApprovalArr.find(user => user === req.user.id));
+  const { chatId } = req.body;
+      
+  const chat = await Chat.findById(chatId);
+  const finishApprovalArr = chat.contractFinishedApprovedBy;
 
-  if (finishApprovalArr.find(user => user === req.user.id)) {
-    return next(new AppError('User has already approved the contract finish!!'))
-  }
-
-  const chatId = contract.chatId;
+  if (finishApprovalArr.find(user => user.valueOf() === req.user.id)) {
+      return next(new AppError('User has already approved the contract finish!!'))
+    }
 
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
     $push: { contractFinishedApprovedBy: req.user.id }
   })
 
+  const updatedContract = await Contract.updateOne({
+    _id: contractId,
+    "team.member": req.user.id
+  }, {
+    $set: {
+      "team.$.finishedApproved": true
+    }
+  })
+
   res.status(200).json({
     status: 'success',
-    updatedChat
+    updatedChat,
+    updatedContract
   })
 
 })
@@ -437,8 +438,17 @@ exports.finishContract = catchAsync(async (req,res) => {
     return next(new AppError('Only the Contract lead can finish contract'))
   }
 
-  if (contract.team.length !== contract.finishedApprovedBy.length) {
-    return next(new AppError('Everyone hasnt approved the contract finish yet!!'))
+  let finishapproved = true;
+  contract.team.forEach(member => {
+    if (member.approved) {
+      if(!member.finishedApproved) {
+        finishapproved = false;
+      }
+    }
+  })
+
+  if (!finishapproved) {
+    return next(new AppError('Every member hasnt approved the contract submission'));
   }
 
   const chatId = contract.chatId;

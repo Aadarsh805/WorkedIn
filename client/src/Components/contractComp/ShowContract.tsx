@@ -154,6 +154,16 @@ const ShowContract = ({ contract, userData, closeContractModal }: contractModalP
     window.location.reload();
   };
 
+  const acceptFinishContractHandler = async () => {
+    const { data } = await axios.patch(`${BASE_URL}${contractEnd}${contract._id}/finish/accept`, {
+      chatId: contract.chatId
+    }, {
+      headers: getHeaders(userData.token ?? '')
+    })
+    console.log(data);
+    window.location.reload();
+  }
+
   return (
     <Section >
       <ContractBody contract={contract} userData={userData} />
@@ -174,7 +184,7 @@ const ShowContract = ({ contract, userData, closeContractModal }: contractModalP
           } else return null;
         })[0].finishedApproved ? null : (
           <Buttons>
-            <button onClick={() => alert('Accepted bitch')}>Finish Contract</button>
+            <button onClick={acceptFinishContractHandler}>Finish Contract</button>
           </Buttons>
         ) : null
       }

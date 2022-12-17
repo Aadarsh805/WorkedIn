@@ -62,7 +62,7 @@ exports.fetchChats = catchAsync(async (req, res) => {
     select: "name photo",
   });
 
-  console.log(populatedChats);
+  // console.log(populatedChats);
 
   res.status(200).send({
     status: 'success',
@@ -78,9 +78,9 @@ exports.creatGroupChat = catchAsync(async (req, res, next) => {
 
   var users = JSON.parse(req.body.users);
 
-  if (users.length < 2) {
+  if (users.length < 1) {
     return next(
-      new AppError("More than 2 users are required to form a group chat")
+      new AppError("Atleast 2 users are required to form a group chat")
     );
   }
 
@@ -139,12 +139,12 @@ exports.contractProtection = catchAsync(async (req,res,next) => {
   const chatId = req.params.chatId;
 
   const chat = await Chat.findById(chatId);
-  console.log(chat);
+  // console.log(chat);
   const contractApproved = chat.contractApproved;
   const contractCompleted = chat.contractSuccessful;
 
-  console.log(contractApproved);
-  console.log(contractCompleted);
+  // console.log(contractApproved);
+  // console.log(contractCompleted);
 
   if (contractApproved) {
     if (!contractCompleted) {

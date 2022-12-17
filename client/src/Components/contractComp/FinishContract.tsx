@@ -306,7 +306,15 @@ const FinishContract = ({user, contractId, closeFinishContractModal}: finishCont
   };
 
   const initialiseFinishHandler = async () => {
-
+    const { data } = await axios.patch(`${BASE_URL}${contractEnd}${contractId}/finish/initialise`, {
+      githubLink,
+      liveLink,
+      projectImages
+    }, {
+      headers: getHeaders(user.token ?? '')
+    })
+    console.log(data);
+    window.location.reload();
   }
 
   return (
@@ -324,7 +332,7 @@ const FinishContract = ({user, contractId, closeFinishContractModal}: finishCont
       <Links>
         <Link>
             <h2>Github Link</h2>
-            <input type="url" placeholder="https://github.com/" value={githubLink} onChange={(e) => setGithubLink(e.target.value)} />
+            <input type="url" placeholder="https://github.com/" value={githubLink} onChange={(e) => setGithubLink(e.target.value)} autoFocus />
         </Link>
         <Link>
             <h2>Deployed Version</h2>

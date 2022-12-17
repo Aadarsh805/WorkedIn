@@ -141,6 +141,8 @@ interface chatObj {
   contractId?: string;
   contractAprovedBy: Array<string>;
   contractApproved: Boolean;
+  contractSuccessful: boolean;
+  contractFinishedApprovedBy: Array<string>
 }
 
 interface chat {
@@ -207,7 +209,37 @@ const ChatOptions = ({
           )
         ) : null}
       </Header>
-      {chatOptions && selectedChat.groupAdmin?._id === user._id ? (
+      {chatOptions && selectedChat.groupAdmin?._id === user._id ? ( selectedChat.contractFinishedApprovedBy.length !== 0 ?
+      (
+        <OptionsMenu events={updateServer || invitePeople}>
+            <ul>
+              <li onClick={() => setupdateServer(!updateServer)}>
+                <h5>Update Server</h5>
+                <MdModeEdit />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setReviewContract(!reviewContract)}
+              >
+                <h5>Review Contract</h5>
+                <BsFillFileEarmarkSpreadsheetFill />
+              </li>
+              <li className="contract" onClick={() => setUpdateContract(!updateContract)}>
+                <h5>Update Due Date</h5>
+                <TfiWrite />
+              </li>
+              <li className="medal" onClick={() => setFinishContract(!finishContract)}>
+                <h5>Edit Submission</h5>
+                <IoIosMedal />
+              </li>
+              <li onClick={() => alert('ghost')}>
+                <h5>Ghost Spotted</h5>
+                <RiGhostFill />
+              </li>
+            </ul>
+          </OptionsMenu>
+      ) :
+      (
         selectedChat.contractApproved ? (
           // contract is approved
           <OptionsMenu events={updateServer || invitePeople}>
@@ -224,7 +256,7 @@ const ChatOptions = ({
                 <BsFillFileEarmarkSpreadsheetFill />
               </li>
               <li className="contract" onClick={() => setUpdateContract(!updateContract)}>
-                <h5>Update Contract</h5>
+                <h5>Update Due Date</h5>
                 <TfiWrite />
               </li>
               <li className="medal" onClick={() => setFinishContract(!finishContract)}>
@@ -257,7 +289,7 @@ const ChatOptions = ({
                 <BsFillFileEarmarkSpreadsheetFill />
               </li>
               <li className="contract" onClick={() => setUpdateContract(!updateContract)}>
-                <h5>Update Contract</h5>
+                <h5>Update Due Date</h5>
                 <TfiWrite />
               </li>
               <li className="contract" onClick={() => setDeleteContract(!deleteContract)}>
@@ -281,7 +313,7 @@ const ChatOptions = ({
             </ul>
           </OptionsMenu>
         )
-      ) : chatOptions && selectedChat.contractApproved ? (
+      )) : chatOptions && selectedChat.contractApproved ? (
         <OptionsMenu events={updateServer || invitePeople}>
           <ul>
             <li

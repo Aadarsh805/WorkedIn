@@ -51,7 +51,9 @@ interface chatObj {
   _id?: string;
   contractId?: string;
   contractAprovedBy: Array<string>;
-  contractApproved: Boolean
+  contractApproved: Boolean;
+  contractSuccessful: boolean;
+  contractFinishedApprovedBy: Array<string>
 }
 
 const Chats = () => {

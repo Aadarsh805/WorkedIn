@@ -96,6 +96,10 @@ const contractModel = mongoose.Schema(
       default: false,
     },
     contractBroken: {
+      isBroken: {
+        type: Boolean,
+        default: false
+      },
       brokenBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
