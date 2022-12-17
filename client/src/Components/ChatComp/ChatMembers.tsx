@@ -11,6 +11,7 @@ import ContractApproval from "../contractComp/ContractApproval";
 import ReviewContract from "../contractComp/ReviewContract";
 import UpdateContractModal from "../contractComp/UpdateContractModal";
 import FinishContract from "../contractComp/FinishContract";
+import DeleteContract from "../contractComp/DeleteContract";
 
 const Section = styled.div`
   border-left: 2px solid rgba(137,117,88,255);
@@ -98,6 +99,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const [invitePeople, setInvitePeople] = useState(false)
   const [reviewContract, setReviewContract] = useState(false)
   const [updateContract, setUpdateContract] = useState(false)
+  const [deleteContract, setDeleteContract] = useState(false)
   const [finishContract, setFinishContract] = useState(false)
 
   useEffect(() => {
@@ -120,12 +122,20 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const closeUpdateContractModal = () => {
     setUpdateContract(false)
   }
+
+  const closeDeleteContractModal = () => {
+    setDeleteContract(false)
+  }
+
+  const closeFinishContractModal = () => {
+    setFinishContract(false)
+  }
   
 
   return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
       <Members divHeight={selectedChat.contractApproved} >
-          <ChatOptions selectedChat={selectedChat} user={user} setUpdateContract={setUpdateContract} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} setFinishContract={setFinishContract} updateContract={updateContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} finishContract={finishContract} />
+          <ChatOptions selectedChat={selectedChat} user={user} setUpdateContract={setUpdateContract} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} setDeleteContract={setDeleteContract} setFinishContract={setFinishContract} updateContract={updateContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} finishContract={finishContract} deleteContract={deleteContract} />
         {selectedChat.users !== undefined &&
           (selectedChat.users as unknown as any[]).map((user) => {
             return (
@@ -155,7 +165,10 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         updateContract ? <UpdateContractModal user={user} contractId={selectedChat.contractId!} closeUpdateContractModal={closeUpdateContractModal} /> : null
       }
       {
-        finishContract ? <FinishContract user={user} contractId={selectedChat.contractId!} /> : null
+        deleteContract ? <DeleteContract closeDeleteContractModal={closeDeleteContractModal}  /> : null
+      }
+      {
+        finishContract ? <FinishContract user={user} contractId={selectedChat.contractId!} closeFinishContractModal={closeFinishContractModal} /> : null
       }
     </Section>
 };

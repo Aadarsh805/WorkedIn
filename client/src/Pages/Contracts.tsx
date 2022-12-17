@@ -16,7 +16,6 @@ const Section = styled.div`
   position: relative;
   min-height: calc(100vh - 2.5rem);
   background-color: rgba(207, 186, 148, 255);
-  /* background-color: #735f32; */
 `;
 
 
@@ -29,6 +28,7 @@ interface member {
 interface teamMember {
   approved: Boolean;
   denied: Boolean;
+  finishedApproved: Boolean;
   member: member;
   responsibility: string;
   review: number;
@@ -37,12 +37,20 @@ interface teamMember {
 
 interface contractProps {
   chatId: string;
+  contractBroken: {
+    reason: string | null,
+    brokenBy: member
+  };
   contractName: string;
   createdAt: string;
   dueDate: string;
+  finishContractInitiated: boolean;
+  githubLink: string;
   lead: member;
+  liveLink: string;
   prevDueDates: [];
   projectDescription: string;
+  projectImages: Array<string>;
   startDate: string;
   status: string;
   team: Array<teamMember>;
@@ -65,9 +73,7 @@ const Contracts = () => {
   }
 
   useEffect(() => {
-    fetchUserData();
-    console.log('brvvub');
-    
+    fetchUserData();    
   }, []);
 
   async function fetchContracts() {
@@ -90,9 +96,9 @@ const Contracts = () => {
     setClickedContract(contract);
   };
 
-  useEffect(() => {
-    console.log('garvit');
-  }, [contracts])
+  const closeContractModal = () => {
+    setIsShowContractModalOpen(false)
+  }
   
 
   return contracts.length === 0 ? (
@@ -104,9 +110,9 @@ const Contracts = () => {
         {contracts.map((contract, index) => {
           return (
             <>
-              <ContractCard key={index} contract={contract} showContract={showContract} descLength={300} />
+              <ContractCard key={contract.contractName} contract={contract} showContract={showContract} descLength={300} />
               {clickedContract && isShowContractModalOpen ? (
-                <ShowContract key={index} contract={clickedContract} userData={userData} />
+                <ShowContract key={contract._id} contract={clickedContract} userData={userData} closeContractModal={closeContractModal}/>
               ) : null}
             </>
           );

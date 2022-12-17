@@ -221,7 +221,8 @@ const FinishBtn = styled.div`
 
 interface finishContractProps {
     user: userProps,
-    contractId: string
+    contractId: string,
+    closeFinishContractModal: any
 }
 
 interface member {
@@ -253,14 +254,14 @@ interface member {
     _id: string;
   }
 
-const FinishContract = ({user, contractId}: finishContractProps) => {
+const FinishContract = ({user, contractId, closeFinishContractModal}: finishContractProps) => {
     const [contract, setContract] = useState<contractProps>();
     const [githubLink, setGithubLink] = useState<string>('');
     const [liveLink, setLiveLink] = useState<string>('');
     const [projectImages, setProjectImages] = useState<Array<string>>([])
 
-//   const wrapperRef = useRef<HTMLDivElement | null>(null);
-//   useOutsideAlerter(wrapperRef, closeReviewContractModal);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeFinishContractModal);
 
   async function fetchContract() {
     const { data } = await axios.get(`${BASE_URL}${contractEnd}${contractId}`, {
@@ -309,7 +310,7 @@ const FinishContract = ({user, contractId}: finishContractProps) => {
   }
 
   return (
-    contract ? (<Section>
+    contract ? (<Section ref={wrapperRef} >
       <Header>
         <h1>{contract.contractName}</h1>
         <h4>Created by</h4>
@@ -354,7 +355,7 @@ const FinishContract = ({user, contractId}: finishContractProps) => {
         <button onClick={initialiseFinishHandler} >Initialise Finish</button>
       </FinishBtn>
     </Section>
-    ) : <Section>Loading..</Section>
+    ) : <Section ref={wrapperRef} >Loading..</Section>
   );
 };
 

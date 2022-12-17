@@ -1,8 +1,10 @@
 import axios from "axios";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
 import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
+import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import ContractBody from "./ContractBody";
 
 const Section = styled.div`
@@ -82,6 +84,7 @@ interface member {
 interface teamMember {
   approved: Boolean;
   denied: Boolean;
+  finishedApproved: Boolean;
   member: member;
   responsibility: string;
   review: number;
@@ -90,12 +93,20 @@ interface teamMember {
 
 interface contractProps {
   chatId: string;
+  contractBroken: {
+    reason: string | null,
+    brokenBy: member
+  };
   contractName: string;
   createdAt: string;
   dueDate: string;
+  finishContractInitiated: boolean;
+  githubLink: string;
   lead: member;
+  liveLink: string;
   prevDueDates: [];
   projectDescription: string;
+  projectImages: Array<string>;
   startDate: string;
   status: string;
   team: Array<teamMember>;
@@ -105,10 +116,14 @@ interface contractProps {
 interface contractModalProps {
   contract: contractProps;
   userData: userProps;
+  closeContractModal: any
 }
 
 
-const ShowContract = ({ contract, userData }: contractModalProps) => {
+const ShowContract = ({ contract, userData, closeContractModal }: contractModalProps) => {
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeContractModal);
 
   const acceptContractHandler = async () => {
     const { data } = await axios.patch(
@@ -138,8 +153,9 @@ const ShowContract = ({ contract, userData }: contractModalProps) => {
     console.log(data);
     window.location.reload();
   };
+
   return (
-    <Section>
+    <Section ref={wrapperRef} >
       <ContractBody contract={contract} userData={userData} />
       {contract.team.filter((member) => {
         if (member.member._id === userData._id) {
@@ -151,6 +167,17 @@ const ShowContract = ({ contract, userData }: contractModalProps) => {
           <button onClick={denyContractHandler}>Deny Contract</button>
         </Buttons>
       )}
+      {
+        contract.finishContractInitiated ? contract.team.filter((member) => {
+          if (member.member._id === userData._id) {
+            return member;
+          } else return null;
+        })[0].finishedApproved ? null : (
+          <Buttons>
+            <button onClick={() => alert('Accepted bitch')}>Finish Contract</button>
+          </Buttons>
+        ) : null
+      }
     </Section>
   );
 };

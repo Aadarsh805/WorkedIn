@@ -8,6 +8,11 @@ import { userProps } from "../../utils/GlobalContants";
 import { TfiWrite } from "react-icons/tfi";
 import { BsFillFileEarmarkSpreadsheetFill } from "react-icons/bs";
 import { IoIosMedal } from 'react-icons/io'
+import { GoTrashcan } from 'react-icons/go'
+import { RiGhostLine, RiGhostFill } from 'react-icons/ri'
+import { BiPen } from 'react-icons/bi'
+import { FaPencilAlt } from 'react-icons/fa'
+
 
 const Section = styled.div`
   border-bottom: 1px solid #3a421b;
@@ -74,6 +79,9 @@ const OptionsMenu = styled.div`
       svg {
         fill: #3a421b;
       }
+      svg.medal{
+        fill: #fff;
+      }
       h5 {
         color: #3a421b;
       }
@@ -87,6 +95,10 @@ const OptionsMenu = styled.div`
       height: 1.3rem;
       fill: #fff;
       /* border: 1px solid red; */
+    }
+
+    svg.medal{
+      fill: #3a421b;
     }
 
     h5 {
@@ -138,11 +150,13 @@ interface chat {
   setUpdateContract: React.Dispatch<React.SetStateAction<boolean>>;
   setInvitePeople: React.Dispatch<React.SetStateAction<boolean>>;
   setReviewContract: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteContract: React.Dispatch<React.SetStateAction<boolean>>;
   setFinishContract: React.Dispatch<React.SetStateAction<boolean>>;
   updateServer: boolean;
   invitePeople: boolean;
   reviewContract: boolean;
   updateContract: boolean;
+  deleteContract: boolean
   finishContract: boolean;
 }
 
@@ -153,11 +167,13 @@ const ChatOptions = ({
   setUpdateContract,
   setInvitePeople,
   setReviewContract,
+  setDeleteContract,
   setFinishContract,
   updateServer,
   updateContract,
   invitePeople,
   reviewContract,
+  deleteContract,
   finishContract
 }: chat) => {
   const [chatOptions, setChatOptions] = useState(false);
@@ -211,9 +227,13 @@ const ChatOptions = ({
                 <h5>Update Contract</h5>
                 <TfiWrite />
               </li>
-              <li className="contract" onClick={() => setFinishContract(!finishContract)}>
+              <li className="medal" onClick={() => setFinishContract(!finishContract)}>
                 <h5>Finish Contract</h5>
                 <IoIosMedal />
+              </li>
+              <li onClick={() => alert('ghost')}>
+                <h5>Ghost Spotted</h5>
+                <RiGhostFill />
               </li>
             </ul>
           </OptionsMenu>
@@ -240,9 +260,9 @@ const ChatOptions = ({
                 <h5>Update Contract</h5>
                 <TfiWrite />
               </li>
-              <li className="contract" onClick={() => setUpdateContract(!updateContract)}>
+              <li className="contract" onClick={() => setDeleteContract(!deleteContract)}>
                 <h5>Delete Contract</h5>
-                <TfiWrite />
+                <GoTrashcan />
               </li>
             </ul>
           </OptionsMenu>
@@ -277,6 +297,10 @@ const ChatOptions = ({
             >
               <h5>Leave Contract</h5>
               <BsFillFileEarmarkSpreadsheetFill />
+            </li>
+            <li onClick={() => alert('ghost')}>
+                <h5>Ghost Spotted</h5>
+                <RiGhostFill />
             </li>
           </ul>
         </OptionsMenu>

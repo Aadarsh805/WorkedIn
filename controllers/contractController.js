@@ -398,6 +398,7 @@ exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
 });
 
 
+// need to make it right
 exports.acceptFinishContract = catchAsync(async (req,res,next) => {
 
   const contractId = req.params.contractId;

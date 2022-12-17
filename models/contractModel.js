@@ -38,6 +38,10 @@ const contractModel = mongoose.Schema(
           type: Boolean,
           default: false,
         },
+        finishedApproved: {
+          type: Boolean,
+          default: false
+        },
         review: {
           //  ref data --> rating, description, userId, contractId, ratedUserId
           type: Number,
