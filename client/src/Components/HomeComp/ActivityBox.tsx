@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const Section = styled.div`
 width: 20vw;
 margin-top: 2rem;
-height: 50vh;
+height: 42vh;
 /* height: fit-content; */
 background-color: rgba(236,227,212,255);
 border-radius: 12px;

@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import styled from "styled-components";
-import {
-  Comment,
-  Share,
-  ThumbsUp,
-  ThumbsUp2,
-} from "../generalComp/SVG";
+import { Comment, Share, ThumbsUp, ThumbsUp2 } from "../generalComp/SVG";
 import { userProps } from "../../utils/GlobalContants";
 import PostModal from "../postComp/PostModal";
 import CommentBox from "./CommentBox";
@@ -38,9 +33,9 @@ const AuthorDetails = styled.div`
     width: 4vw;
     height: 4vw;
     border-radius: 50%;
-    -webkit-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.22);
--moz-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.22);
-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.22);
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
   }
 `;
 
@@ -52,23 +47,24 @@ const AuthorTopSection = styled.div`
   width: 35vw;
   box-sizing: border-box;
   /* margin-top: 1rem; */
-  
-  div{
+
+  div {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* border: 1px solid red; */
 
-    h3{
+    h3 {
       font-size: 1.2rem;
       margin-bottom: 0.1rem;
     }
   }
 
-  h5{
+  h5 {
     /* border: 1px solid red; */
     text-align: left;
-    width: 100%;
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
     overflow: hidden;
     font-size: 0.8rem;
     font-weight: 500;
@@ -86,8 +82,8 @@ const Description = styled.div`
   width: 100%;
   margin-bottom: 0.4rem;
   /* border: 1px solid red; */
-  
-  h4{
+
+  h4 {
     /* border: 1px solid red; */
     margin: 0 2rem 0.5rem 1.5rem;
   }
@@ -111,10 +107,10 @@ const PostStats = styled.div`
   width: 95%;
   margin: 0 auto 0.5rem;
 
-  h5{
+  h5 {
     font-size: 0.8rem;
   }
-  
+
   div {
     display: flex;
     align-items: flex-end;
@@ -171,8 +167,8 @@ const PostFeed = ({ post, user }: postFeedProps) => {
 
   let host = window.location.protocol + "//" + window.location.host;
 
-  const str = "ewjhbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbnbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcne"
   return (
+    <>
     <Section>
       <AuthorDetails>
         <img src={post.author.photo} alt="" />
@@ -193,7 +189,7 @@ const PostFeed = ({ post, user }: postFeedProps) => {
           <h5>
             {post.author.tagline !== ""
               ? post.author.tagline
-              : str.slice(0,50)}
+              : '......'}
           </h5>
         </AuthorTopSection>
       </AuthorDetails>
@@ -227,11 +223,12 @@ const PostFeed = ({ post, user }: postFeedProps) => {
         </div>
       </PostBottom>
       <CommentBox
-        userData={user}
-        isCommentBoxOpen={isCommentBoxOpen}
-        postId={post._id}
-      />
+    userData={user}
+    isCommentBoxOpen={isCommentBoxOpen}
+    postId={post._id}
+  />
     </Section>
+  </>
   );
 };
 

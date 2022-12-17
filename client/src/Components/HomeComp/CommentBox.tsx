@@ -12,8 +12,9 @@ import CreateComment from './CreateComment'
 const Section = styled.div`
 display: ${(props: commentStylesProps) => props.isCommentBoxOpen ? 'block' : 'none'};
 opacity: ${(props : commentStylesProps) => props.isCommentBoxOpen ? 1 : 0};
-/* max-height: ${(props : commentStylesProps) => props.isCommentBoxOpen ? '10vh' : 0}; */
-/* transition: max-height 0.25s linear, opacity 0.2s linear; */
+/* border: 1px solid purple; */
+margin-top: 0.8rem;
+background-color: rgba(236, 227, 212, 255);
 `
 
 interface commentStylesProps {

@@ -23,9 +23,8 @@ const Section = styled.div`
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
-    /* margin: 1rem auto 0.7rem; */
     margin-bottom: 0.7rem;
-    /* border: 1px solid white; */
+    object-fit: cover;
     -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);

@@ -16,7 +16,7 @@ const Section = styled.div`
   /* min-height: calc(100vh - 2.5rem); */
   display: flex;
   padding: 0 5vw;
-  background-color: rgba(207,186,148,255);
+  background-color: rgba(207, 186, 148, 255);
 `;
 
 const PostContainer = styled.div`
@@ -48,7 +48,7 @@ const Home = () => {
   const [userData, setUserData] = useState<userProps>({});
   const [posts, setPosts] = useState<Array<postArr>>([]);
 
-  // get userData 
+  // get userData
   useEffect(() => {
     async function fetchUserData() {
       const data = await JSON.parse(
@@ -77,7 +77,7 @@ const Home = () => {
         <PostContainer>
           <CreatePost />
           {posts.map((post, index) => {
-            return <PostFeed post={post} user={userData} key={index} />;
+            return (<PostFeed post={post} user={userData} key={index} />);
           })}
         </PostContainer>
         <ActivityBox />

@@ -8,36 +8,63 @@ import { BASE_URL, postEnd } from "../../utils/APIRoutes";
 import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`
-  /* display: flex; */
-  /* width: 80%; */
-  border: 1px solid purple;
-  margin: 0.8rem 0rem 0.5rem 1rem;
+  width: 92.5%;
+  padding: 0.4rem;
+  margin: 0rem 0rem 1.2rem 1.2rem;
+  box-sizing: border-box;
+  /* border: 1px solid purple; */
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+  /* background-color: #fff; */
 `;
 
 const CommentAuthor = styled.div`
   display: flex;
-  border: 1px solid purple;
+  /* align-items: center; */
+  /* border: 1px solid yellow; */
 
   img {
-    width: 3.5vw;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.6rem;
+        -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
   }
 `;
 
 const AboutAuthor = styled.div`
 
+
+h4{
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 95%;
+  overflow: hidden;
+  white-space: nowrap;
+  /* border: 1px solid red; */
+}
 `;
 
 const AuthorName = styled.div`
 display: flex;
-border: 1px solid red;
+/* border: 1px solid red; */
 text-align: center;
-/* width: 100%; */
 align-items: center;
 justify-content: space-between;
-width: 35vw;
+width: calc(37vw - 6.1rem + 0.5rem);
+
+h3{
+  font-size: 1rem;
+}
 
 svg{
-   border: 1px solid red;
+   /* border: 1px solid red; */
+   /* margin-right: 0; */
 }
 `
 
@@ -52,7 +79,15 @@ const CommentOptions = styled.div`
   }
 `;
 
-const CommentContent = styled.div``
+const CommentContent = styled.div`
+margin-top: 0.5rem;
+padding-left: 0.5rem;
+/* border: 1px solid blue; */
+p{
+  font-size: 0.9rem;
+  line-height: 150%;
+}
+`
 
 interface commentType {
   comment: string;
@@ -105,7 +140,7 @@ const CommentFeed = ({ comment, userData, postId }: commentProps) => {
               {isCommentModalOpen ? <CommentModal comment={comment} userData={userData} postId={postId} setUpdateComment={setUpdateComment} closeCommentModal={closeCommentModal}/> : null}
             </CommentOptions>
           </AuthorName>
-          <h4>{comment.user.tagline}</h4>
+          <h4>{comment.user.tagline !== '' ? comment.user.tagline : '...' }</h4>
         </AboutAuthor>
       </CommentAuthor>
       <CommentContent>
