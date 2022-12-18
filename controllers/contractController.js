@@ -472,17 +472,19 @@ exports.finishContract = catchAsync(async (req,res) => {
 exports.leaveContract = catchAsync(async (req,res) => {
   const { reason, chatId } = req.body;
   const contractId = req.params.contractId;
+  const userId = req.user.id;
 
   const brokenContract = await Contract.findByIdAndUpdate(contractId, {
     contractBroken: {
-      brokenBy: req.user.id,
+      brokenBy: userId,
       reason
     },
     status: 'broken'
   })
 
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
-    contractApproved: false
+    contractApproved: false,
+    $pull: { users: userId},
   })
 
   res.status(200).json({

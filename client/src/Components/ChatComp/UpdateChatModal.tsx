@@ -279,7 +279,7 @@ const UpdateChatModal = ({
       <UpdateButton>
         <button onClick={updateChatInfoHandler}>Update</button>
       </UpdateButton>
-    </Section>
+    </Section> 
   );
 };
 

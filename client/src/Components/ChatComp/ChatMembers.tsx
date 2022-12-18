@@ -13,6 +13,7 @@ import UpdateContractModal from "../contractComp/UpdateContractModal";
 import FinishContract from "../contractComp/FinishContract";
 import DeleteContract from "../contractComp/DeleteContract";
 import FinishApprovalBtn from "../contractComp/FinishApprovalBtn";
+import BreakContract from "../contractComp/BreakContract";
 
 const Section = styled.div`
   border-left: 2px solid rgba(137,117,88,255);
@@ -26,7 +27,7 @@ interface membersProps {
 }
 
 const Members = styled.div`
-  border: 1px solid white;
+  /* border: 1px solid white; */
   padding-top: 0.5rem;
   box-sizing: border-box;
   height: ${(props:membersProps) => props.divHeight ? 'calc(100vh - 3rem)' : 'calc(100vh - 7rem)' };
@@ -104,6 +105,11 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const [updateContract, setUpdateContract] = useState(false)
   const [deleteContract, setDeleteContract] = useState(false)
   const [finishContract, setFinishContract] = useState(false)
+  const [breakContract, setBreakContract] = useState(false)
+
+  // leave group
+  // break contracr
+  // ghost spotted
 
   useEffect(() => {
     setupdateServer(false)
@@ -133,12 +139,16 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const closeFinishContractModal = () => {
     setFinishContract(false)
   }
+
+  const closeBreakContractModal = () => {
+    setBreakContract(false)
+  }
   
 
   return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
       <Members divHeight={selectedChat.contractSuccessful ? true : (selectedChat.contractApproved && selectedChat.contractFinishedApprovedBy.length === 0 )} >
-          <ChatOptions selectedChat={selectedChat} user={user} setUpdateContract={setUpdateContract} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} setDeleteContract={setDeleteContract} setFinishContract={setFinishContract} updateContract={updateContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} finishContract={finishContract} deleteContract={deleteContract} />
+          <ChatOptions selectedChat={selectedChat} user={user} setUpdateContract={setUpdateContract} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} setDeleteContract={setDeleteContract} setFinishContract={setFinishContract} setBreakContract={setBreakContract} updateContract={updateContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} finishContract={finishContract} deleteContract={deleteContract} breakContract={breakContract} />
         {selectedChat.users !== undefined &&
           (selectedChat.users as unknown as any[]).map((user) => {
             return (
@@ -175,6 +185,9 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
       }
       {
         finishContract ? <FinishContract user={user} contractId={selectedChat.contractId!} closeFinishContractModal={closeFinishContractModal} /> : null
+      }
+      {
+        breakContract ? <BreakContract user={user} contractId={selectedChat.contractId!} closeBreakContractModal={closeBreakContractModal} /> : null
       }
     </Section>
 };
