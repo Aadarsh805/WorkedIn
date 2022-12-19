@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import { chatObj } from "../../types/chatTypes";
-import { searchResultProps } from "../../types/searchTypes";
-import { userProps } from "../../types/userProps";
-import { BASE_URL, chatEnd, searchUserEnd } from "../../utils/APIRoutes";
-import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
-import SearchedUser from "./SearchedUser";
-import UserBadge from "./UserBadge";
+import { chatObj } from "../../../types/chatTypes";
+import { searchResultProps } from "../../../types/searchTypes";
+import { userProps } from "../../../types/userProps";
+import { BASE_URL, chatEnd, searchUserEnd } from "../../../utils/APIRoutes";
+import { getHeaders } from "../../../utils/helperFunction";
+import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
+import SearchedUser from "../../generalComp/SearchedUser";
+import UserBadge from "../../generalComp/UserBadge";
 
 const Section = styled.div`
   position: absolute;

@@ -1,9 +1,6 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
-import { getHeaders, getUserData } from "../../utils/helperFunction";
-import CreateChatModal from "./CreateChatModal";
+import CreateChatModal from "./chatModals/CreateChatModal";
 import { BsFillUnlockFill, BsFillLockFill } from 'react-icons/bs'
 import { userProps } from "../../types/userProps";
 import { chatObj } from "../../types/chatTypes";
@@ -23,7 +20,7 @@ const Chats = styled.div`
   height: calc(100vh - 6.75rem);
 
   &::-webkit-scrollbar {
-    width: 0.3rem;
+    width: 0.15rem;
     &-thumb {
       background-color: #fff;
       background-color: rgba(137, 117, 88, 255);
@@ -142,7 +139,6 @@ const AllChats = ({ user, setSelectedChat, allChats }: allChatProps) => {
   return (
     <Section>
       <Chats>
-
       {allChats.map((chat, index) => {
         if (chat.chatName === "one_On_one") {
           const chatUsers = chat.users;

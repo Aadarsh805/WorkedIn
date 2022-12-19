@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+import styled from "styled-components";
 import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
-import styled from "styled-components";
-import { postProps } from "../../types/postProps";
-import { userProps } from "../../types/userProps";
-import { postEnd } from "../../utils/APIRoutes";
-import { Comment, Share, ThumbsUp, ThumbsUp2 } from "../generalComp/SVG";
 import PostModal from "./PostModal";
+import { userProps } from "../../types/userProps";
+import { postProps } from "../../types/postProps";
+import { ThumbsUp } from "../generalComp/SVG";
 
 const AuthorDetails = styled.div`
   display: flex;

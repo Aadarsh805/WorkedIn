@@ -1,18 +1,17 @@
 import axios from 'axios'
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
-import { BASE_URL, chatEnd, searchUserEnd } from '../../utils/APIRoutes'
-import { getHeaders } from '../../utils/helperFunction'
-import UserBadge from './UserBadge'
-import SearchedUser from './SearchedUser'
-import { useOutsideAlerter } from '../../utils/OutsideAlerter';
-import { userProps } from '../../types/userProps'
-import { searchResultProps } from '../../types/searchTypes'
+import { BASE_URL, chatEnd, searchUserEnd } from '../../../utils/APIRoutes'
+import { getHeaders } from '../../../utils/helperFunction'
+import UserBadge from '../../generalComp/UserBadge'
+import SearchedUser from '../../generalComp/SearchedUser'
+import { useOutsideAlerter } from '../../../utils/OutsideAlerter';
+import { userProps } from '../../../types/userProps'
+import { searchResultProps } from '../../../types/searchTypes'
 
 const Section = styled.div`
 position: absolute;
 width: 50vw;
-/* min-height: 55vh; */
 max-height: 80vh;
 transition: all 0.15s linear;
 top: 50%;

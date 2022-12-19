@@ -31,7 +31,7 @@ const Messages = styled.div`
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 0.4rem;
+    width: 0.25rem;
     &-thumb {
       background-color: #fff;
       /* background-color: rgba(236, 227, 212, 255); */

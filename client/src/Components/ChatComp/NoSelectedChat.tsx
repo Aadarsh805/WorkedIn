@@ -6,7 +6,7 @@ import { searchResultProps } from '../../types/searchTypes'
 import { userProps } from '../../types/userProps'
 import { BASE_URL, chatEnd, searchUserEnd } from '../../utils/APIRoutes'
 import { getHeaders } from '../../utils/helperFunction'
-import SearchedUser from './SearchedUser'
+import SearchedUser from '../generalComp/SearchedUser'
 
 const Section = styled.div`
 /* border: 1px solid red; */
@@ -73,25 +73,22 @@ const Searches = styled.div`
 
 interface noSelectedChatProps {
   user: userProps,
-  setAccessedChat: React.Dispatch<React.SetStateAction<chatObj | undefined>>,
   setSelectedChat: React.Dispatch<React.SetStateAction<chatObj | undefined>>,
   setAllChats:  React.Dispatch<React.SetStateAction<chatObj[]>>,
   allChats: Array<chatObj>
 }
 
-const NoSelectedChat = ({user, setAccessedChat, setSelectedChat, setAllChats, allChats}: noSelectedChatProps) => {
+const NoSelectedChat = ({user, setSelectedChat, setAllChats, allChats}: noSelectedChatProps) => {
 
   const [searchResult, setSearchResult] = useState<Array<searchResultProps>>([]);
 
 
   const handleSearch = async (query: string) => {
     console.log(query === '');
-    
     if (query === '') {
       setSearchResult([])  
       return;
     }
-
     const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
       headers: getHeaders(user.token ?? '')
     })
@@ -101,7 +98,6 @@ const NoSelectedChat = ({user, setAccessedChat, setSelectedChat, setAllChats, al
 
 
   const accessChat = async (userToAccess: searchResultProps) => {
-
       const { data } = await axios.post(`${BASE_URL}${chatEnd}`, { 
         userId: userToAccess._id
        }, {
@@ -110,7 +106,6 @@ const NoSelectedChat = ({user, setAccessedChat, setSelectedChat, setAllChats, al
 
       console.log(data.chat);
 
-      setAccessedChat(data.chat)
       setSelectedChat(data.chat)
       if (!allChats.find((chat) => chat._id === data.chat.id)) setAllChats([data.chat, ...allChats]);  
   };

@@ -55,14 +55,12 @@ exports.fetchChats = catchAsync(async (req, res) => {
     .populate("users", "name photo")
     .populate("groupAdmin", "name photo")
     .populate("latestMessage")
-    .sort({ updatedAt: -1 });
+    .sort({ createdAt: -1 });
 
   const populatedChats = await User.populate(allChats, {
     path: "latestMessage.sender",
     select: "name photo",
   });
-
-  // console.log(populatedChats);
 
   res.status(200).send({
     status: 'success',
@@ -139,12 +137,8 @@ exports.contractProtection = catchAsync(async (req,res,next) => {
   const chatId = req.params.chatId;
 
   const chat = await Chat.findById(chatId);
-  // console.log(chat);
   const contractApproved = chat.contractApproved;
   const contractCompleted = chat.contractSuccessful;
-
-  // console.log(contractApproved);
-  // console.log(contractCompleted);
 
   if (contractApproved) {
     if (!contractCompleted) {

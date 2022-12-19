@@ -29,13 +29,11 @@ const Section = styled.div`
 }
 `
 
-
-
 const Chats = () => {
   const [userData, setUserData] = useState<userProps>({});
   const [allChats, setAllChats] = useState<chatObj[]>([]);
   const [selectedChat, setSelectedChat] = useState<chatObj>();
-  const [accessedChat, setAccessedChat] = useState<chatObj>()
+  // const [accessedChat, setAccessedChat] = useState<chatObj>()
 
 
     useEffect(() => {
@@ -62,7 +60,7 @@ const Chats = () => {
     <Section className='chats' >
           <AllChats user={userData} setSelectedChat={setSelectedChat} allChats={allChats!} />
           {
-            selectedChat ? null : <NoSelectedChat user={userData} setAccessedChat={setAccessedChat} setSelectedChat={setSelectedChat} allChats={allChats} setAllChats={setAllChats} />
+            selectedChat ? null : <NoSelectedChat user={userData} setSelectedChat={setSelectedChat} allChats={allChats} setAllChats={setAllChats} />
           }
           {
             selectedChat && <ChatMessages user={userData} selectedChat={selectedChat} />

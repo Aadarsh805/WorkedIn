@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { getHeaders } from "../../../utils/helperFunction";
+import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;

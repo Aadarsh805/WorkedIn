@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { chatObj } from '../../types/chatTypes'
 import { userProps } from '../../types/userProps'
-import CreateContractModal from './CreateContractModal'
+import CreateContractModal from './contractModals/CreateContract'
 
 const Section = styled.div`
     /* border: 1px solid white; */
@@ -41,7 +41,7 @@ interface contractModalProps {
     user: userProps;
   }
 
-const CreateContract = ({ selectedChat, user }: contractModalProps) => {
+const CreateContractBtn = ({ selectedChat, user }: contractModalProps) => {
     const [contractModal, setContractModal] = useState(false)
 
     const closeContractModal = () => {
@@ -58,4 +58,4 @@ const CreateContract = ({ selectedChat, user }: contractModalProps) => {
   )
 }
 
-export default CreateContract
+export default CreateContractBtn

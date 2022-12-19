@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import NoContracts from "../components/contractComp/NoContracts";
-import ShowContract from "../components/contractComp/ShowContract";
+import ShowContract from "../components/contractComp/contractModals/ShowContract";
 import Navbar from "../components/generalComp/Navbar";
 import { BASE_URL, contractEnd } from "../utils/APIRoutes";
 import { localStorageUser } from "../utils/GlobalContants";

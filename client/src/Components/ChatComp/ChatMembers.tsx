@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { GiCrown } from "react-icons/gi";
-import { AiOutlineDown } from "react-icons/ai";
 import ChatOptions from "./ChatOptions";
-import UpdateChatModal from "./UpdateChatModal";
-import ManageMembers from "./ManageMembers";
-import CreateContract from "../contractComp/CreateContract";
+import UpdateChatModal from "./chatModals/UpdateChatModal";
+import ManageMembers from "./chatModals/ManageMembers";
+import CreateContractBtn from "../contractComp/CreateContractBtn";
 import ContractApproval from "../contractComp/ContractApproval";
-import ReviewContract from "../contractComp/ReviewContract";
-import UpdateContractModal from "../contractComp/UpdateContractModal";
-import FinishContract from "../contractComp/FinishContract";
-import DeleteContract from "../contractComp/DeleteContract";
+import ReviewContract from "../contractComp/contractModals/ReviewContract";
+import UpdateContract from "../contractComp/contractModals/UpdateContract";
+import FinishContract from "../contractComp/contractModals/FinishContract";
+import DeleteContract from "../contractComp/contractModals/DeleteContract";
 import FinishApprovalBtn from "../contractComp/FinishApprovalBtn";
-import BreakContract from "../contractComp/BreakContract";
+import BreakContract from "../contractComp/contractModals/BreakContract";
 import { userProps } from "../../types/userProps";
 import { chatObj } from "../../types/chatTypes";
 
@@ -80,11 +79,6 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const [finishContract, setFinishContract] = useState(false)
   const [breakContract, setBreakContract] = useState(false)
 
-  // useEffect(() => {
-  //   setupdateServer(false)
-  //   setInvitePeople(false)
-  // }, [selectedChat])
-
   const closeUpdateServerModal = () => {    
     setupdateServer(false)
   }
@@ -135,7 +129,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
       {
         selectedChat.contractApproved ? null : selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 
         selectedChat.groupAdmin?._id === user._id ?
-        <CreateContract selectedChat={selectedChat} user={user}/> : null
+        <CreateContractBtn selectedChat={selectedChat} user={user}/> : null
       }
       {
         updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} userToken={user.token} closeUpdateServerModal={closeUpdateServerModal} /> : null
@@ -147,7 +141,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         reviewContract ? <ReviewContract user={user} contractId={selectedChat.contractId} closeReviewContractModal={closeReviewContractModal} /> : null
       }
       {
-        updateContract ? <UpdateContractModal user={user} contractId={selectedChat.contractId!} closeUpdateContractModal={closeUpdateContractModal} /> : null
+        updateContract ? <UpdateContract user={user} contractId={selectedChat.contractId!} closeUpdateContractModal={closeUpdateContractModal} /> : null
       }
       {
         deleteContract ? <DeleteContract closeDeleteContractModal={closeDeleteContractModal} contractId={selectedChat.contractId!} userToken={user.token!} /> : null

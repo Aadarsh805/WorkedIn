@@ -1,12 +1,12 @@
 import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { contractProps } from "../../types/contractTypes";
-import { userProps } from "../../types/userProps";
-import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { months } from "../../utils/GlobalContants";
-import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import { contractProps } from "../../../types/contractTypes";
+import { userProps } from "../../../types/userProps";
+import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { months } from "../../../utils/GlobalContants";
+import { getHeaders } from "../../../utils/helperFunction";
+import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -24,8 +24,6 @@ const Section = styled.div`
 
   &::-webkit-scrollbar {
     width: 0.4rem;
-    /* background-color: #735f32; */
-    /* border-radius: 10px; */
     &-thumb {
       background-color: #fff;
       width: 0.1rem;
@@ -72,7 +70,6 @@ const Header = styled.div`
 
 const Description = styled.p`
   /* border: 1px solid red; */
-  /* margin: 0 auto; */
   padding: 1rem;
   border-radius: 8px;
   margin-top: 1rem;
@@ -97,8 +94,6 @@ const NewDueDate = styled.div`
   margin-top: 1.8rem;
   display: flex;
   align-items: center;
-  /* border: 1px solid red; */
-  /* justify-content: flex-start; */
 
   h2{
     margin-right: 1rem;
@@ -186,7 +181,7 @@ interface updateContractProps {
   closeUpdateContractModal: any
 }
 
-const UpdateContractModal = ({ contractId, user, closeUpdateContractModal }: updateContractProps) => {
+const UpdateContract = ({ contractId, user, closeUpdateContractModal }: updateContractProps) => {
   const [contract, setContract] = useState<contractProps>();
   const [newDueDate, setNewDueDate] = useState('');
   const [reason, setReason] = useState('');
@@ -260,10 +255,4 @@ const UpdateContractModal = ({ contractId, user, closeUpdateContractModal }: upd
   );
 };
 
-export default UpdateContractModal;
-
-// Project Name
-// Desc
-// dates
-// NEw Due Date
-// REason
+export default UpdateContract;

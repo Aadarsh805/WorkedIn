@@ -1,4 +1,3 @@
-import React from "react";
 import { GrFormClose } from "react-icons/gr";
 import styled from "styled-components";
 import { searchResultProps } from "../../types/searchTypes";

@@ -1,5 +1,4 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { chatObj } from "../../types/chatTypes";
 import { userProps } from "../../types/userProps";

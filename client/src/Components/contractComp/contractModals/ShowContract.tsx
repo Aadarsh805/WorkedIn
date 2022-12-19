@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { contractProps } from "../../types/contractTypes";
-import { userProps } from "../../types/userProps";
-import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
-import ContractBody from "./ContractBody";
+import { contractProps } from "../../../types/contractTypes";
+import { userProps } from "../../../types/userProps";
+import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { getHeaders } from "../../../utils/helperFunction";
+import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
+import ContractBody from "../ContractBody";
 
 const Section = styled.div`
   position: absolute;

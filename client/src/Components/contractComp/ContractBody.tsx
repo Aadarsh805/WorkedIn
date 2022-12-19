@@ -5,7 +5,6 @@ import { userProps } from '../../types/userProps';
 import { months } from '../../utils/GlobalContants';
 import TeamMemberCard from './TeamMemberCard';
 
-
 const Header = styled.div`
   /* border: 1px solid red; */
   position: relative;

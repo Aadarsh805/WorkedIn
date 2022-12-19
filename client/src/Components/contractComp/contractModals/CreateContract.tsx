@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { chatObj, member } from "../../types/chatTypes";
-import { userProps } from "../../types/userProps";
-import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import { chatObj, member } from "../../../types/chatTypes";
+import { userProps } from "../../../types/userProps";
+import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { getHeaders } from "../../../utils/helperFunction";
+import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -279,7 +279,7 @@ interface memberRoleProps {
   photo: string;
 }
 
-const CreateContractModal = ({
+const CreateContract = ({
   selectedChat,
   user,
   closeContractModal,
@@ -435,4 +435,4 @@ const CreateContractModal = ({
   );
 };
 
-export default CreateContractModal;
+export default CreateContract;
