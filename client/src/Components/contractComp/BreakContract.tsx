@@ -1,7 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react'
-import styled from 'styled-components';
-import { userProps } from '../../utils/GlobalContants';
-import { useOutsideAlerter } from '../../utils/OutsideAlerter';
+import React, { useRef, useState, useEffect } from "react";
+import styled from "styled-components";
+import { userProps } from "../../utils/GlobalContants";
+import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
+// @import "~react-image-gallery/styles/css/image-gallery.css";
+// import 'react-image-gallery/styles/css'
 
 const Section = styled.div`
   position: absolute;
@@ -27,7 +30,7 @@ const Section = styled.div`
     }
   }
 
-  h1{
+  h1 {
     color: #faf8f1;
     font-size: 1.6rem;
     font-weight: 500;
@@ -53,7 +56,7 @@ const Section = styled.div`
     border-radius: 10px;
     outline: none;
     border: none;
-    width: 90%;
+    width: 95%;
     height: 8rem;
     margin: 0.2rem 0 1rem;
     font-size: 1rem;
@@ -79,9 +82,43 @@ const Section = styled.div`
   }
 `;
 
+const ImageContainer = styled.div`
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.2rem 0 2rem;
+`;
+
+const GalleryContainer = styled.div`
+  width: 70%;
+  border: 1px solid white;
+
+  div {
+    border-radius: 10px;
+    /* border: 1px solid red; */
+  }
+
+  img {
+    /* border: 1px solid purple; */
+    border-radius: 10px;
+  }
+
+  svg {
+    /* border: 1px solid purple; */
+    stroke: rgba(250, 248, 241, 0.8);
+    transition: all 0.15s linear;
+    /* stroke: #fff; */
+
+    &:hover {
+      /* stroke:rgba(250, 248, 241, 0.8); */
+      stroke: #faf8f1;
+    }
+  }
+`;
+
 const Upload = styled.div`
-  /* border: 1px solid red; */
-  /* padding-left: 1rem; */
+  border: 1px solid red;
   width: 20%;
   margin: 1rem auto;
 
@@ -92,15 +129,15 @@ const Upload = styled.div`
     padding: 10px 16px;
     background-color: #735f32;
     border: 2px solid rgba(236, 227, 212, 255);
-    box-shadow: 3px 3px 0px rgba(236, 227, 212, 255);
+    /* box-shadow: 3px 3px 0px rgba(236, 227, 212, 255); */
     border-radius: 4px;
     color: white;
     font-weight: 400;
     font-size: 0.8rem;
     box-sizing: border-box;
     cursor: pointer;
-    translate: -3px -3px;
-    transition: all 0.15s ease-in;
+    /* translate: -3px -3px; */
+    /* transition: all 0.15s ease-in; */
     position: relative;
     overflow: hidden;
 
@@ -124,24 +161,24 @@ const Upload = styled.div`
 `;
 
 const Confirm = styled.div`
-    display: flex;
-    /* border: 2px solid red; */
-    align-items: flex-start;
+  display: flex;
+  /* border: 2px solid red; */
+  align-items: flex-start;
 
-    input{
-        /* border: 2px solid red; */
-        margin-right: 1rem;
-        margin-top: 0.25rem;
-    }
-    
-    p{
-        /* border: 1px solid red; */
-        color: #faf8f1;
-        width: 90%;
-        font-size: 1rem;
-        line-height: 120%;
-    }
-`
+  input {
+    /* border: 2px solid red; */
+    margin-right: 1rem;
+    margin-top: 0.25rem;
+  }
+
+  p {
+    /* border: 1px solid red; */
+    color: #faf8f1;
+    width: 90%;
+    font-size: 1rem;
+    line-height: 120%;
+  }
+`;
 
 const UpdateButton = styled.div`
   /* border: 1px solid white; */
@@ -168,23 +205,26 @@ const UpdateButton = styled.div`
       box-shadow: 0 0 0;
     }
 
-    &:last-child{
-        margin-left: 2.5rem;
+    &:last-child {
+      margin-left: 2.5rem;
     }
   }
 `;
 
 interface breakContractProps {
-    closeBreakContractModal: any;
-    user: userProps;
-    contractId: string
+  closeBreakContractModal: any;
+  user: userProps;
+  contractId: string;
 }
 
-const BreakContract = ({closeBreakContractModal, user, contractId}: breakContractProps) => {
+const BreakContract = ({
+  closeBreakContractModal,
+  user,
+  contractId,
+}: breakContractProps) => {
+  const [proofImages, setProofImages] = useState<string[]>([]);
 
-    const [proofImages, setProofImages] = useState<string[]>([])
-
-    const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, closeBreakContractModal);
 
   const postImage = (pics: FileList | null) => {
@@ -214,42 +254,63 @@ const BreakContract = ({closeBreakContractModal, user, contractId}: breakContrac
     }
   };
 
-  const breakContractHandler = async () => {
-    
-  }
+  const breakContractHandler = async () => {};
+
+  const images: string | any[] | readonly ReactImageGalleryItem[] = [
+    // {
+    //   original: "https://picsum.photos/id/1018/1000/600/",
+    //   thumbnail: "https://picsum.photos/id/1018/250/150/",
+    // },
+  ];
 
   return (
-    <Section ref={wrapperRef} >
-        <h1>Leave Contract</h1>
-        <h3>Before breaking the contract we would like to take feedback from you</h3>
-        <h2>Reason</h2>
-        <textarea placeholder='Reason why you are breaking this contract' />
-        <h2>Work you completed from your side</h2>
-        <textarea placeholder='How much did you completed the project from your side' />
-        <h2>Proof of work you have done so far</h2>
+    <Section ref={wrapperRef}>
+      <h1>Leave Contract</h1>
+      <h3>
+        Before breaking the contract we would like to take feedback from you
+      </h3>
+      <h2>Reason</h2>
+      <textarea
+        placeholder="Reason why you are breaking this contract"
+        autoFocus
+      />
+      <h2>Work you completed from your side</h2>
+      <textarea placeholder="How much did you completed the project from your side" />
+      <h2>Proof of work you have done so far</h2>
+      <ImageContainer>
         <Upload>
-            <div className="input-container">
-                Choose a photo
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => postImage(e.target.files)}
-                />
-            </div>
+          <div className="input-container">
+            Choose a photo
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => postImage(e.target.files)}
+            />
+          </div>
         </Upload>
-        <Confirm>
+        {
+          images.length !== 0 ?
+          <GalleryContainer>
+          <ImageGallery items={images} />
+        </GalleryContainer> : null
+        }
+      </ImageContainer>
+      <Confirm>
         <input type="radio" name="" id="" />
-        <p>Are you sure you want to break the contract ?? This will impact your profiles as well your other teammates profiles</p>
-        </Confirm>
-        <UpdateButton>
+        <p>
+          Are you sure you want to break the contract ?? This will impact your
+          profiles as well your other teammates profiles
+        </p>
+      </Confirm>
+      <UpdateButton>
         <button onClick={breakContractHandler}>Yes, Break Contract</button>
         <button onClick={closeBreakContractModal}>No, Go Back</button>
       </UpdateButton>
     </Section>
-  )
-}
+  );
+};
 
-export default BreakContract
+export default BreakContract;
 
 // reason for leaving
 // what you expected from the project
