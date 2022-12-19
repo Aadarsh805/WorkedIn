@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { localStorageUser } from '../utils/GlobalContants';
+import { BASE_URL, userEnd } from '../utils/APIRoutes';
 
 const Section = styled.div`
 height: 100vh;
@@ -40,7 +41,7 @@ const Register = () => {
 
     const handleSubmit = async (e : any) => {
         e.preventDefault()
-        const {data} = await axios.post('http://localhost:5000/api/v1/users/signup', {
+        const {data} = await axios.post(`${BASE_URL}${userEnd}signup`, {
             name: user?.name,
             email: user?.email,
             password: user?.password,
