@@ -1,6 +1,7 @@
 import React from "react";
 import { GrFormClose } from "react-icons/gr";
 import styled from "styled-components";
+import { searchResultProps } from "../../types/searchTypes";
 
 const Section = styled.div`
   display: flex;
@@ -37,13 +38,6 @@ const Section = styled.div`
   }
   }
 `;
-
-interface searchResultProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
 interface userBadgeProps {
   user: searchResultProps;
   onClickFunc: any

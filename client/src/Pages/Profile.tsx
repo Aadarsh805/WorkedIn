@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  contractProps,
-  localStorageUser, userProps,
-} from "../utils/GlobalContants";
+import { localStorageUser } from "../utils/GlobalContants";
 
 import Navbar from "../components/generalComp/Navbar";
 import Intro from "../components/profileComp/Intro";
@@ -15,6 +12,8 @@ import { getHeaders } from "../utils/helperFunction";
 import About from "../components/profileComp/About";
 import ContractCard from "../components/contractComp/ContractCard";
 import RecentUserActivity from "../components/profileComp/RecentUserActivity";
+import { userProps } from "../types/userProps";
+import { contractProps } from "../types/contractTypes";
 
 const Section = styled.div`
   /* border: 5px solid black; */

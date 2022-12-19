@@ -5,9 +5,11 @@ import NoContracts from "../components/contractComp/NoContracts";
 import ShowContract from "../components/contractComp/ShowContract";
 import Navbar from "../components/generalComp/Navbar";
 import { BASE_URL, contractEnd } from "../utils/APIRoutes";
-import { localStorageUser, userProps } from "../utils/GlobalContants";
+import { localStorageUser } from "../utils/GlobalContants";
 import { getHeaders } from "../utils/helperFunction";
 import ContractCard from "../components/contractComp/ContractCard";
+import { contractProps } from "../types/contractTypes";
+import { userProps } from "../types/userProps";
 
 const Section = styled.div`
   padding: 1rem;
@@ -18,44 +20,6 @@ const Section = styled.div`
   background-color: rgba(207, 186, 148, 255);
 `;
 
-
-interface member {
-  name: string;
-  _id: string;
-  photo: string;
-}
-
-interface teamMember {
-  approved: Boolean;
-  denied: Boolean;
-  finishedApproved: Boolean;
-  member: member;
-  responsibility: string;
-  review: number;
-  role: string;
-}
-
-interface contractProps {
-  chatId: string;
-  contractBroken: {
-    reason: string | null,
-    brokenBy: member
-  };
-  contractName: string;
-  createdAt: string;
-  dueDate: string;
-  finishContractInitiated: boolean;
-  githubLink: string;
-  lead: member;
-  liveLink: string;
-  prevDueDates: [];
-  projectDescription: string;
-  projectImages: Array<string>;
-  startDate: string;
-  status: string;
-  team: Array<teamMember>;
-  _id: string;
-}
 
 const Contracts = () => {
   const [userData, setUserData] = useState<userProps>({});

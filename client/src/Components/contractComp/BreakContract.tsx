@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
-import { userProps } from "../../utils/GlobalContants";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import axios from "axios";
 import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
 import { getHeaders } from "../../utils/helperFunction";
+import { userProps } from "../../types/userProps";
 // @import "~react-image-gallery/styles/css/image-gallery.css";
 // import 'react-image-gallery/styles/css'
 

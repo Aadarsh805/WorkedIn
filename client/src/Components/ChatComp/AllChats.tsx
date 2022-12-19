@@ -2,10 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders, getUserData } from "../../utils/helperFunction";
 import CreateChatModal from "./CreateChatModal";
 import { BsFillUnlockFill, BsFillLockFill } from 'react-icons/bs'
+import { userProps } from "../../types/userProps";
+import { chatObj } from "../../types/chatTypes";
 
 const Section = styled.div`
   border-right: 2px solid rgba(137, 117, 88, 255);
@@ -127,32 +128,6 @@ interface allChatProps {
   user: userProps;
   setSelectedChat: any;
   allChats: Array<chatObj>
-}
-
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean;
-  contractSuccessful: boolean;
-  contractFinishedApprovedBy: Array<string>
 }
 
 const AllChats = ({ user, setSelectedChat, allChats }: allChatProps) => {

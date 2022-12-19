@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import styled from "styled-components";
-import { userProps } from "../../utils/GlobalContants";
+import { userProps } from "../../types/userProps";
 import Socials from "./Socials";
 import UpdateIntroModal from "./UpdateIntroModal";
 

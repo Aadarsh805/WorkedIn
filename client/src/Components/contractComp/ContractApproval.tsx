@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { chatObj } from "../../types/chatTypes";
+import { userProps } from "../../types/userProps";
 import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`
@@ -36,30 +37,6 @@ const Section = styled.div`
     }
   }
 `;
-
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean;
-}
 
 interface contractApprovalProps {
   selectedChat: chatObj;

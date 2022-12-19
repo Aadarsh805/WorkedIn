@@ -1,6 +1,7 @@
 import React from "react";
 import { BsArrow90DegRight } from "react-icons/bs";
 import styled from "styled-components";
+import { contractProps } from "../../types/contractTypes";
 import { months } from "../../utils/GlobalContants";
 import StatusStrip from "./StatusStrip";
 
@@ -143,35 +144,6 @@ const ShowContractButton = styled.div`
     }
   }
 `;
-
-interface member {
-  name: string;
-  _id: string;
-  photo: string;
-}
-
-interface teamMember {
-  approved: Boolean;
-  denied: Boolean;
-  member: member;
-  responsibility: string;
-  review: number;
-  role: string;
-}
-
-interface contractProps {
-  chatId: string;
-  contractName: string;
-  createdAt: string;
-  dueDate: string;
-  lead: member;
-  prevDueDates: [];
-  projectDescription: string;
-  startDate: string;
-  status: string;
-  team: Array<teamMember>;
-  _id: string;
-}
 
 interface contractCardProps {
   contract: contractProps;

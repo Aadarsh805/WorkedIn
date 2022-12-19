@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { contractProps } from "../../types/contractTypes";
+import { userProps } from "../../types/userProps";
 import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import ContractBody from "./ContractBody";
@@ -43,35 +44,6 @@ interface reviewContractProps {
   user: userProps;
   contractId?: string;
   closeReviewContractModal: any
-}
-
-interface member {
-  name: string;
-  _id: string;
-  photo: string;
-}
-
-interface teamMember {
-  approved: Boolean;
-  denied: Boolean;
-  member: member;
-  responsibility: string;
-  review: number;
-  role: string;
-}
-
-interface contractProps {
-  chatId: string;
-  contractName: string;
-  createdAt: string;
-  dueDate: string;
-  lead: member;
-  prevDueDates: [];
-  projectDescription: string;
-  startDate: string;
-  status: string;
-  team: Array<teamMember>;
-  _id: string;
 }
 
 const ReviewContract = ({ user, contractId, closeReviewContractModal }: reviewContractProps) => {

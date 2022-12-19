@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useRef } from "react";
 import styled from "styled-components";
+import { contractProps } from "../../types/contractTypes";
+import { userProps } from "../../types/userProps";
 import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import ContractBody from "./ContractBody";
@@ -74,44 +75,6 @@ const Buttons = styled.div`
     }
   }
 `;
-
-interface member {
-  name: string;
-  _id: string;
-  photo: string;
-}
-
-interface teamMember {
-  approved: Boolean;
-  denied: Boolean;
-  finishedApproved: Boolean;
-  member: member;
-  responsibility: string;
-  review: number;
-  role: string;
-}
-
-interface contractProps {
-  chatId: string;
-  contractBroken: {
-    reason: string | null,
-    brokenBy: member
-  };
-  contractName: string;
-  createdAt: string;
-  dueDate: string;
-  finishContractInitiated: boolean;
-  githubLink: string;
-  lead: member;
-  liveLink: string;
-  prevDueDates: [];
-  projectDescription: string;
-  projectImages: Array<string>;
-  startDate: string;
-  status: string;
-  team: Array<teamMember>;
-  _id: string;
-}
 
 interface contractModalProps {
   contract: contractProps;

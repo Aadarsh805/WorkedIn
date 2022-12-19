@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { searchResultProps } from "../../types/searchTypes";
 
 const Section = styled.div`
   display: flex;
@@ -31,11 +32,6 @@ const Section = styled.div`
     color:rgb(58, 66, 27);
   }
 `;
-interface searchResultProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
 
 interface searchedUserProps {
   user: searchResultProps;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { localStorageUser, userProps } from "../../utils/GlobalContants";
+import { userProps } from "../../types/userProps";
+import { localStorageUser } from "../../utils/GlobalContants";
 
 const Section = styled.div`
   /* border: 1px solid red; */

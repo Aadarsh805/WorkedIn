@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { GiCrown } from "react-icons/gi";
 import { AiOutlineDown } from "react-icons/ai";
 import ChatOptions from "./ChatOptions";
-import { userProps } from "../../utils/GlobalContants";
 import UpdateChatModal from "./UpdateChatModal";
 import ManageMembers from "./ManageMembers";
 import CreateContract from "../contractComp/CreateContract";
@@ -14,6 +13,8 @@ import FinishContract from "../contractComp/FinishContract";
 import DeleteContract from "../contractComp/DeleteContract";
 import FinishApprovalBtn from "../contractComp/FinishApprovalBtn";
 import BreakContract from "../contractComp/BreakContract";
+import { userProps } from "../../types/userProps";
+import { chatObj } from "../../types/chatTypes";
 
 const Section = styled.div`
   border-left: 2px solid rgba(137,117,88,255);
@@ -65,34 +66,6 @@ const Member = styled.div`
   }
 `;
 
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean;
-  contractSuccessful: boolean;
-  contractFinishedApprovedBy: Array<string>
-}
-
-
-
 interface chat {
   selectedChat: chatObj;
   user: userProps;
@@ -107,14 +80,10 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const [finishContract, setFinishContract] = useState(false)
   const [breakContract, setBreakContract] = useState(false)
 
-  // leave group
-  // break contracr
-  // ghost spotted
-
-  useEffect(() => {
-    setupdateServer(false)
-    setInvitePeople(false)
-  }, [selectedChat])
+  // useEffect(() => {
+  //   setupdateServer(false)
+  //   setInvitePeople(false)
+  // }, [selectedChat])
 
   const closeUpdateServerModal = () => {    
     setupdateServer(false)

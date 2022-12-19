@@ -4,7 +4,6 @@ import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
 import { HiUserAdd } from "react-icons/hi";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
-import { userProps } from "../../utils/GlobalContants";
 import { TfiWrite } from "react-icons/tfi";
 import { BsFillFileEarmarkSpreadsheetFill } from "react-icons/bs";
 import { IoIosMedal } from "react-icons/io";
@@ -12,6 +11,8 @@ import { GoTrashcan } from "react-icons/go";
 import { RiGhostFill } from "react-icons/ri";
 import { ImExit } from "react-icons/im";
 import { RxCrumpledPaper } from "react-icons/rx";
+import { chatObj } from "../../types/chatTypes";
+import { userProps } from "../../types/userProps";
 
 const Section = styled.div`
   border-bottom: 1px solid #3a421b;
@@ -145,32 +146,6 @@ const OptionsMenu = styled.div`
     }
   }
 `;
-
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean;
-  contractSuccessful: boolean;
-  contractFinishedApprovedBy: Array<string>;
-}
 
 interface chat {
   selectedChat: chatObj;

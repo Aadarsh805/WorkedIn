@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { userProps } from '../../utils/GlobalContants'
+import { chatObj } from '../../types/chatTypes'
+import { userProps } from '../../types/userProps'
 import CreateContractModal from './CreateContractModal'
 
 const Section = styled.div`
@@ -34,30 +35,6 @@ const ContractBtn = styled.div`
       box-shadow: 0 0 0;
     }
 `
-
-interface groupMemberProps {
-    _id: string;
-    name: string;
-    photo: string;
-  }
-  
-  interface chatObj {
-    chatName?: string;
-    contracted?: Boolean;
-    chatPhoto?: string;
-    createdAt?: string;
-    groupAdmin?: {
-      _id?: string;
-      name?: string;
-      photo?: string;
-    };
-    isGroupChat?: Boolean;
-    users?: Array<groupMemberProps>;
-    _id?: string;
-    contractId?: string;
-    contractAprovedBy: Array<string>;
-    contractApproved: Boolean
-}
 
 interface contractModalProps {
     selectedChat: chatObj;

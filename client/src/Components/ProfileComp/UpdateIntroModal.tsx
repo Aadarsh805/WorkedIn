@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
+import { userProps } from "../../types/userProps";
 import { BASE_URL, userEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
@@ -204,11 +204,9 @@ interface updateIntroProps {
   closeUpdateIntroModal: any;
 }
 
-const UpdateIntroModal = ({
-  user,
-  userToken,
-  closeUpdateIntroModal,
-}: updateIntroProps) => {
+const UpdateIntroModal = (props : updateIntroProps) => {
+
+  const { user, userToken, closeUpdateIntroModal } = props
 
   const [name, setName] = useState(user.name);
   const [tagline, setTagline] = useState(user.tagline !== '' ? user.tagline : '')

@@ -1,37 +1,23 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { commentProps } from '../../types/commentTypes'
+import { userProps } from '../../types/userProps'
 import { BASE_URL, postEnd } from '../../utils/APIRoutes'
-import { userProps } from '../../utils/GlobalContants'
 import { getHeaders, getUserData } from '../../utils/helperFunction'
 import CommentFeed from './CommentFeed'
 import CreateComment from './CreateComment'
-
-
-
-const Section = styled.div`
-display: ${(props: commentStylesProps) => props.isCommentBoxOpen ? 'block' : 'none'};
-opacity: ${(props : commentStylesProps) => props.isCommentBoxOpen ? 1 : 0};
-/* border: 1px solid purple; */
-margin-top: 0.8rem;
-background-color: rgba(236, 227, 212, 255);
-`
 
 interface commentStylesProps {
   isCommentBoxOpen: Boolean
 }
 
-interface commentProps {
-  comment: string,
-  createdAt: string,
-  user: {
-    name: string,
-    photo: string,
-    tagline: string,
-    _id: string,
-  },
-  _id: string
-}
+const Section = styled.div`
+display: ${(props: commentStylesProps) => props.isCommentBoxOpen ? 'block' : 'none'};
+opacity: ${(props : commentStylesProps) => props.isCommentBoxOpen ? 1 : 0};
+margin-top: 0.8rem;
+background-color: rgba(236, 227, 212, 255);
+`
 
 interface commentFeedProps {
   isCommentBoxOpen: Boolean

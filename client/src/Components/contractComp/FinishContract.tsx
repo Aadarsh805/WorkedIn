@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
+import { contractProps } from "../../types/contractTypes";
+import { userProps } from "../../types/userProps";
 import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders, getReadableTime } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
@@ -225,35 +226,6 @@ interface finishContractProps {
     closeFinishContractModal: any
 }
 
-interface member {
-    name: string;
-    _id: string;
-    photo: string;
-  }
-  
-  interface teamMember {
-    approved: Boolean;
-    denied: Boolean;
-    member: member;
-    responsibility: string;
-    review: number;
-    role: string;
-  }
-  
-  interface contractProps {
-    chatId: string;
-    contractName: string;
-    createdAt: string;
-    dueDate: string;
-    lead: member;
-    prevDueDates: [];
-    projectDescription: string;
-    startDate: string;
-    status: string;
-    team: Array<teamMember>;
-    _id: string;
-  }
-
 const FinishContract = ({user, contractId, closeFinishContractModal}: finishContractProps) => {
     const [contract, setContract] = useState<contractProps>();
     const [githubLink, setGithubLink] = useState<string>('');
@@ -368,5 +340,3 @@ const FinishContract = ({user, contractId, closeFinishContractModal}: finishCont
 };
 
 export default FinishContract;
-
-// projet name | dates | desc | github lnk | live link | share at least 3 project ss

@@ -21,16 +21,16 @@ form{
 }
 `
 
+interface newUserProps {
+    name: string,
+    email: string,
+    password: string,
+    confirmPassword: string,
+}
+
 const Register = () => {
 
     const navigate = useNavigate()
-
-    interface newUserProps {
-        name: string,
-        email: string,
-        password: string,
-        confirmPassword: string,
-    }
 
     const [user, setUser] = useState<newUserProps>()
 
@@ -45,10 +45,7 @@ const Register = () => {
             email: user?.email,
             password: user?.password,
             passwordConfirm: user?.confirmPassword
-        })
-        // console.log(data.status);
-        // console.log(data.user);
-        
+        })        
         if (data.status === 'success') {
             data.user.token = data.token
             localStorage.setItem(localStorageUser, JSON.stringify(data.user))   

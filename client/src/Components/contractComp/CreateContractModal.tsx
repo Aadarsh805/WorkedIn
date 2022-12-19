@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { chatObj, member } from "../../types/chatTypes";
+import { userProps } from "../../types/userProps";
 import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
@@ -262,29 +263,6 @@ const InitialiseButton = styled.div`
   }
 `;
 
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean;
-}
 
 interface contractModalProps {
   selectedChat: chatObj;
@@ -292,7 +270,7 @@ interface contractModalProps {
   closeContractModal: any;
 }
 
-interface memberRolesProps {
+interface memberRoleProps {
   id: number;
   member: string;
   role: string;
@@ -306,7 +284,7 @@ const CreateContractModal = ({
   user,
   closeContractModal,
 }: contractModalProps) => {
-  const [memberRoles, setMemberRoles] = useState<memberRolesProps[]>([]);
+  const [memberRoles, setMemberRoles] = useState<memberRoleProps[]>([]);
   const [contractName, setContractName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -318,7 +296,7 @@ const CreateContractModal = ({
   useEffect(() => {
     console.log(selectedChat.users);
 
-    (selectedChat.users as unknown as groupMemberProps[]).map((user, index) => {
+    (selectedChat.users as unknown as member[]).map((user, index) => {
       console.log(index);
       if (memberRoles.find((member) => member.member === user._id)) {
         return memberRoles;

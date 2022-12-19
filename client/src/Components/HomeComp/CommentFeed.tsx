@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { userProps } from "../../utils/GlobalContants";
 import { HiDotsVertical } from "react-icons/hi";
 import CommentModal from "./CommentModal";
 import axios from "axios";
 import { BASE_URL, postEnd } from "../../utils/APIRoutes";
 import { getHeaders } from "../../utils/helperFunction";
+import { commentProps } from "../../types/commentTypes";
+import { userProps } from "../../types/userProps";
 
 const Section = styled.div`
   width: 92.5%;
@@ -98,25 +99,13 @@ border: none;
 
 `
 
-interface commentType {
-  comment: string;
-  createdAt: string;
-  user: {
-    name: string;
-    photo: string;
-    tagline: string;
-    _id: string;
-  };
-  _id: string;
-}
-
-interface commentProps {
-  comment: commentType,
+interface commentFeedProps {
+  comment: commentProps,
   userData: userProps,
   postId: string
 }
 
-const CommentFeed = ({ comment, userData, postId }: commentProps) => {
+const CommentFeed = ({ comment, userData, postId }: commentFeedProps) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [updateComment, setUpdateComment] = useState(false)
   const [commentContent, setCommentContent] = useState(comment.comment)

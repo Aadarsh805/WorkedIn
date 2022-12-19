@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { postProps } from "../../types/postProps";
 import { postEnd } from "../../utils/APIRoutes";
 import { Comment, Share, ThumbsUp, ThumbsUp2 } from "../generalComp/SVG";
 
@@ -73,23 +74,8 @@ const PostBottom = styled.div`
   }
 `;
 
-interface postProps {
-  author: {
-    name: string;
-    photo: string;
-    tagline: string;
-    _id: string;
-  };
-  description: string;
-  image: string;
-  comments: number;
-  like: Array<string>;
-  _id: string;
-  createdAt: string;
-}
-
 interface postContentProps {
-  post: postProps | undefined;
+  post: postProps;
   commentBoxModal: any;
 }
 

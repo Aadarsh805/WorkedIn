@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import { chatObj } from "../../types/chatTypes";
+import { searchResultProps } from "../../types/searchTypes";
+import { userProps } from "../../types/userProps";
 import { BASE_URL, chatEnd, searchUserEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import SearchedUser from "./SearchedUser";
@@ -85,46 +87,10 @@ const UserBadges = styled.div`
   box-sizing: border-box;
 `;
 
-// userbadges
-// search
-// searchUserReault
-// add to group
-// remove from group
-
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean;
-}
-
 interface manageMemberProps {
   selectedChat: chatObj;
   user: userProps;
   closeInvitePeopleModal: any;
-}
-
-interface searchResultProps {
-  _id: string;
-  name: string;
-  photo: string;
 }
 
 const ManageMembers = ({

@@ -14,6 +14,7 @@ const Section = styled.div`
   width: 5rem;
   height: 1rem;
 `;
+
 interface statusStripProps {
   status: string;
 }

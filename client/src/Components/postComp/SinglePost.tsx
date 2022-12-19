@@ -2,8 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { postProps } from "../../types/postProps";
+import { userProps } from "../../types/userProps";
 import { BASE_URL, postEnd } from "../../utils/APIRoutes";
-import { localStorageUser, userProps } from "../../utils/GlobalContants";
+import { localStorageUser } from "../../utils/GlobalContants";
 import Navbar from "../generalComp/Navbar";
 import ActivityBox from "../homeComp/ActivityBox";
 import CommentBox from "../homeComp/CommentBox";
@@ -25,23 +27,9 @@ const PostContainer = styled.div`
   margin: 0 5vw;
 `;
 
-interface postObjProps {
-  author: {
-    name: string;
-    photo: string;
-    tagline: string;
-    _id: string;
-  };
-  description: string;
-  image: string;
-  comments: number;
-  like: Array<string>;
-  _id: string;
-  createdAt: string;
-}
 
 const SinglePost = () => {
-  const [post, setPost] = useState<postObjProps>();
+  const [post, setPost] = useState<postProps>();
   const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
   const [postId, setPostId] = useState<string>()
 
@@ -87,7 +75,7 @@ const SinglePost = () => {
       <Section>
         <ProfileBriefBox/>
         <PostContainer>
-        <PostContent commentBoxModal={commentBoxModal} post={post} />
+        <PostContent commentBoxModal={commentBoxModal} post={post!} />
         {
             post && 
         <CommentBox userData={userData} isCommentBoxOpen={isCommentBoxOpen} postId={post._id} />

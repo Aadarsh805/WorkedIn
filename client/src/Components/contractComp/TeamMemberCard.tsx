@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { teamMember } from "../../types/contractTypes";
 
 const Section = styled.div`
   background-color: #faf8f1;
@@ -76,21 +77,6 @@ const MemberResponsibility = styled.p`
     }
   }
 `;
-
-interface member {
-  name: string;
-  _id: string;
-  photo: string;
-}
-
-interface teamMember {
-  approved: Boolean;
-  denied: Boolean;
-  member: member;
-  responsibility: string;
-  review: number;
-  role: string;
-}
 
 interface memberProps {
   currentUser: teamMember;

@@ -1,8 +1,10 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { chatObj } from '../../types/chatTypes'
+import { searchResultProps } from '../../types/searchTypes'
+import { userProps } from '../../types/userProps'
 import { BASE_URL, chatEnd, searchUserEnd } from '../../utils/APIRoutes'
-import { userProps } from '../../utils/GlobalContants'
 import { getHeaders } from '../../utils/helperFunction'
 import SearchedUser from './SearchedUser'
 
@@ -68,38 +70,6 @@ const Searches = styled.div`
   grid-template-columns: auto auto;
 
 `
-
-interface searchResultProps {
-  _id: string,
-  name: string,
-  photo: string
-}
-
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean;
-  contractSuccessful: boolean;
-  contractFinishedApprovedBy: Array<string>
-}
 
 interface noSelectedChatProps {
   user: userProps,

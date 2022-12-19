@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import styled from "styled-components";
 import { Comment, Share, ThumbsUp, ThumbsUp2 } from "../generalComp/SVG";
-import { userProps } from "../../utils/GlobalContants";
 import PostModal from "../postComp/PostModal";
 import CommentBox from "./CommentBox";
 import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
 import { FaRegThumbsUp } from "react-icons/fa";
+import { userProps } from "../../types/userProps";
+import { postProps } from "../../types/postProps";
 
 const Section = styled.div`
   width: 100%;
@@ -150,21 +151,6 @@ const PostBottom = styled.div`
     /* fill: rgba(137,117,88,255); */
   }
 `;
-
-interface postProps {
-  author: {
-    name: string;
-    photo: string;
-    tagline: string;
-    _id: string;
-  };
-  description: string;
-  image: string;
-  comments: number;
-  like: Array<string>;
-  _id: string;
-  createdAt: string;
-}
 
 interface postFeedProps {
   user: userProps;

@@ -7,7 +7,9 @@ import ProfileBriefBox from "../components/homeComp/ProfileBriefBox";
 import { apiProvider } from "../utils/helperFunction";
 import ActivityBox from "../components/homeComp/ActivityBox";
 import PostFeed from "../components/homeComp/PostFeed";
-import { localStorageUser, userProps } from "../utils/GlobalContants";
+import { localStorageUser } from "../utils/GlobalContants";
+import { postProps } from "../types/postProps";
+import { userProps } from "../types/userProps";
 
 const Section = styled.div`
   /* background-color: ${(props) => props.theme.grey}; */
@@ -30,23 +32,10 @@ const PostContainer = styled.div`
 `;
 
 const Home = () => {
-  interface postArr {
-    author: {
-      name: string;
-      photo: string;
-      tagline: string;
-      _id: string;
-    };
-    description: string;
-    image: string;
-    comments: number;
-    like: Array<string>;
-    _id: string;
-    createdAt: string;
-  }
+  
 
   const [userData, setUserData] = useState<userProps>({});
-  const [posts, setPosts] = useState<Array<postArr>>([]);
+  const [posts, setPosts] = useState<Array<postProps>>([]);
 
   // get userData
   useEffect(() => {

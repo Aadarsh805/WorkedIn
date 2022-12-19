@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
-import { months, userProps } from '../../utils/GlobalContants';
+import { contractProps } from '../../types/contractTypes';
+import { userProps } from '../../types/userProps';
+import { months } from '../../utils/GlobalContants';
 import TeamMemberCard from './TeamMemberCard';
 
 
@@ -84,35 +86,6 @@ const ContractDates = styled.div`
   font-weight: 400;
   color: #faf8f1;
 `;
-
-interface member {
-    name: string;
-    _id: string;
-    photo: string;
-  }
-  
-  interface teamMember {
-    approved: Boolean;
-    denied: Boolean;
-    member: member;
-    responsibility: string;
-    review: number;
-    role: string;
-  }
-  
-  interface contractProps {
-    chatId: string;
-    contractName: string;
-    createdAt: string;
-    dueDate: string;
-    lead: member;
-    prevDueDates: [];
-    projectDescription: string;
-    startDate: string;
-    status: string;
-    team: Array<teamMember>;
-    _id: string;
-  }
 
 interface contractBodyProps { 
     contract: contractProps;
