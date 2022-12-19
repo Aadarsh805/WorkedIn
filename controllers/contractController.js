@@ -470,20 +470,27 @@ exports.finishContract = catchAsync(async (req,res) => {
 
 
 exports.leaveContract = catchAsync(async (req,res) => {
-  const { reason, chatId } = req.body;
+  const { reason, workDoneByBroker, workProof, chatId } = req.body;
   const contractId = req.params.contractId;
   const userId = req.user.id;
 
+  if (!reason && !workDoneByBroker && workProof.length < 2) {
+    return next(new AppError('Sufficient data is not sent to break this contract!!'))
+  }
+
   const brokenContract = await Contract.findByIdAndUpdate(contractId, {
     contractBroken: {
+      isBroken: true,
       brokenBy: userId,
-      reason
+      reason,
+      workDoneByBroker,
+      workProof
     },
     status: 'broken'
   })
 
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
-    contractApproved: false,
+    contractBroken: true,
     $pull: { users: userId},
   })
 

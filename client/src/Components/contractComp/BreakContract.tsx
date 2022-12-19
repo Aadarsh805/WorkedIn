@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { userProps } from "../../utils/GlobalContants";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
+import axios from "axios";
+import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
+import { getHeaders } from "../../utils/helperFunction";
 // @import "~react-image-gallery/styles/css/image-gallery.css";
 // import 'react-image-gallery/styles/css'
 
@@ -118,7 +121,7 @@ const GalleryContainer = styled.div`
 `;
 
 const Upload = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 20%;
   margin: 1rem auto;
 
@@ -215,14 +218,20 @@ interface breakContractProps {
   closeBreakContractModal: any;
   user: userProps;
   contractId: string;
+  chatId: string
 }
 
 const BreakContract = ({
   closeBreakContractModal,
   user,
+  chatId,
   contractId,
 }: breakContractProps) => {
-  const [proofImages, setProofImages] = useState<string[]>([]);
+  const [reason, setReason] = useState<string>('');
+  const [workDoneByBroker, setWorkDoneByBroker] = useState<string>('');
+  const [galleyImages, setGalleyImages] = useState<readonly ReactImageGalleryItem[]>([]);
+  const [workProof, setworkProof] = useState<Array<string>>([])
+  const [confirmBreak, setConfirmBreak] = useState(false)
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, closeBreakContractModal);
@@ -242,7 +251,11 @@ const BreakContract = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          setProofImages([...proofImages, data.url.toString()]);
+          setGalleyImages([...galleyImages, {
+            original: data.url.toString(),
+            thumbnail: data.url.toString()
+          }]);
+          setworkProof([...workProof, data.url.toString()])
           console.log(data);
           console.log(data.url.toString());
         })
@@ -254,14 +267,24 @@ const BreakContract = ({
     }
   };
 
-  const breakContractHandler = async () => {};
+  const breakContractHandler = async () => {
+    if (!confirmBreak) {
+      console.log('Havent confirmed breaking the contract');
+      return
+    }
 
-  const images: string | any[] | readonly ReactImageGalleryItem[] = [
-    // {
-    //   original: "https://picsum.photos/id/1018/1000/600/",
-    //   thumbnail: "https://picsum.photos/id/1018/250/150/",
-    // },
-  ];
+    const { data } = await axios.patch(`${BASE_URL}${contractEnd}${contractId}/break`, {
+      reason,
+      workDoneByBroker,
+      workProof,
+      chatId
+    }, {
+      headers: getHeaders(user.token ?? '')
+    })
+    console.log(data);
+    window.location.reload();
+  }
+
 
   return (
     <Section ref={wrapperRef}>
@@ -273,9 +296,15 @@ const BreakContract = ({
       <textarea
         placeholder="Reason why you are breaking this contract"
         autoFocus
+        value={reason}
+        onChange={(e) => setReason(e.target.value)}
       />
       <h2>Work you completed from your side</h2>
-      <textarea placeholder="How much did you completed the project from your side" />
+      <textarea
+       placeholder="How much did you completed the project from your side"
+       value={workDoneByBroker}
+       onChange={(e) => setWorkDoneByBroker(e.target.value)}
+      />
       <h2>Proof of work you have done so far</h2>
       <ImageContainer>
         <Upload>
@@ -289,14 +318,16 @@ const BreakContract = ({
           </div>
         </Upload>
         {
-          images.length !== 0 ?
+          galleyImages.length !== 0 ?
           <GalleryContainer>
-          <ImageGallery items={images} />
+          <ImageGallery items={galleyImages} />
         </GalleryContainer> : null
         }
       </ImageContainer>
       <Confirm>
-        <input type="radio" name="" id="" />
+        <div onClick={() => setConfirmBreak(!confirmBreak)} >
+        <input type="radio" checked={confirmBreak} />
+        </div>
         <p>
           Are you sure you want to break the contract ?? This will impact your
           profiles as well your other teammates profiles

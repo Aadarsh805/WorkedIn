@@ -187,7 +187,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         finishContract ? <FinishContract user={user} contractId={selectedChat.contractId!} closeFinishContractModal={closeFinishContractModal} /> : null
       }
       {
-        breakContract ? <BreakContract user={user} contractId={selectedChat.contractId!} closeBreakContractModal={closeBreakContractModal} /> : null
+        breakContract ? <BreakContract user={user} contractId={selectedChat.contractId!} chatId={selectedChat._id!} closeBreakContractModal={closeBreakContractModal} /> : null
       }
     </Section>
 };

@@ -21,6 +21,7 @@ router.route('/:contractId/delete').delete(contractController.deleteContract)
 router.route('/:contractId/finish/initialise').patch(contractController.initialiseFinishContract)
 router.route('/:contractId/finish/accept').patch(contractController.acceptFinishContract)
 router.route('/:contractId/finish/submit').patch(contractController.finishContract)
+router.route('/:contractId/break').patch(contractController.leaveContract)
 
 
 module.exports = router;

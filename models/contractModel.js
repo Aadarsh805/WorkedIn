@@ -107,7 +107,17 @@ const contractModel = mongoose.Schema(
       reason: {
         type: String,
         default: null
-      }
+      },
+      workDoneByBroker: {
+        type: String,
+        default: null
+      },
+      workProof: [
+        {
+          type: String,
+          default: null,
+        },
+      ],
     },
   },
   { timestamps: true }
