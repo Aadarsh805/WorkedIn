@@ -5,6 +5,9 @@ import { BsFillUnlockFill, BsFillLockFill } from "react-icons/bs";
 import { userProps } from "../../types/userProps";
 import { chatObj } from "../../types/chatTypes";
 import { BrokenLock, BrokenLock2 } from "../generalComp/SVG";
+import { MdOutlineDoneAll, MdRemoveDone } from "react-icons/md";
+import { AiOutlineFileDone } from "react-icons/ai";
+import { IoMdDoneAll } from "react-icons/io";
 
 const Section = styled.div`
   border-right: 2px solid rgba(137, 117, 88, 255);
@@ -43,6 +46,7 @@ const Chat = styled.div`
   align-items: center;
   background-color: #fff;
   background-color: rgba(236, 227, 212, 255);
+  position: relative;
 
   img {
     margin-right: 0.5rem;
@@ -59,7 +63,7 @@ const Chat = styled.div`
     font-size: 1rem;
     font-weight: 800;
     color: #3a421b;
-    width: calc(14.4vw - 1.2rem - 40px - 1.15rem - 0.8rem);
+    width: calc(14.4vw - 3.15rem - 40px);
     white-space: nowrap;
     overflow: hidden;
     /* border: 1px solid #000; */
@@ -67,20 +71,36 @@ const Chat = styled.div`
 
   svg {
     fill: #3a421b;
+    /* fill: #000; */
     margin-right: 0.15rem;
     width: 1rem;
     height: 1rem;
+    transform: scale(1.25);
     /* border: 1px solid #000; */
   }
 
   div {
-    overflow: hidden;
+    /* overflow: hidden; */
     white-space: nowrap;
     display: flex;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: calc(14.4vw - 1.2rem - 40px);
+  }
+
+  div.broken{
+    /* border: 1px solid red; */
+    position: absolute;
+    width: 1.6rem;
+    right: 0;
+    /* margin: auto 0; */
+
+    svg{
+      /* border: 1px solid black; */
+      transform: scale(2.5);
+      width: 2rem;
+    }
   }
 
   &:first-child {
@@ -159,8 +179,10 @@ const AllChats = ({ user, setSelectedChat, allChats }: allChatProps) => {
               <div>
                 <h4>{chat.chatName}</h4>
                 {chat.contractBroken ? (
+                  <div className="broken">
                   <BrokenLock />
-                ) : chat.contractApproved ? (
+                  </div>
+                ) : chat.contractSuccessful ? <IoMdDoneAll/> : chat.contractApproved ? (
                   <BsFillLockFill />
                 ) : (
                   <BsFillUnlockFill />

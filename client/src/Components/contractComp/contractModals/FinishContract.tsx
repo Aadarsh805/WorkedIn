@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
+import ReactImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import styled from "styled-components";
 import { contractProps } from "../../../types/contractTypes";
 import { userProps } from "../../../types/userProps";
@@ -23,7 +24,7 @@ const Section = styled.div`
   padding: 2rem 2rem 1.5rem;
 
   &::-webkit-scrollbar {
-    width: 0.4rem;
+    width: 0.25rem;
     &-thumb {
       background-color: #fff;
       width: 0.1rem;
@@ -36,6 +37,18 @@ const Section = styled.div`
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 0.4rem;
+  }
+
+  h2.proof{
+    margin-bottom: 0;
+    /* border: 1px solid red; */
+  }
+
+  h4{
+    color: rgba(250, 248, 241, 0.8);
+    font-size: 0.8rem;
+    font-weight: 500;
+    
   }
 `;
 
@@ -93,13 +106,13 @@ const Description = styled.p`
 `;
 
 const Links = styled.div`
-    /* border: 1px solid white; */
-    margin-top: 1rem;
-`
+  /* border: 1px solid white; */
+  margin-top: 1rem;
+`;
 const Link = styled.div`
-    /* border: 1px solid white; */
-    margin-bottom: 1rem;
-    input {
+  /* border: 1px solid white; */
+  margin-bottom: 1rem;
+  input {
     box-sizing: border-box;
     padding: 0.7rem 1rem;
     border-radius: 10px;
@@ -115,45 +128,12 @@ const Link = styled.div`
       color: rgb(58, 66, 27);
     }
   }
-`
-
-const ProjectSnaps = styled.div`
-border: 1px solid white;
-min-height: 40vh;
-`
-
-const ProjectImages = styled.div`
-border: 1px solid white;
-display: grid;
-grid-template-columns: auto auto;
-`
-
-const ProjectImage = styled.div`
-    border: 1px solid red;
-    /* width: calc(30vw - 2rem); */
-    /* width: ca;/ */
-    /* height: calc(30vw - 2rem); */
-    width: 20rem;
-    height: 15rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    /* height: calc(30vw - 2rem); */
-
-    img{
-        /* margin: 0 auto 0.6rem; */
-        width: 100%;
-        width: 20rem;
-        height: 15rem;
-        object-fit: contain;
-    }
-`
+`;
 
 const Upload = styled.div`
   /* border: 1px solid red; */
-  width: 30%;
-  margin: 1.4rem auto 1.2rem;
+  width: 20%;
+  margin: 1rem auto;
 
   div.input-container {
     display: flex;
@@ -194,7 +174,7 @@ const Upload = styled.div`
 `;
 
 const FinishBtn = styled.div`
-    margin-top: 2.5rem;
+  margin-top: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -218,19 +198,59 @@ const FinishBtn = styled.div`
       box-shadow: 0 0 0;
     }
   }
-`
+`;
+
+const ImageContainer = styled.div`
+  /* border: 1px solid white; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.2rem 0 2rem;
+`;
+
+const GalleryContainer = styled.div`
+  width: 70%;
+  /* border: 1px solid white; */
+
+  div {
+    border-radius: 10px;
+    /* border: 1px solid red; */
+  }
+
+  img {
+    /* border: 1px solid purple; */
+    border-radius: 10px;
+  }
+
+  svg {
+    /* border: 1px solid purple; */
+    stroke: rgba(250, 248, 241, 0.8);
+    transition: all 0.15s linear;
+    /* stroke: #fff; */
+
+    &:hover {
+      /* stroke:rgba(250, 248, 241, 0.8); */
+      stroke: #faf8f1;
+    }
+  }
+`;
 
 interface finishContractProps {
-    user: userProps,
-    contractId: string,
-    closeFinishContractModal: any
+  user: userProps;
+  contractId: string;
+  closeFinishContractModal: any;
 }
 
-const FinishContract = ({user, contractId, closeFinishContractModal}: finishContractProps) => {
-    const [contract, setContract] = useState<contractProps>();
-    const [githubLink, setGithubLink] = useState<string>('');
-    const [liveLink, setLiveLink] = useState<string>('');
-    const [projectImages, setProjectImages] = useState<Array<string>>([])
+const FinishContract = ({
+  user,
+  contractId,
+  closeFinishContractModal,
+}: finishContractProps) => {
+  const [contract, setContract] = useState<contractProps>();
+  const [githubLink, setGithubLink] = useState<string>("");
+  const [liveLink, setLiveLink] = useState<string>("");
+  const [projectImages, setProjectImages] = useState<Array<string>>([]);
+  const [galleyImages, setGalleyImages] = useState<readonly ReactImageGalleryItem[]>([]);
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   useOutsideAlerter(wrapperRef, closeFinishContractModal);
@@ -265,6 +285,10 @@ const FinishContract = ({user, contractId, closeFinishContractModal}: finishCont
       })
         .then((res) => res.json())
         .then((data) => {
+          setGalleyImages([...galleyImages, {
+            original: data.url.toString(),
+            thumbnail: data.url.toString()
+          }]);
           setProjectImages([...projectImages, data.url.toString()]);
           console.log(data);
           console.log(data.url.toString());
@@ -278,19 +302,23 @@ const FinishContract = ({user, contractId, closeFinishContractModal}: finishCont
   };
 
   const initialiseFinishHandler = async () => {
-    const { data } = await axios.patch(`${BASE_URL}${contractEnd}${contractId}/finish/initialise`, {
-      githubLink,
-      liveLink,
-      projectImages
-    }, {
-      headers: getHeaders(user.token ?? '')
-    })
+    const { data } = await axios.patch(
+      `${BASE_URL}${contractEnd}${contractId}/finish/initialise`,
+      {
+        githubLink,
+        liveLink,
+        projectImages,
+      },
+      {
+        headers: getHeaders(user.token ?? ""),
+      }
+    );
     console.log(data);
     window.location.reload();
-  }
+  };
 
-  return (
-    contract ? (<Section ref={wrapperRef} >
+  return contract ? (
+    <Section ref={wrapperRef}>
       <Header>
         <h1>{contract.contractName}</h1>
         <h4>Created by</h4>
@@ -303,39 +331,51 @@ const FinishContract = ({user, contractId, closeFinishContractModal}: finishCont
       <Description>{contract.projectDescription}</Description>
       <Links>
         <Link>
-            <h2>Github Link</h2>
-            <input type="url" placeholder="https://github.com/" value={githubLink} onChange={(e) => setGithubLink(e.target.value)} autoFocus />
+          <h2>Github Link</h2>
+          <input
+            type="url"
+            placeholder="https://github.com/"
+            value={githubLink}
+            onChange={(e) => setGithubLink(e.target.value)}
+            autoFocus
+          />
         </Link>
         <Link>
-            <h2>Deployed Version</h2>
-            <input type="url" placeholder="https://example.com/" value={liveLink} onChange={(e) => setLiveLink(e.target.value)} />
+          <h2>Deployed Version</h2>
+          <input
+            type="url"
+            placeholder="https://example.com/"
+            value={liveLink}
+            onChange={(e) => setLiveLink(e.target.value)}
+          />
         </Link>
       </Links>
-      <ProjectSnaps>
-        <h2>Share your Project Snaps</h2>
+      <h2 className="proof">Share proof of work</h2>
+      <h4>Upload at least 3 images as a proof of you project work</h4>
+      <ImageContainer>
         <Upload>
-            <div className="input-container">
-              Choose a photo
-              <input type="file" accept="image/*" onChange={(e) => postImage(e.target.files)}/>
-            </div>
+          <div className="input-container">
+            Choose a photo
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => postImage(e.target.files)}
+            />
+          </div>
         </Upload>
-        <ProjectImages>
         {
-            projectImages.map(img => {
-                return (
-                    <ProjectImage>
-                    <img src={img} alt={`img-${img}`} />
-                    </ProjectImage>
-                )
-            })
+          galleyImages.length !== 0 ?
+          <GalleryContainer>
+          <ReactImageGallery items={galleyImages} />
+        </GalleryContainer> : null
         }
-        </ProjectImages>
-      </ProjectSnaps>
+      </ImageContainer>      
       <FinishBtn>
-        <button onClick={initialiseFinishHandler} >Initialise Finish</button>
+        <button onClick={initialiseFinishHandler}>Initialise Finish</button>
       </FinishBtn>
     </Section>
-    ) : <Section ref={wrapperRef} >Loading..</Section>
+  ) : (
+    <Section ref={wrapperRef}>Loading..</Section>
   );
 };
 

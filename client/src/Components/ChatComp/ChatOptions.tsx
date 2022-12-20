@@ -216,7 +216,27 @@ const ChatOptions = ({
         ) : null}
       </Header>
       {chatOptions && selectedChat.groupAdmin?._id === user._id ? (
-        selectedChat.contractSuccessful ? (
+        selectedChat.contractBroken ? (
+          <OptionsMenu events={updateServer || invitePeople}>
+            <ul>
+              <li onClick={() => setupdateServer(!updateServer)}>
+                <h5>Update Server</h5>
+                <MdModeEdit />
+              </li>
+              <li onClick={() => setInvitePeople(!invitePeople)}>
+                <h5>Manage Members</h5>
+                <HiUserAdd />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setReviewContract(!reviewContract)}
+              >
+                <h5>Review Contract</h5>
+                <BsFillFileEarmarkSpreadsheetFill />
+              </li>
+            </ul>
+          </OptionsMenu>
+        ) : selectedChat.contractSuccessful ? (
           <OptionsMenu events={updateServer || invitePeople}>
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
@@ -355,6 +375,22 @@ const ChatOptions = ({
             </ul>
           </OptionsMenu>
         )
+      ) : chatOptions && selectedChat.contractBroken ? (
+        <OptionsMenu events={updateServer || invitePeople}>
+          <ul>
+            <li
+              className="contract"
+              onClick={() => setReviewContract(!reviewContract)}
+            >
+              <h5>Review Contract</h5>
+              <BsFillFileEarmarkSpreadsheetFill />
+            </li>
+            <li className="leave" onClick={() => alert("Leave Group")}>
+              <h5>Leave Group</h5>
+              <ImExit />
+            </li>
+          </ul>
+        </OptionsMenu> 
       ) : chatOptions && selectedChat.contractSuccessful ? (
         // non admin options
         <OptionsMenu events={updateServer || invitePeople}>

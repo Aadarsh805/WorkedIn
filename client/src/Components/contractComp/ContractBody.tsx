@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components';
-import { contractProps } from '../../types/contractTypes';
-import { userProps } from '../../types/userProps';
-import { months } from '../../utils/GlobalContants';
-import TeamMemberCard from './TeamMemberCard';
+import React from "react";
+import styled from "styled-components";
+import { contractProps } from "../../types/contractTypes";
+import { userProps } from "../../types/userProps";
+import { months } from "../../utils/GlobalContants";
+import TeamMemberCard from "./TeamMemberCard";
 
 const Header = styled.div`
   /* border: 1px solid red; */
@@ -79,44 +79,70 @@ const TeamRolesContainer = styled.div`
 
 const ContractDates = styled.div`
   position: absolute;
-  top: -0.8rem;
+  top: -1.3rem;
   right: 0rem;
   font-size: 1rem;
   font-weight: 400;
   color: #faf8f1;
+  /* border: 1px solid red; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: flex-end; */
+  /* text-align: right; */
+
+  div{
+    /* border: 1px solid red; */
+  }
+
+  h2{
+    font-weight: 400;
+    /* margin-top: 0.4rem; */
+    font-size: 1rem;
+    /* color: rgb(250, 248, 241, 0.8); */
+
+    span{
+      text-decoration: underline;
+      font-weight: 500;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+  }
 `;
 
-interface contractBodyProps { 
-    contract: contractProps;
+interface contractBodyProps {
+  contract: contractProps;
   userData: userProps;
 }
 
-const ContractBody = ({contract, userData}: contractBodyProps) => {
-    const currentUser = contract.team.find(
-        (member) => member.member._id === userData._id
-      );
+const ContractBody = ({ contract, userData }: contractBodyProps) => {
+  const currentUser = contract.team.find(
+    (member) => member.member._id === userData._id
+  );
 
-      const getReadableTime = (ISODate: string) => {
-        const readable = new Date(ISODate);        
-        const month = readable.getMonth();
-        const date = readable.getDate();        
-        const year = readable.getFullYear();
-    
-        const monthLong = months[month];
-        const fulldate = monthLong + " " + date + ", " + year;
-        return fulldate;
-      };
+  const getReadableTime = (ISODate: string) => {
+    const readable = new Date(ISODate);
+    const month = readable.getMonth();
+    const date = readable.getDate();
+    const year = readable.getFullYear();
+
+    const monthLong = months[month];
+    const fulldate = monthLong + " " + date + ", " + year;
+    return fulldate;
+  };
 
   return (
     <>
-    <Header>
+      <Header>
         <h1>{contract.contractName}</h1>
         <h4>Created by</h4>
         <h3>{contract.lead.name}</h3>
         <ContractDates>
-        {getReadableTime(contract.startDate.slice(0, 10))} -{" "}
-        {getReadableTime(contract.dueDate.slice(0, 10))}
-      </ContractDates>
+          <div>
+            {getReadableTime(contract.startDate.slice(0, 10))} -{" "}
+            {getReadableTime(contract.dueDate.slice(0, 10))}
+          </div>
+          <h2>Status:- <span>{contract.status}</span></h2>
+        </ContractDates>
       </Header>
       <Description>{contract.projectDescription}</Description>
       <MyRole>
@@ -140,7 +166,7 @@ const ContractBody = ({contract, userData}: contractBodyProps) => {
         </TeamRolesContainer>
       </TeamRoles>
     </>
-  )
-}
+  );
+};
 
-export default ContractBody
+export default ContractBody;

@@ -20,7 +20,7 @@ const Section = styled.div`
   border-radius: 10px;
 
   box-sizing: border-box;
-  padding: 2rem 2.5rem 2.5rem;
+  padding: 2.5rem 2.5rem 2.5rem;
 
   &::-webkit-scrollbar {
     width: 0.4rem;

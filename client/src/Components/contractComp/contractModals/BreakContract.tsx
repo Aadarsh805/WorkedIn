@@ -45,11 +45,23 @@ const Section = styled.div`
     margin-bottom: 0.2rem;
   }
 
+  h2.proof{
+    margin-bottom: 0;
+    /* border: 1px solid red; */
+  }
+
   h3 {
     color: rgba(250, 248, 241, 0.8);
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 1rem;
+  }
+
+  h4{
+    color: rgba(250, 248, 241, 0.8);
+    font-size: 0.8rem;
+    font-weight: 500;
+    
   }
 
   textarea {
@@ -84,7 +96,7 @@ const Section = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  border: 1px solid white;
+  /* border: 1px solid white; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,7 +105,7 @@ const ImageContainer = styled.div`
 
 const GalleryContainer = styled.div`
   width: 70%;
-  border: 1px solid white;
+  /* border: 1px solid white; */
 
   div {
     border-radius: 10px;
@@ -109,10 +121,8 @@ const GalleryContainer = styled.div`
     /* border: 1px solid purple; */
     stroke: rgba(250, 248, 241, 0.8);
     transition: all 0.15s linear;
-    /* stroke: #fff; */
 
     &:hover {
-      /* stroke:rgba(250, 248, 241, 0.8); */
       stroke: #faf8f1;
     }
   }
@@ -130,15 +140,15 @@ const Upload = styled.div`
     padding: 10px 16px;
     background-color: #735f32;
     border: 2px solid rgba(236, 227, 212, 255);
-    /* box-shadow: 3px 3px 0px rgba(236, 227, 212, 255); */
+    box-shadow: 3px 3px 0px rgba(236, 227, 212, 255);
     border-radius: 4px;
     color: white;
     font-weight: 400;
     font-size: 0.8rem;
     box-sizing: border-box;
     cursor: pointer;
-    /* translate: -3px -3px; */
-    /* transition: all 0.15s ease-in; */
+    translate: -3px -3px;
+    transition: all 0.15s ease-in;
     position: relative;
     overflow: hidden;
 
@@ -290,7 +300,7 @@ const BreakContract = ({
       <h3>
         Before breaking the contract we would like to take feedback from you
       </h3>
-      <h2>Reason</h2>
+      <h2>Reason for breaking this contract</h2>
       <textarea
         placeholder="Reason why you are breaking this contract"
         autoFocus
@@ -303,7 +313,8 @@ const BreakContract = ({
        value={workDoneByBroker}
        onChange={(e) => setWorkDoneByBroker(e.target.value)}
       />
-      <h2>Proof of work you have done so far</h2>
+      <h2 className="proof" >Proof of work you have done so far</h2>
+      <h4>Upload at least 3 images as a proof of you project work</h4>
       <ImageContainer>
         <Upload>
           <div className="input-container">

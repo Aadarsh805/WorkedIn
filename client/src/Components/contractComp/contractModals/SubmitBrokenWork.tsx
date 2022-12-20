@@ -41,11 +41,23 @@ const Section = styled.div`
     margin-bottom: 0.2rem;
   }
 
+  h2.proof{
+    margin-bottom: 0;
+    /* border: 1px solid red; */
+  }
+
   h3 {
     color: rgba(250, 248, 241, 0.8);
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 1rem;
+  }
+  
+  h4{
+    color: rgba(250, 248, 241, 0.8);
+    font-size: 0.8rem;
+    font-weight: 500;
+    
   }
 
   textarea {
@@ -279,6 +291,8 @@ const SubmitBrokenWork = ({submitModalHandler}: submitWorkProps) => {
             <input type="url" placeholder="https://example.com/" value={liveLink} onChange={(e) => setLiveLink(e.target.value)} />
         </Link>
       </Links>
+      <h2 className="proof">Share proof of work</h2>
+      <h4>Upload at least 3 images as a proof of you project work</h4>
       <ImageContainer>
         <Upload>
           <div className="input-container">
