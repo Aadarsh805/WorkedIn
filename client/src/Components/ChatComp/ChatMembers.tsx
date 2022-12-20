@@ -14,6 +14,7 @@ import FinishApprovalBtn from "../contractComp/FinishApprovalBtn";
 import BreakContract from "../contractComp/contractModals/BreakContract";
 import { userProps } from "../../types/userProps";
 import { chatObj } from "../../types/chatTypes";
+import ContractBrokenBtn from "./ContractBrokenBtn";
 
 const Section = styled.div`
   border-left: 2px solid rgba(137,117,88,255);
@@ -106,11 +107,10 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const closeBreakContractModal = () => {
     setBreakContract(false)
   }
-  
 
   return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
-      <Members divHeight={selectedChat.contractSuccessful ? true : (selectedChat.contractApproved && selectedChat.contractFinishedApprovedBy.length === 0 )} >
+      <Members divHeight={selectedChat.contractBroken ? false : selectedChat.contractSuccessful ? true : (selectedChat.contractApproved && selectedChat.contractFinishedApprovedBy.length === 0 )} >
           <ChatOptions selectedChat={selectedChat} user={user} setUpdateContract={setUpdateContract} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} setDeleteContract={setDeleteContract} setFinishContract={setFinishContract} setBreakContract={setBreakContract} updateContract={updateContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} finishContract={finishContract} deleteContract={deleteContract} breakContract={breakContract} />
         {selectedChat.users !== undefined &&
           (selectedChat.users as unknown as any[]).map((user) => {
@@ -124,7 +124,7 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
           })}
       </Members>
       {
-        selectedChat.contractSuccessful ? null : ( selectedChat.contractFinishedApprovedBy.length !== 0 ? <FinishApprovalBtn selectedChat={selectedChat} user={user} /> : null )
+        selectedChat.contractBroken ? <ContractBrokenBtn user={user} selectedChat={selectedChat} /> : selectedChat.contractSuccessful ? null : ( selectedChat.contractFinishedApprovedBy.length !== 0 ? <FinishApprovalBtn selectedChat={selectedChat} user={user} /> : null )
       }
       {
         selectedChat.contractApproved ? null : selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 

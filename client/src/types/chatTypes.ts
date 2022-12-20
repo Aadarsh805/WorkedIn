@@ -21,5 +21,6 @@ export interface chatObj {
     contractAprovedBy: Array<string>;
     contractApproved: Boolean;
     contractSuccessful: boolean;
+    contractBroken: boolean;
     contractFinishedApprovedBy: Array<string>
   }

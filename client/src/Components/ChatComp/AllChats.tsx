@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import CreateChatModal from "./chatModals/CreateChatModal";
-import { BsFillUnlockFill, BsFillLockFill } from 'react-icons/bs'
+import { BsFillUnlockFill, BsFillLockFill } from "react-icons/bs";
 import { userProps } from "../../types/userProps";
 import { chatObj } from "../../types/chatTypes";
+import { BrokenLock, BrokenLock2 } from "../generalComp/SVG";
 
 const Section = styled.div`
   border-right: 2px solid rgba(137, 117, 88, 255);
@@ -27,8 +28,8 @@ const Chats = styled.div`
       width: 0.1rem;
       border-radius: 1rem;
     }
-}
-`
+  }
+`;
 
 const Chat = styled.div`
   /* border: 1px solid red; */
@@ -63,18 +64,17 @@ const Chat = styled.div`
     overflow: hidden;
     /* border: 1px solid #000; */
   }
-  
-  svg{
+
+  svg {
     fill: #3a421b;
     margin-right: 0.15rem;
     width: 1rem;
+    height: 1rem;
     /* border: 1px solid #000; */
   }
-  
-  div{
-    /* border: 1px solid #000; */
+
+  div {
     overflow: hidden;
-    /* height: 1rem; */
     white-space: nowrap;
     display: flex;
     display: flex;
@@ -83,23 +83,23 @@ const Chat = styled.div`
     width: calc(14.4vw - 1.2rem - 40px);
   }
 
-  &:first-child{
+  &:first-child {
     margin-top: 0.5rem;
   }
 `;
 
 const GroupChatButton = styled.div`
   /* border: 1px solid red; */
-  width: calc(16vw - 2rem);
-  margin: 0.8rem auto 0;
+  width: 100%;
+  margin: 0.8rem 0 0;
+  
   display: flex;
   align-items: center;
-
-  /* position: absolute; */
-  /* bottom: calc(1vh + 0.15rem); */
-
+  
+  
   button {
     border-radius: 4px;
+    margin: 0 auto;
     cursor: pointer;
     padding: 12px 24px;
     background-color: #735f32;
@@ -108,11 +108,9 @@ const GroupChatButton = styled.div`
     color: #fff;
     font-weight: 400;
     border: 2px solid rgba(236, 227, 212, 255);
-    /* border: 2px solid #3a421b; */
     box-shadow: 3px 3px 0px rgba(236, 227, 212, 255);
     translate: -3px -3px;
     transition: all 0.15s ease-in;
-    /* line-height: 0; */
 
     &:hover {
       translate: 0;
@@ -124,11 +122,10 @@ const GroupChatButton = styled.div`
 interface allChatProps {
   user: userProps;
   setSelectedChat: any;
-  allChats: Array<chatObj>
+  allChats: Array<chatObj>;
 }
 
 const AllChats = ({ user, setSelectedChat, allChats }: allChatProps) => {
-
   const [isCreateChatModalOpen, setIsCreateChatModalOpen] = useState(false);
 
   const closeCreatChatModal = () => {
@@ -139,35 +136,39 @@ const AllChats = ({ user, setSelectedChat, allChats }: allChatProps) => {
   return (
     <Section>
       <Chats>
-      {allChats.map((chat, index) => {
-        if (chat.chatName === "one_On_one") {
-          const chatUsers = chat.users;
-          const filteredUser = (chatUsers as unknown as any[]).filter(
-            (chatUser) => {
-              return chatUser.name !== user.name;
-            }
-          );
-          console.log(filteredUser[0].name);
+        {allChats.map((chat, index) => {
+          if (chat.chatName === "one_On_one") {
+            const chatUsers = chat.users;
+            const filteredUser = (chatUsers as unknown as any[]).filter(
+              (chatUser) => {
+                return chatUser.name !== user.name;
+              }
+            );
+            console.log(filteredUser[0].name);
+            return (
+              <Chat key={index} onClick={() => setSelectedChat(chat)}>
+                <img src={filteredUser[0].photo} alt="" />
+                <h4>{filteredUser[0].name}</h4>
+              </Chat>
+            );
+          }
+
           return (
             <Chat key={index} onClick={() => setSelectedChat(chat)}>
-              <img src={filteredUser[0].photo} alt="" />
-              <h4>{filteredUser[0].name}</h4>
+              <img src={chat.chatPhoto} alt="" />
+              <div>
+                <h4>{chat.chatName}</h4>
+                {chat.contractBroken ? (
+                  <BrokenLock />
+                ) : chat.contractApproved ? (
+                  <BsFillLockFill />
+                ) : (
+                  <BsFillUnlockFill />
+                )}
+              </div>
             </Chat>
           );
-        }
-
-        return (
-          <Chat key={index} onClick={() => setSelectedChat(chat)}>
-            <img src={chat.chatPhoto} alt="" />
-            <div>
-            <h4>{chat.chatName}</h4>
-            {
-              chat.contractApproved ? <BsFillLockFill/> : <BsFillUnlockFill/>
-            }
-            </div>
-          </Chat>
-        );
-      })}
+        })}
       </Chats>
       <GroupChatButton>
         <button

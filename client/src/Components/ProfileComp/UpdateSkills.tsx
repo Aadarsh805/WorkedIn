@@ -14,6 +14,7 @@ const Section = styled.div`
   max-height: 60vh;
   box-sizing: border-box;
   background-color: #735f32;
+  z-index: 2;
   transform: translate(-50%, -53.5%);
   border-radius: 10px;
   overflow-y: auto;

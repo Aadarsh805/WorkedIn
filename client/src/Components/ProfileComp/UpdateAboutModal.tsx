@@ -13,7 +13,7 @@ const Section = styled.div`
   height: 75vh;
   box-sizing: border-box;
   background-color: #735f32;
-  /* background-color: #faf8f1; */
+  z-index: 2;
   transform: translate(-50%, -53.5%);
   border-radius: 10px;
   overflow-y: auto;
