@@ -130,6 +130,9 @@ contractModel.pre(/^find/, function (next) {
   }).populate({
     path: "lead",
     select: "name photo",
+  }).populate({
+    path: 'contractBroken.brokenBy',
+    select: 'name'
   });
   next();
 });

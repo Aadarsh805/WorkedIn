@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { FiArrowUpRight } from "react-icons/fi";
+import ReactImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { contractProps } from "../../types/contractTypes";
 import { userProps } from "../../types/userProps";
-import { months } from "../../utils/GlobalContants";
+import { getReadableTime } from "../../utils/helperFunction";
+import ContractBroker from "./ContractBroker";
 import TeamMemberCard from "./TeamMemberCard";
 
 const Header = styled.div`
@@ -51,7 +55,7 @@ const Description = styled.p`
 
 const MyRole = styled.div`
   /* border: 1px solid red; */
-  margin: 1.5rem 0;
+  margin: 1.5rem 0 1.5rem;
 
   h2 {
     color: #faf8f1;
@@ -69,6 +73,9 @@ const MyCardContainer = styled.div`
 const TeamRoles = styled.div`
   h2 {
     margin-bottom: 1rem;
+    color: #faf8f1;
+    font-size: 1.2rem;
+    font-weight: 600;
   }
 `;
 
@@ -84,23 +91,12 @@ const ContractDates = styled.div`
   font-size: 1rem;
   font-weight: 400;
   color: #faf8f1;
-  /* border: 1px solid red; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: flex-end; */
-  /* text-align: right; */
 
-  div{
-    /* border: 1px solid red; */
-  }
-
-  h2{
+  h2 {
     font-weight: 400;
-    /* margin-top: 0.4rem; */
     font-size: 1rem;
-    /* color: rgb(250, 248, 241, 0.8); */
 
-    span{
+    span {
       text-decoration: underline;
       font-weight: 500;
       font-size: 1.2rem;
@@ -109,25 +105,112 @@ const ContractDates = styled.div`
   }
 `;
 
+const Links = styled.div`
+  /* border: 1px solid white; */
+  margin-top: 1.7rem;
+  display: flex;
+  align-items: center;
+`;
+
+const Link = styled.div`
+  /* border: 1px solid #fff; */
+  width: 50%;
+  overflow: hidden;
+  white-space: nowrap;
+
+  h2 {
+    margin-bottom: 0.4rem;
+    color: #faf8f1;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  div {
+    display: flex;
+
+    h4 {
+      color: rgba(236, 227, 212, 255);
+      font-size: 1rem;
+      font-weight: 300;
+      text-decoration: underline;
+    }
+
+    svg {
+      /* border: 1px solid white; */
+      margin-left: 0.6rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      transition: all 0.15s linear;
+      cursor: pointer;
+    }
+  }
+`;
+
+const ProjectGallery = styled.div`
+  border: 1px solid #fff;
+  margin-top: 1.5rem;
+
+  h2 {
+    margin-bottom: 0.4rem;
+    color: #faf8f1;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+`;
+
+const GalleryContainer = styled.div`
+border: 1px solid white;
+  div {
+    border-radius: 10px;
+    /* border: 1px solid red; */
+  }
+
+  img {
+    /* border: 1px solid purple; */
+    border-radius: 10px;
+  }
+
+  svg {
+    /* border: 1px solid purple; */
+    stroke: rgba(250, 248, 241, 0.8);
+    transition: all 0.15s linear;
+
+    &:hover {
+      stroke: #faf8f1;
+    }
+  }
+`
+
 interface contractBodyProps {
   contract: contractProps;
   userData: userProps;
 }
 
 const ContractBody = ({ contract, userData }: contractBodyProps) => {
+  const [galleryImages, setGalleryImages] = useState<
+    readonly ReactImageGalleryItem[]
+  >([]);
+
+  const projectImages = contract.projectImages;
+
+  useEffect(() => {
+    projectImages.map((image) => {
+      return setGalleryImages([
+        ...galleryImages,
+        {
+          original: image,
+          thumbnail: image,
+        },
+      ]);
+    });
+  }, [projectImages]);
+
   const currentUser = contract.team.find(
     (member) => member.member._id === userData._id
   );
 
-  const getReadableTime = (ISODate: string) => {
-    const readable = new Date(ISODate);
-    const month = readable.getMonth();
-    const date = readable.getDate();
-    const year = readable.getFullYear();
-
-    const monthLong = months[month];
-    const fulldate = monthLong + " " + date + ", " + year;
-    return fulldate;
+  const navigationHandler = (url: string) => {
+    window.open(url, '_blank')
   };
 
   return (
@@ -141,10 +224,50 @@ const ContractBody = ({ contract, userData }: contractBodyProps) => {
             {getReadableTime(contract.startDate.slice(0, 10))} -{" "}
             {getReadableTime(contract.dueDate.slice(0, 10))}
           </div>
-          <h2>Status:- <span>{contract.status}</span></h2>
+          <h2>
+            Status:- <span>{contract.status}</span>
+          </h2>
         </ContractDates>
       </Header>
       <Description>{contract.projectDescription}</Description>
+      {contract.status === "completed" ? (
+        <>
+          <Links>
+            <Link>
+              <h2>Github Link</h2>
+              <div>
+                <h4>{contract.githubLink}</h4>
+                <div
+                  onClick={() => navigationHandler(contract.githubLink)}
+                  style={{ color: "rgba(236, 227, 212, 255)" }}
+                >
+                  <FiArrowUpRight />
+                </div>
+              </div>
+            </Link>
+            {contract.liveLink ? (
+              <Link>
+                <h2>Live on</h2>
+                <div>
+                  <h4>{contract.liveLink}</h4>
+                  <div
+                    onClick={() => navigationHandler(contract.liveLink)}
+                    style={{ color: "rgba(236, 227, 212, 255)" }}
+                  >
+                    <FiArrowUpRight />
+                  </div>
+                </div>
+              </Link>
+            ) : null}
+          </Links>
+          {/* <ProjectGallery>
+            <h2>Project Gallery</h2>
+            <GalleryContainer>
+            <ReactImageGallery items={galleryImages}/>
+            </GalleryContainer>
+          </ProjectGallery> */}
+        </>
+      ) : null}
       <MyRole>
         <h2>My Role :- </h2>
         <MyCardContainer>
@@ -165,6 +288,7 @@ const ContractBody = ({ contract, userData }: contractBodyProps) => {
             })}
         </TeamRolesContainer>
       </TeamRoles>
+      {contract.contractBroken.isBroken ? <ContractBroker broker={contract.contractBroken} /> : null}
     </>
   );
 };

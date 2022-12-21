@@ -13,30 +13,24 @@ const Section = styled.div`
   top: 50%;
   left: 50%;
   width: 60vw;
-  height: 80vh;
+  height: 95vh;
   background-color: #735f32;
   transform: translate(-50%, -50%);
   overflow: auto;
   border-radius: 10px;
+  z-index: 2;
+  /* pointer-events: none; */
 
   box-sizing: border-box;
-  padding: 2rem 2.5rem 2.5rem;
+  padding: 2.5rem 2.5rem 2.5rem;
 
   &::-webkit-scrollbar {
-    width: 0.4rem;
-    /* background-color: #735f32; */
-    /* border-radius: 10px; */
+    width: 0.25rem;
     &-thumb {
       background-color: #fff;
       width: 0.1rem;
       border-radius: 1rem;
     }
-  }
-
-  h2 {
-    color: #faf8f1;
-    font-size: 1.2rem;
-    font-weight: 600;
   }
 `;
 
@@ -46,10 +40,10 @@ const Buttons = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* justify-content: space-around; */
   margin-top: 3rem;
 
   button {
+    /* pointer-events: all; */
     border-radius: 4px;
     cursor: pointer;
     padding: 12px 24px;
@@ -59,11 +53,9 @@ const Buttons = styled.div`
     color: #fff;
     font-weight: 400;
     border: 2px solid rgba(236, 227, 212, 255);
-    /* border: 2px solid #3a421b; */
     box-shadow: 3px 3px 0px rgba(236, 227, 212, 255);
     translate: -3px -3px;
     transition: all 0.15s ease-in;
-    /* line-height: 0; */
 
     &:hover {
       translate: 0;
@@ -79,7 +71,7 @@ const Buttons = styled.div`
 interface contractModalProps {
   contract: contractProps;
   userData: userProps;
-  closeContractModal: any
+  closeContractModal?: any
 }
 
 
@@ -128,7 +120,7 @@ const ShowContract = ({ contract, userData, closeContractModal }: contractModalP
   }
 
   return (
-    <Section >
+    <Section ref={wrapperRef} >
       <ContractBody contract={contract} userData={userData} />
       {contract.team.filter((member) => {
         if (member.member._id === userData._id) {

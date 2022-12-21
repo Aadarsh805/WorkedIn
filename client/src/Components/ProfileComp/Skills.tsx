@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import styled from "styled-components";
-import UpdateSkills from "./UpdateSkills";
+import UpdateSkills from "./profileModals/UpdateSkills";
 
 const Section = styled.div`
   /* border: 1px solid red; */

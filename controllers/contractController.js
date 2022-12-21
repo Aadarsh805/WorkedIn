@@ -55,7 +55,8 @@ exports.getContract = catchAsync(async (req, res, next) => {
 
   const contract = await Contract.findById(contractId)
     .populate("lead", "name photo")
-    .populate("team.member", "name photo");
+    .populate("team.member", "name photo")
+    .populate("contractBroken.brokenBy", "name");
 
   if (!contract) {
     console.log('No contract');

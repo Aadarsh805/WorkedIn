@@ -5,7 +5,7 @@ import { contractProps } from "../../../types/contractTypes";
 import { userProps } from "../../../types/userProps";
 import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
 import { months } from "../../../utils/GlobalContants";
-import { getHeaders } from "../../../utils/helperFunction";
+import { getHeaders, getReadableTime } from "../../../utils/helperFunction";
 import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
 
 const Section = styled.div`
@@ -201,19 +201,6 @@ const UpdateContract = ({ contractId, user, closeUpdateContractModal }: updateCo
   useEffect(() => {
     fetchContract();
   }, []);
-
-
-
-  const getReadableTime = (ISODate: string) => {
-    const readable = new Date(ISODate);
-    const month = readable.getMonth();
-    const date = readable.getDate();
-    const year = readable.getFullYear();
-
-    const monthLong = months[month];
-    const fulldate = monthLong + " " + date + ", " + year;
-    return fulldate;
-  };
 
   const updateContractHandler = async () => {
     const { data } = await axios.patch(`${BASE_URL}${contractEnd}${contractId}`, {

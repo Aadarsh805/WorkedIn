@@ -18,6 +18,8 @@ const Section = styled.div`
   position: relative;
   min-height: calc(100vh - 2.5rem);
   background-color: rgba(207, 186, 148, 255);
+  /* pointer-events: all; */
+  z-index: 1;
 `;
 
 
@@ -49,7 +51,6 @@ const Contracts = () => {
   }
 
   useEffect(() => {
-    // console.log(userData);
     if (Object.keys(userData).length !== 0) {
       fetchContracts();
     }
@@ -74,9 +75,9 @@ const Contracts = () => {
         {contracts.map(contract => {
           return (
             <>
-              <ContractCard key={contract.contractName} contract={contract} showContract={showContract} descLength={300} />
+              <ContractCard key={contract.contractName} contract={contract} showContract={showContract} descLength={250} />
               {clickedContract && isShowContractModalOpen ? (
-                <ShowContract key={contract._id} contract={clickedContract} userData={userData} closeContractModal={closeContractModal}/>
+                <ShowContract key={contract._id} contract={clickedContract} userData={userData} />
               ) : null}
             </>
           );

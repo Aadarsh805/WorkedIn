@@ -237,7 +237,7 @@ const BreakContract = ({
 }: breakContractProps) => {
   const [reason, setReason] = useState<string>('');
   const [workDoneByBroker, setWorkDoneByBroker] = useState<string>('');
-  const [galleyImages, setGalleyImages] = useState<readonly ReactImageGalleryItem[]>([]);
+  const [galleryImages, setGalleryImages] = useState<readonly ReactImageGalleryItem[]>([]);
   const [workProof, setworkProof] = useState<Array<string>>([])
   const [confirmBreak, setConfirmBreak] = useState(false)
 
@@ -259,7 +259,7 @@ const BreakContract = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          setGalleyImages([...galleyImages, {
+          setGalleryImages([...galleryImages, {
             original: data.url.toString(),
             thumbnail: data.url.toString()
           }]);
@@ -327,9 +327,9 @@ const BreakContract = ({
           </div>
         </Upload>
         {
-          galleyImages.length !== 0 ?
+          galleryImages.length !== 0 ?
           <GalleryContainer>
-          <ImageGallery items={galleyImages} />
+          <ImageGallery items={galleryImages} />
         </GalleryContainer> : null
         }
       </ImageContainer>

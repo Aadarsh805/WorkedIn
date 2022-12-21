@@ -16,10 +16,7 @@ export interface teamMember {
 
 export interface contractProps {
   chatId: string;
-  contractBroken: {
-    reason: string | null,
-    brokenBy: member
-  };
+  contractBroken: contractBrokenProps;
   contractName: string;
   createdAt: string;
   dueDate: string;
@@ -34,4 +31,15 @@ export interface contractProps {
   status: string;
   team: Array<teamMember>;
   _id: string;
+}
+
+export interface contractBrokenProps {
+  isBroken: Boolean;
+  reason: string | null;
+  brokenBy: {
+    _id: string;
+    name: string;
+  } | null;
+  workDoneByBroker: string | null;
+  workProof: Array<string> | null;
 }
