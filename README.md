@@ -29,8 +29,69 @@ The site is in `PROGRESS`.
 
 # How it works
 
+<!-- Before starting a project, you need to create a contract and a contract can only be created inside a group chat. You can s -->
 
----
+<p style="clear:both;">
+<img alt="Home page" src="https://user-images.githubusercontent.com/89806031/209111535-b0bb0b79-e07e-40db-b3c3-fc277830a8fd.png"  style="margin-left:10px" width="50%" align="right"/>
+<h3 align="center">Create a Post</h3>
+
+<p align="justify">
+You can create a post regarding your project or devs you are looking to collaborate with or you can view other users post as well in the post feed below. We also allow uers to comment, like and share their or other user's posts. If someone is interested in your project they may approach you through chat section. 
+</p>
+<br /><br />
+</p>
+<!--  -->
+<p style="clear:both;">
+<img alt="Chat page" src="https://user-images.githubusercontent.com/89806031/209116220-067dacf3-5242-4f83-a757-3b6c4170e323.png"  style="margin-right:10px" width="50%" align="left"/>
+<h3 align="center">Create a Group Chat</h3>
+<p align="justify">
+Before starting a project, you would create a contract and contract could only be created inside a group chat. After a group chat is created with the members who'll be working on the project, the group admin | lead would create a contract and other members can accept it or reject it accordingly.
+<br/>
+In the left section, you can view all your chats and on the right side, all team members of the selected chat appear.
+<br/>
+There are different symbols in front of the Group Chat names :- 
+<br>
+1) <ins>Open Lock</ins> :- Tells that contract hasn't been approved by all members or not even contracted<br/>
+2) <ins>Closed Lock</ins> :- Tells that contract has been made and no member can casually exit the group. (Quitting the group would lead to breaking the contract)</br>
+3) <ins>Broken Lock</ins> :- Tells that contract was broken, maybe someone left the project or someone ghosted<br/>
+4) <ins>Double Tick</ins> :- Tells that contract was successfully completed within dueDate
+</p>
+<br />
+</p>
+<!--  -->
+<p style="clear:both;">
+<img alt="Contract" src="https://user-images.githubusercontent.com/89806031/209128795-b01c51cc-b4da-466a-ba3f-9b21f5963546.png" style="margin-left:10px" width="50%" align="right"/>
+<img alt="Contract" src="https://user-images.githubusercontent.com/89806031/209129118-9b421ae4-0bd9-4bb5-b95a-5ce9afe82da8.png" style="margin-left:10px" width="50%" align="right"/>
+<h3 align="center">Initialise Contract</h3>
+<p align="justify">
+Only the Admin or Group lead can initilaise CONTRACT. In the contract, the lead needs to specify Project's name, description, starting and due date and role and responsibilities of every member. 
+<br/>
+Once the contract is initialised, other members have to accept the contract. Until the contract isn't accepted by all, the contract isn't actually created.
+<br/>
+Once the contract is approved by all members, the group chat is now locked and the contract would be visible in each members profile.
+<br/>
+Only the admin can update or delete the contract, other team members can only accept or reject the contract, same while making a project submission.
+<br/><br/>
+The contract has different status as :-
+<br />
+1) In-Progress :- When submission is to be made and contract hasn't reached its due date.<br/>
+2) Completed :- When submission has been made before the due date.<br/>
+3) Delayed :- When submission hasn't been made yet and contract has crossed the due date.<br/>
+4) Broken :- When someone left the contract in between or a successful ghost strike has been made.<br/>
+</p>
+<br />
+</p>
+<!--  -->
+<p style="clear:both;">
+<img alt="Contract Page" src="https://user-images.githubusercontent.com/89806031/209134744-71cce40e-483b-4bed-9beb-ff05ba5a8030.png
+" style="margin-right:10px" width="50%" align="left"/>
+<h3 align="center">All Contract</h3>
+<p align="justify">
+Only the Admin or Group lead can initilaise CONTRACT. In the contract, the lead needs to specify Project's name, description, starting and due date and role and responsibilities of every member. 
+<br/>
+</p>
+<br/>
+</p>
 
 # Upcoming Features
 
@@ -55,7 +116,7 @@ We welcome everyone either be Beginner or Expeienced in open source community to
 
 But make sure to raise an issue first before working on any feature and always create a different branch than main while working on any feature or bug
 
-Be sure to read the <a href="https://github.com/Garvit1809/WorkedIn/blob/Documentation/CONTRIBUTING.md" target="_blank">Workedin Contributor Guide</a> on how to get started with the project and start contributing 😁.
+Be sure to read the <a href="https://github.com/Garvit1809/WorkedIn/blob/Documentation/CONTRIBUTING.md" target="_blank">WorkedIn Contributor Guide</a> on how to get started with the project and start contributing 😁.
 
 ---
 # 🧰 Tools & Packages
