@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
 import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
-import styled from "styled-components";
 import { HiUserAdd } from "react-icons/hi";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
-import { userProps } from "../../utils/GlobalContants";
 import { TfiWrite } from "react-icons/tfi";
 import { BsFillFileEarmarkSpreadsheetFill } from "react-icons/bs";
+import { IoIosMedal } from "react-icons/io";
+import { GoTrashcan } from "react-icons/go";
+import { RiGhostFill } from "react-icons/ri";
+import { ImExit } from "react-icons/im";
+import { RxCrumpledPaper } from "react-icons/rx";
+import { chatObj } from "../../types/chatTypes";
+import { userProps } from "../../types/userProps";
 
 const Section = styled.div`
   border-bottom: 1px solid #3a421b;
@@ -73,6 +79,9 @@ const OptionsMenu = styled.div`
       svg {
         fill: #3a421b;
       }
+      svg.medal {
+        fill: #fff;
+      }
       h5 {
         color: #3a421b;
       }
@@ -88,12 +97,24 @@ const OptionsMenu = styled.div`
       /* border: 1px solid red; */
     }
 
+    /* svg.medal {
+      fill: #3a421b;
+    } */
+
     h5 {
       color: #fff;
     }
 
     &:nth-last-child(1) {
       margin-bottom: 0;
+    }
+  }
+
+  li.leave {
+    svg {
+      /* border: 1px solid blue; */
+      width: 1.25rem;
+      height: 1.1rem;
     }
   }
 
@@ -104,31 +125,27 @@ const OptionsMenu = styled.div`
       height: 1rem;
     }
   }
+
+  li.break {
+    svg {
+      fill: #fff;
+      /* border: 1px solid red; */
+      path {
+        fill: #fff;
+        /* stroke: red; */
+        /* color: red; */
+      }
+    }
+
+    &:hover {
+      svg {
+        path {
+          fill: #3a421b;
+        }
+      }
+    }
+  }
 `;
-
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean;
-}
 
 interface chat {
   selectedChat: chatObj;
@@ -137,10 +154,18 @@ interface chat {
   setUpdateContract: React.Dispatch<React.SetStateAction<boolean>>;
   setInvitePeople: React.Dispatch<React.SetStateAction<boolean>>;
   setReviewContract: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteContract: React.Dispatch<React.SetStateAction<boolean>>;
+  setFinishContract: React.Dispatch<React.SetStateAction<boolean>>;
+  setBreakContract: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditSubmission: React.Dispatch<React.SetStateAction<boolean>>;
   updateServer: boolean;
   invitePeople: boolean;
   reviewContract: boolean;
-  updateContract: boolean
+  updateContract: boolean;
+  deleteContract: boolean;
+  finishContract: boolean;
+  breakContract: boolean;
+  editSubmission: boolean;
 }
 
 const ChatOptions = ({
@@ -150,10 +175,18 @@ const ChatOptions = ({
   setUpdateContract,
   setInvitePeople,
   setReviewContract,
+  setDeleteContract,
+  setFinishContract,
+  setBreakContract,
+  setEditSubmission,
   updateServer,
   updateContract,
   invitePeople,
   reviewContract,
+  deleteContract,
+  finishContract,
+  breakContract,
+  editSubmission,
 }: chat) => {
   const [chatOptions, setChatOptions] = useState(false);
 
@@ -187,31 +220,7 @@ const ChatOptions = ({
         ) : null}
       </Header>
       {chatOptions && selectedChat.groupAdmin?._id === user._id ? (
-        selectedChat.contractApproved ? (
-          <OptionsMenu events={updateServer || invitePeople}>
-            <ul>
-              <li onClick={() => setupdateServer(!updateServer)}>
-                <h5>Update Server</h5>
-                <MdModeEdit />
-              </li>
-              <li
-                className="contract"
-                onClick={() => setReviewContract(!reviewContract)}
-              >
-                <h5>Review Contract</h5>
-                <BsFillFileEarmarkSpreadsheetFill />
-              </li>
-              <li className="contract" onClick={() => setUpdateContract(!updateContract)}>
-                <h5>Update Contract</h5>
-                <TfiWrite />
-              </li>
-              <li className="contract" onClick={() => alert('Contract Finished')}>
-                <h5>Fisnish Contract</h5>
-                <TfiWrite />
-              </li>
-            </ul>
-          </OptionsMenu>
-        ) : selectedChat.contracted ? (
+        selectedChat.contractBroken ? (
           <OptionsMenu events={updateServer || invitePeople}>
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
@@ -229,13 +238,150 @@ const ChatOptions = ({
                 <h5>Review Contract</h5>
                 <BsFillFileEarmarkSpreadsheetFill />
               </li>
-              <li className="contract" onClick={() => setUpdateContract(!updateContract)}>
-                <h5>Update Contract</h5>
+            </ul>
+          </OptionsMenu>
+        ) : selectedChat.contractSuccessful ? (
+          <OptionsMenu events={updateServer || invitePeople || reviewContract}>
+            <ul>
+              <li onClick={() => setupdateServer(!updateServer)}>
+                <h5>Update Server</h5>
+                <MdModeEdit />
+              </li>
+              <li onClick={() => setInvitePeople(!invitePeople)}>
+                <h5>Manage Members</h5>
+                <HiUserAdd />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setReviewContract(!reviewContract)}
+              >
+                <h5>Review Contract</h5>
+                <BsFillFileEarmarkSpreadsheetFill />
+              </li>
+            </ul>
+          </OptionsMenu>
+        ) : selectedChat.contractFinishedApprovedBy.length !== 0 ? (
+          <OptionsMenu
+            events={
+              updateServer || reviewContract || updateContract || editSubmission
+            }
+          >
+            <ul>
+              <li onClick={() => setupdateServer(!updateServer)}>
+                <h5>Update Server</h5>
+                <MdModeEdit />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setReviewContract(!reviewContract)}
+              >
+                <h5>Review Contract</h5>
+                <BsFillFileEarmarkSpreadsheetFill />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setUpdateContract(!updateContract)}
+              >
+                <h5>Update Due Date</h5>
                 <TfiWrite />
+              </li>
+              <li
+                className="medal"
+                onClick={() => setEditSubmission(!editSubmission)}
+              >
+                <h5>Edit Submission</h5>
+                <IoIosMedal />
+              </li>
+              <li onClick={() => alert("ghost")}>
+                <h5>Ghost Spotted</h5>
+                <RiGhostFill />
+              </li>
+            </ul>
+          </OptionsMenu>
+        ) : selectedChat.contractApproved ? (
+          // contract is approved
+          <OptionsMenu
+            events={
+              updateServer || invitePeople || updateContract || finishContract
+            }
+          >
+            <ul>
+              <li onClick={() => setupdateServer(!updateServer)}>
+                <h5>Update Server</h5>
+                <MdModeEdit />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setReviewContract(!reviewContract)}
+              >
+                <h5>Review Contract</h5>
+                <BsFillFileEarmarkSpreadsheetFill />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setUpdateContract(!updateContract)}
+              >
+                <h5>Update Due Date</h5>
+                <TfiWrite />
+              </li>
+              <li
+                className="medal"
+                onClick={() => setFinishContract(!finishContract)}
+              >
+                <h5>Finish Contract</h5>
+                <IoIosMedal />
+              </li>
+              <li onClick={() => alert("ghost")}>
+                <h5>Ghost Spotted</h5>
+                <RiGhostFill />
+              </li>
+            </ul>
+          </OptionsMenu>
+        ) : selectedChat.contracted ? (
+          // contract not approved but contracted
+          <OptionsMenu
+            events={
+              updateServer ||
+              invitePeople ||
+              reviewContract ||
+              reviewContract ||
+              deleteContract
+            }
+          >
+            <ul>
+              <li onClick={() => setupdateServer(!updateServer)}>
+                <h5>Update Server</h5>
+                <MdModeEdit />
+              </li>
+              <li onClick={() => setInvitePeople(!invitePeople)}>
+                <h5>Manage Members</h5>
+                <HiUserAdd />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setReviewContract(!reviewContract)}
+              >
+                <h5>Review Contract</h5>
+                <BsFillFileEarmarkSpreadsheetFill />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setUpdateContract(!updateContract)}
+              >
+                <h5>Update Due Date</h5>
+                <TfiWrite />
+              </li>
+              <li
+                className="contract"
+                onClick={() => setDeleteContract(!deleteContract)}
+              >
+                <h5>Delete Contract</h5>
+                <GoTrashcan />
               </li>
             </ul>
           </OptionsMenu>
         ) : (
+          // not contrated
           <OptionsMenu events={updateServer || invitePeople}>
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
@@ -249,8 +395,41 @@ const ChatOptions = ({
             </ul>
           </OptionsMenu>
         )
-      ) : chatOptions && selectedChat.contracted ? (
-        <OptionsMenu events={updateServer || invitePeople}>
+      ) : chatOptions && selectedChat.contractBroken ? (
+        // non admin options
+        <OptionsMenu events={reviewContract}>
+          <ul>
+            <li
+              className="contract"
+              onClick={() => setReviewContract(!reviewContract)}
+            >
+              <h5>Review Contract</h5>
+              <BsFillFileEarmarkSpreadsheetFill />
+            </li>
+            <li className="leave" onClick={() => alert("Leave Group")}>
+              <h5>Leave Group</h5>
+              <ImExit />
+            </li>
+          </ul>
+        </OptionsMenu>
+      ) : chatOptions && selectedChat.contractSuccessful ? (
+        <OptionsMenu events={reviewContract}>
+          <ul>
+            <li
+              className="contract"
+              onClick={() => setReviewContract(!reviewContract)}
+            >
+              <h5>Review Contract</h5>
+              <BsFillFileEarmarkSpreadsheetFill />
+            </li>
+            <li className="leave" onClick={() => alert("Leave Group")}>
+              <h5>Leave Group</h5>
+              <ImExit />
+            </li>
+          </ul>
+        </OptionsMenu>
+      ) : chatOptions && selectedChat.contractApproved ? (
+        <OptionsMenu events={reviewContract || breakContract}>
           <ul>
             <li
               className="contract"
@@ -260,27 +439,31 @@ const ChatOptions = ({
               <BsFillFileEarmarkSpreadsheetFill />
             </li>
             <li
-              className="contract"
-              onClick={() => alert('Leave Group')}
+              className="break"
+              onClick={() => setBreakContract(!breakContract)}
             >
-              <h5>Leave Group</h5>
-              <BsFillFileEarmarkSpreadsheetFill />
+              <h5>Break Contract</h5>
+              <RxCrumpledPaper />
+            </li>
+            <li onClick={() => alert("ghost")}>
+              <h5>Ghost Spotted</h5>
+              <RiGhostFill />
             </li>
           </ul>
         </OptionsMenu>
-      ) : chatOptions && (
-        <OptionsMenu events={updateServer || invitePeople}>
+      ) : chatOptions && selectedChat.contracted ? (
+        <OptionsMenu events={reviewContract}>
           <ul>
             <li
               className="contract"
-              onClick={() => alert('leave group')}
+              onClick={() => setReviewContract(!reviewContract)}
             >
-              <h5>Leave Group</h5>
+              <h5>Review Contract</h5>
               <BsFillFileEarmarkSpreadsheetFill />
             </li>
           </ul>
         </OptionsMenu>
-      )}
+      ) : null}
     </Section>
   );
 };

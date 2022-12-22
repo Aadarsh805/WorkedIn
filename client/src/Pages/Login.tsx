@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import { localStorageUser } from '../utils/GlobalContants';
+import { BASE_URL, userEnd } from '../utils/APIRoutes';
 
 const Section = styled.div`
 height: 100vh;
@@ -37,7 +38,7 @@ const Login = () => {
 
     const handleSubmit = async (e : any) => {
         e.preventDefault()
-        const {data} = await axios.post('http://localhost:5000/api/v1/users/login', {
+        const {data} = await axios.post(`${BASE_URL}${userEnd}login`, {
             email: user?.email,
             password: user?.password 
         });
@@ -54,7 +55,7 @@ const Login = () => {
             console.log("Enter email");
             return
         }
-        const {data} = await axios.post('http://localhost:5000/api/v1/users/forgotpassword', {
+        const {data} = await axios.post(`${BASE_URL}${userEnd}forgotpassword`, {
             email: user?.email
         })
         console.log(data);

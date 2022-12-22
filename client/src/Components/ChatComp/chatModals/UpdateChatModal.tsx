@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
-import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import { BASE_URL, chatEnd } from "../../../utils/APIRoutes";
+import { getHeaders } from "../../../utils/helperFunction";
+import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -145,7 +145,8 @@ const ServerName = styled.div`
     color: rgb(58, 66, 27);
 
     &::placeholder {
-      color: rgb(58, 66, 27);
+      color: rgba(58, 66, 27, 0.8);
+      /* color: rgba(250, 248, 241, 0.7); */
     }
   }
 `;
@@ -279,7 +280,7 @@ const UpdateChatModal = ({
       <UpdateButton>
         <button onClick={updateChatInfoHandler}>Update</button>
       </UpdateButton>
-    </Section>
+    </Section> 
   );
 };
 

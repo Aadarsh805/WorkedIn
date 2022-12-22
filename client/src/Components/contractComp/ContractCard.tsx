@@ -1,7 +1,9 @@
 import React from "react";
 import { BsArrow90DegRight } from "react-icons/bs";
 import styled from "styled-components";
+import { contractProps } from "../../types/contractTypes";
 import { months } from "../../utils/GlobalContants";
+import { getReadableTime } from "../../utils/helperFunction";
 import StatusStrip from "./StatusStrip";
 
 const Section = styled.div`
@@ -14,6 +16,7 @@ const Section = styled.div`
   border-radius: 10px;
   background-color: rgba(236, 227, 212, 255);
   overflow: hidden;
+  z-index: 1;
 `;
 
 const ContractName = styled.div`
@@ -74,8 +77,6 @@ const ContractBrief = styled.div`
     text-indent: 2.75rem;
     line-height: 160%;
     font-size: 1rem;
-    /* border-right: 2px solid rgba(137, 117, 88, 255); */
-    /* border-bottom: 2px solid rgba(137, 117, 88, 255); */
     box-sizing: border-box;
     padding-right: 1rem;
     padding-bottom: 0.4rem;
@@ -86,7 +87,6 @@ const MemberPics = styled.div`
   /* border: 1px solid red; */
   width: 35%;
   box-sizing: border-box;
-  /* padding: 0 1rem; */
 
   display: flex;
   flex-wrap: wrap;
@@ -110,24 +110,19 @@ const MemberPics = styled.div`
 
 const ShowContractButton = styled.div`
   /* border: 1px solid red; */
-  /* position: absolute; */
-  /* bottom: 1rem; */
-  /* right: 1rem; */
-  display: flex;
   margin-top: 0.5rem;
-  /* align-items: flex-end; */
-  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   button {
     border-radius: 4px;
     cursor: pointer;
     padding: 8px 16px;
     background-color: #735f32;
-    /* background-color: rgba(236, 227, 212, 255); */
     box-sizing: border-box;
     font-size: 1rem;
     color: rgba(236, 227, 212, 255);
-    /* color: #735f32; */
     font-weight: 500;
     border: 2px solid rgb(58, 66, 27);
     border: 2px solid #735f32;
@@ -142,36 +137,19 @@ const ShowContractButton = styled.div`
       box-shadow: 0 0 0;
     }
   }
+
+  h2{
+    font-size: 1rem;
+    font-weight: 400;
+    
+    span{
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      text-decoration: underline;
+    }
+  }
 `;
-
-interface member {
-  name: string;
-  _id: string;
-  photo: string;
-}
-
-interface teamMember {
-  approved: Boolean;
-  denied: Boolean;
-  member: member;
-  responsibility: string;
-  review: number;
-  role: string;
-}
-
-interface contractProps {
-  chatId: string;
-  contractName: string;
-  createdAt: string;
-  dueDate: string;
-  lead: member;
-  prevDueDates: [];
-  projectDescription: string;
-  startDate: string;
-  status: string;
-  team: Array<teamMember>;
-  _id: string;
-}
 
 interface contractCardProps {
   contract: contractProps;
@@ -180,16 +158,7 @@ interface contractCardProps {
 }
 
 const ContractCard = ({ contract, showContract, descLength }: contractCardProps) => {
-  const getReadableTime = (ISODate: string) => {
-    const readable = new Date(ISODate);        
-    const month = readable.getMonth();
-    const date = readable.getDate();        
-    const year = readable.getFullYear();
-
-    const monthLong = months[month];
-    const fulldate = monthLong + " " + date + ", " + year;
-    return fulldate;
-  };
+  
   return (
     <Section>
       <ContractName>
@@ -217,6 +186,7 @@ const ContractCard = ({ contract, showContract, descLength }: contractCardProps)
         </MemberPics>
       </ContractBrief>
       <ShowContractButton>
+        <h2>Status:- <span>{contract.status}</span></h2>
         <button onClick={() => showContract(contract)}>Show Contract</button>
       </ShowContractButton>
     </Section>

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  contractProps,
-  localStorageUser, userProps,
-} from "../utils/GlobalContants";
+import { localStorageUser } from "../utils/GlobalContants";
 
 import Navbar from "../components/generalComp/Navbar";
 import Intro from "../components/profileComp/Intro";
@@ -15,6 +12,9 @@ import { getHeaders } from "../utils/helperFunction";
 import About from "../components/profileComp/About";
 import ContractCard from "../components/contractComp/ContractCard";
 import RecentUserActivity from "../components/profileComp/RecentUserActivity";
+import { userProps } from "../types/userProps";
+import { contractProps } from "../types/contractTypes";
+import ShowContract from "../components/contractComp/contractModals/ShowContract";
 
 const Section = styled.div`
   /* border: 5px solid black; */
@@ -40,24 +40,27 @@ const MyProjects = styled.div`
   width: 100%;
   background-color: #3a421b;
   border-radius: 10px;
+`;
 
-  h1 {
-    color: rgba(236, 227, 212, 255);
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    padding: 0 2rem;
-  }
+const ProjectHeading = styled.h1`
+  color: rgba(236, 227, 212, 255);
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  padding: 0 2rem;
 `;
 
 const Contracts = styled.div`
   /* border: 1px solid white; */
   display: flex;
   flex-direction: column-reverse;
-`
+`;
 
 const Profile = () => {
   const [localUser, setLocalUser] = useState<userProps>({});
   const [user, setUser] = useState<userProps>({});
+
+  const [isShowContractModalOpen, setIsShowContractModalOpen] = useState(false);
+  const [clickedContract, setClickedContract] = useState<contractProps>();
 
   async function fetchUserData() {
     const data = await JSON.parse(
@@ -87,7 +90,12 @@ const Profile = () => {
   }, [localUser]);
 
   const showContract = (contract: contractProps) => {
-    console.log("jhebfb");
+    setIsShowContractModalOpen(!isShowContractModalOpen);
+    setClickedContract(contract);
+  };
+
+  const closeContractModal = () => {
+    setIsShowContractModalOpen(false);
   };
 
   return (
@@ -109,17 +117,31 @@ const Profile = () => {
               <NoSkill userToken={localUser.token!} />
             )}
             <MyProjects>
-              <h1>My Past Projects</h1>
+              <ProjectHeading>My Past Projects</ProjectHeading>
               <Contracts>
-
-              {Object.keys(user).length !== 0 && (user.pastProjects as unknown as contractProps[]).map((project, index) => {
-                return (
-                  <ContractCard key={index} contract={project} showContract={showContract} descLength={150} />
-                  );
-                })}
+                {Object.keys(user).length !== 0 &&
+                  (user.pastProjects as unknown as contractProps[]).map(
+                    (project, index) => {
+                      return (
+                        <ContractCard
+                          key={index}
+                          contract={project}
+                          showContract={showContract}
+                          descLength={100}
+                        />
+                      );
+                    }
+                  )}
               </Contracts>
+              {clickedContract && isShowContractModalOpen ? (
+                <ShowContract
+                  contract={clickedContract}
+                  userData={user}
+                  closeContractModal={closeContractModal}
+                />
+              ) : null}
             </MyProjects>
-          </UserDetails> 
+          </UserDetails>
           <RecentUserActivity />
         </Section>
       </>

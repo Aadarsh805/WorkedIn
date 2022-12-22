@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FaPencilAlt } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
-import UpdateAboutModal from "./UpdateAboutModal";
+import UpdateAboutModal from "./profileModals/UpdateAboutModal";
 
 const Section = styled.div`
   box-sizing: border-box;

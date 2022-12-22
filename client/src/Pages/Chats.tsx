@@ -7,13 +7,12 @@ import ChatMessages from '../components/chatComp/ChatMessages'
 import NoSelectedChat from '../components/chatComp/NoSelectedChat'
 
 import Navbar from '../components/generalComp/Navbar'
+import { chatObj } from '../types/chatTypes'
+import { userProps } from '../types/userProps'
 import { BASE_URL, chatEnd } from '../utils/APIRoutes'
-import { userProps } from '../utils/GlobalContants'
 import { getHeaders, getUserData } from '../utils/helperFunction'
 
 const Section = styled.div`
-    /* border: 1px solid red; */
-    /* padding-top: 1rem; */
     box-sizing: border-box;
     min-height: calc(100vh - 2.5rem);
     display: flex;
@@ -30,35 +29,11 @@ const Section = styled.div`
 }
 `
 
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean
-}
-
 const Chats = () => {
   const [userData, setUserData] = useState<userProps>({});
   const [allChats, setAllChats] = useState<chatObj[]>([]);
   const [selectedChat, setSelectedChat] = useState<chatObj>();
-  const [accessedChat, setAccessedChat] = useState<chatObj>()
+  // const [accessedChat, setAccessedChat] = useState<chatObj>()
 
 
     useEffect(() => {
@@ -85,7 +60,7 @@ const Chats = () => {
     <Section className='chats' >
           <AllChats user={userData} setSelectedChat={setSelectedChat} allChats={allChats!} />
           {
-            selectedChat ? null : <NoSelectedChat user={userData} setAccessedChat={setAccessedChat} setSelectedChat={setSelectedChat} allChats={allChats} setAllChats={setAllChats} />
+            selectedChat ? null : <NoSelectedChat user={userData} setSelectedChat={setSelectedChat} allChats={allChats} setAllChats={setAllChats} />
           }
           {
             selectedChat && <ChatMessages user={userData} selectedChat={selectedChat} />

@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { GiCrown } from "react-icons/gi";
-import { AiOutlineDown } from "react-icons/ai";
 import ChatOptions from "./ChatOptions";
-import { userProps } from "../../utils/GlobalContants";
-import UpdateChatModal from "./UpdateChatModal";
-import ManageMembers from "./ManageMembers";
-import CreateContract from "../contractComp/CreateContract";
+import UpdateChatModal from "./chatModals/UpdateChatModal";
+import ManageMembers from "./chatModals/ManageMembers";
+import CreateContractBtn from "../contractComp/CreateContractBtn";
 import ContractApproval from "../contractComp/ContractApproval";
-import ReviewContract from "../contractComp/ReviewContract";
-import UpdateContractModal from "../contractComp/UpdateContractModal";
+import ReviewContract from "../contractComp/contractModals/ReviewContract";
+import UpdateContract from "../contractComp/contractModals/UpdateContract";
+import FinishContract from "../contractComp/contractModals/FinishContract";
+import DeleteContract from "../contractComp/contractModals/DeleteContract";
+import FinishApprovalBtn from "../contractComp/FinishApprovalBtn";
+import BreakContract from "../contractComp/contractModals/BreakContract";
+import { userProps } from "../../types/userProps";
+import { chatObj } from "../../types/chatTypes";
+import ContractBrokenBtn from "./ContractBrokenBtn";
+import UpdateSubmission from "../contractComp/contractModals/UpdateSubmission";
 
 const Section = styled.div`
   border-left: 2px solid rgba(137,117,88,255);
@@ -26,8 +32,6 @@ const Members = styled.div`
   /* border: 1px solid white; */
   padding-top: 0.5rem;
   box-sizing: border-box;
-  
-  /* height: calc(100vh - 7rem); */
   height: ${(props:membersProps) => props.divHeight ? 'calc(100vh - 3rem)' : 'calc(100vh - 7rem)' };
   overflow: auto;
 `;
@@ -63,30 +67,6 @@ const Member = styled.div`
   }
 `;
 
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean
-}
-
 interface chat {
   selectedChat: chatObj;
   user: userProps;
@@ -97,15 +77,12 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const [invitePeople, setInvitePeople] = useState(false)
   const [reviewContract, setReviewContract] = useState(false)
   const [updateContract, setUpdateContract] = useState(false)
+  const [deleteContract, setDeleteContract] = useState(false)
+  const [finishContract, setFinishContract] = useState(false)
+  const [breakContract, setBreakContract] = useState(false)
+  const [editSubmission, setEditSubmission] = useState(false)
 
-  useEffect(() => {
-    setupdateServer(false)
-    setInvitePeople(false)
-  }, [selectedChat])
-
-  const closeUpdateServerModal = () => {
-    console.log("Jugad");
-    
+  const closeUpdateServerModal = () => {    
     setupdateServer(false)
   }
 
@@ -120,12 +97,27 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
   const closeUpdateContractModal = () => {
     setUpdateContract(false)
   }
-  
+
+  const closeDeleteContractModal = () => {
+    setDeleteContract(false)
+  }
+
+  const closeFinishContractModal = () => {
+    setFinishContract(false)
+  }
+
+  const closeBreakContractModal = () => {
+    setBreakContract(false)
+  }
+
+  const clossEditSubmissionModal = () => {
+    setEditSubmission(false)
+  }
 
   return selectedChat.chatName === "one_On_one" ? null : 
     <Section>
-      <Members divHeight={selectedChat.contractApproved} >
-          <ChatOptions selectedChat={selectedChat} user={user} setUpdateContract={setUpdateContract} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} updateContract={updateContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} />
+      <Members divHeight={selectedChat.contractBroken ? false : selectedChat.contractSuccessful ? true : (selectedChat.contractApproved && selectedChat.contractFinishedApprovedBy.length === 0 )} >
+          <ChatOptions selectedChat={selectedChat} user={user} setUpdateContract={setUpdateContract} setupdateServer={setupdateServer} setInvitePeople={setInvitePeople} setReviewContract={setReviewContract} setDeleteContract={setDeleteContract} setFinishContract={setFinishContract} setBreakContract={setBreakContract} setEditSubmission={setEditSubmission} updateContract={updateContract} updateServer={updateServer} invitePeople={invitePeople} reviewContract={reviewContract} finishContract={finishContract} deleteContract={deleteContract} breakContract={breakContract} editSubmission={editSubmission} />
         {selectedChat.users !== undefined &&
           (selectedChat.users as unknown as any[]).map((user) => {
             return (
@@ -138,9 +130,12 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
           })}
       </Members>
       {
+        selectedChat.contractBroken ? <ContractBrokenBtn user={user} selectedChat={selectedChat} /> : selectedChat.contractSuccessful ? null : ( selectedChat.contractFinishedApprovedBy.length !== 0 ? <FinishApprovalBtn selectedChat={selectedChat} user={user} /> : null )
+      }
+      {
         selectedChat.contractApproved ? null : selectedChat.contracted ? <ContractApproval selectedChat={selectedChat} user={user} /> : 
         selectedChat.groupAdmin?._id === user._id ?
-        <CreateContract selectedChat={selectedChat} user={user}/> : null
+        <CreateContractBtn selectedChat={selectedChat} user={user}/> : null
       }
       {
         updateServer ? <UpdateChatModal selectedChatId={selectedChat._id} selectedChatImage={selectedChat.chatPhoto} selectedChatName={selectedChat.chatName} userId={user._id} userToken={user.token} closeUpdateServerModal={closeUpdateServerModal} /> : null
@@ -152,7 +147,19 @@ const ChatMembers = ({ selectedChat, user }: chat) => {
         reviewContract ? <ReviewContract user={user} contractId={selectedChat.contractId} closeReviewContractModal={closeReviewContractModal} /> : null
       }
       {
-        updateContract ? <UpdateContractModal user={user} contractId={selectedChat.contractId!} closeUpdateContractModal={closeUpdateContractModal} /> : null
+        updateContract ? <UpdateContract user={user} contractId={selectedChat.contractId!} closeUpdateContractModal={closeUpdateContractModal} /> : null
+      }
+      {
+        deleteContract ? <DeleteContract closeDeleteContractModal={closeDeleteContractModal} contractId={selectedChat.contractId!} userToken={user.token!} /> : null
+      }
+      {
+        finishContract ? <FinishContract user={user} contractId={selectedChat.contractId!} closeFinishContractModal={closeFinishContractModal} /> : null
+      }
+      {
+        breakContract ? <BreakContract user={user} contractId={selectedChat.contractId!} chatId={selectedChat._id!} closeBreakContractModal={closeBreakContractModal} /> : null
+      }
+      {
+        editSubmission ? <UpdateSubmission user={user} contractId={selectedChat.contractId!} clossEditSubmissionModal={clossEditSubmissionModal} /> : null
       }
     </Section>
 };

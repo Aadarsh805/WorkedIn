@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import NoContracts from "../components/contractComp/NoContracts";
-import ShowContract from "../components/contractComp/ShowContract";
+import ShowContract from "../components/contractComp/contractModals/ShowContract";
 import Navbar from "../components/generalComp/Navbar";
 import { BASE_URL, contractEnd } from "../utils/APIRoutes";
-import { localStorageUser, userProps } from "../utils/GlobalContants";
+import { localStorageUser } from "../utils/GlobalContants";
 import { getHeaders } from "../utils/helperFunction";
 import ContractCard from "../components/contractComp/ContractCard";
+import { contractProps } from "../types/contractTypes";
+import { userProps } from "../types/userProps";
 
 const Section = styled.div`
   padding: 1rem;
@@ -16,38 +18,10 @@ const Section = styled.div`
   position: relative;
   min-height: calc(100vh - 2.5rem);
   background-color: rgba(207, 186, 148, 255);
-  /* background-color: #735f32; */
+  /* pointer-events: all; */
+  z-index: 1;
 `;
 
-
-interface member {
-  name: string;
-  _id: string;
-  photo: string;
-}
-
-interface teamMember {
-  approved: Boolean;
-  denied: Boolean;
-  member: member;
-  responsibility: string;
-  review: number;
-  role: string;
-}
-
-interface contractProps {
-  chatId: string;
-  contractName: string;
-  createdAt: string;
-  dueDate: string;
-  lead: member;
-  prevDueDates: [];
-  projectDescription: string;
-  startDate: string;
-  status: string;
-  team: Array<teamMember>;
-  _id: string;
-}
 
 const Contracts = () => {
   const [userData, setUserData] = useState<userProps>({});
@@ -65,9 +39,7 @@ const Contracts = () => {
   }
 
   useEffect(() => {
-    fetchUserData();
-    console.log('brvvub');
-    
+    fetchUserData();    
   }, []);
 
   async function fetchContracts() {
@@ -79,7 +51,6 @@ const Contracts = () => {
   }
 
   useEffect(() => {
-    // console.log(userData);
     if (Object.keys(userData).length !== 0) {
       fetchContracts();
     }
@@ -90,9 +61,9 @@ const Contracts = () => {
     setClickedContract(contract);
   };
 
-  useEffect(() => {
-    console.log('garvit');
-  }, [contracts])
+  const closeContractModal = () => {
+    setIsShowContractModalOpen(false)
+  }
   
 
   return contracts.length === 0 ? (
@@ -101,12 +72,12 @@ const Contracts = () => {
     <>
       <Navbar />
       <Section>
-        {contracts.map((contract, index) => {
+        {contracts.map(contract => {
           return (
             <>
-              <ContractCard key={index} contract={contract} showContract={showContract} descLength={300} />
+              <ContractCard key={contract.contractName} contract={contract} showContract={showContract} descLength={250} />
               {clickedContract && isShowContractModalOpen ? (
-                <ShowContract key={index} contract={clickedContract} userData={userData} />
+                <ShowContract key={contract._id} contract={clickedContract} userData={userData} />
               ) : null}
             </>
           );

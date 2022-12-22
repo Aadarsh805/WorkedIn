@@ -56,6 +56,10 @@ const chatModel = mongoose.Schema(
     contractSuccessful: {
       type: Boolean,
       default: false
+    },
+    contractBroken: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

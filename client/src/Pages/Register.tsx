@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { localStorageUser } from '../utils/GlobalContants';
+import { BASE_URL, userEnd } from '../utils/APIRoutes';
 
 const Section = styled.div`
 height: 100vh;
@@ -21,16 +22,16 @@ form{
 }
 `
 
+interface newUserProps {
+    name: string,
+    email: string,
+    password: string,
+    confirmPassword: string,
+}
+
 const Register = () => {
 
     const navigate = useNavigate()
-
-    interface newUserProps {
-        name: string,
-        email: string,
-        password: string,
-        confirmPassword: string,
-    }
 
     const [user, setUser] = useState<newUserProps>()
 
@@ -40,15 +41,12 @@ const Register = () => {
 
     const handleSubmit = async (e : any) => {
         e.preventDefault()
-        const {data} = await axios.post('http://localhost:5000/api/v1/users/signup', {
+        const {data} = await axios.post(`${BASE_URL}${userEnd}signup`, {
             name: user?.name,
             email: user?.email,
             password: user?.password,
             passwordConfirm: user?.confirmPassword
-        })
-        // console.log(data.status);
-        // console.log(data.user);
-        
+        })        
         if (data.status === 'success') {
             data.user.token = data.token
             localStorage.setItem(localStorageUser, JSON.stringify(data.user))   

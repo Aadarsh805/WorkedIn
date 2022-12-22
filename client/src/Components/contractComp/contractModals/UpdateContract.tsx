@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { months, userProps } from "../../utils/GlobalContants";
-import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import { contractProps } from "../../../types/contractTypes";
+import { userProps } from "../../../types/userProps";
+import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { months } from "../../../utils/GlobalContants";
+import { getHeaders, getReadableTime } from "../../../utils/helperFunction";
+import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -22,8 +24,6 @@ const Section = styled.div`
 
   &::-webkit-scrollbar {
     width: 0.4rem;
-    /* background-color: #735f32; */
-    /* border-radius: 10px; */
     &-thumb {
       background-color: #fff;
       width: 0.1rem;
@@ -70,7 +70,6 @@ const Header = styled.div`
 
 const Description = styled.p`
   /* border: 1px solid red; */
-  /* margin: 0 auto; */
   padding: 1rem;
   border-radius: 8px;
   margin-top: 1rem;
@@ -95,8 +94,6 @@ const NewDueDate = styled.div`
   margin-top: 1.8rem;
   display: flex;
   align-items: center;
-  /* border: 1px solid red; */
-  /* justify-content: flex-start; */
 
   h2{
     margin-right: 1rem;
@@ -177,34 +174,6 @@ const UpdateBtn = styled.div`
   }
 `
 
-interface member {
-  name: string;
-  _id: string;
-  photo: string;
-}
-
-interface teamMember {
-  approved: Boolean;
-  denied: Boolean;
-  member: member;
-  responsibility: string;
-  review: number;
-  role: string;
-}
-
-interface contractProps {
-  chatId: string;
-  contractName: string;
-  createdAt: string;
-  dueDate: string;
-  lead: member;
-  prevDueDates: [];
-  projectDescription: string;
-  startDate: string;
-  status: string;
-  team: Array<teamMember>;
-  _id: string;
-}
 
 interface updateContractProps {
   contractId: string;
@@ -212,7 +181,7 @@ interface updateContractProps {
   closeUpdateContractModal: any
 }
 
-const UpdateContractModal = ({ contractId, user, closeUpdateContractModal }: updateContractProps) => {
+const UpdateContract = ({ contractId, user, closeUpdateContractModal }: updateContractProps) => {
   const [contract, setContract] = useState<contractProps>();
   const [newDueDate, setNewDueDate] = useState('');
   const [reason, setReason] = useState('');
@@ -232,19 +201,6 @@ const UpdateContractModal = ({ contractId, user, closeUpdateContractModal }: upd
   useEffect(() => {
     fetchContract();
   }, []);
-
-
-
-  const getReadableTime = (ISODate: string) => {
-    const readable = new Date(ISODate);
-    const month = readable.getMonth();
-    const date = readable.getDate();
-    const year = readable.getFullYear();
-
-    const monthLong = months[month];
-    const fulldate = monthLong + " " + date + ", " + year;
-    return fulldate;
-  };
 
   const updateContractHandler = async () => {
     const { data } = await axios.patch(`${BASE_URL}${contractEnd}${contractId}`, {
@@ -286,10 +242,4 @@ const UpdateContractModal = ({ contractId, user, closeUpdateContractModal }: upd
   );
 };
 
-export default UpdateContractModal;
-
-// Project Name
-// Desc
-// dates
-// NEw Due Date
-// REason
+export default UpdateContract;

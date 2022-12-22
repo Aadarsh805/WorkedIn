@@ -1,16 +1,17 @@
 <h1 align="center"> WORKEDIN </h1>
 
-
 <h3 align="center"> Short Brief </h3>
 
 <p align="center">
-WorkedIn is an application for people to share projects and collaborate with folks having good work ethics. Along with the skills , you can check the `WORK ETHICS` of the person if he would be suitable for collaboration
+WorkedIn is an application for people to share projects and collaborate with folks having good work ethics. Along with the skills , you can check the WORK ETHICS of the person if they would be suitable for collaboration
 </p>
 
 ## Contents:
+
 - About
-- Project Starter
-- Glimpse of the site
+- How it Works
+- Upcoming Features
+- Contributing Guidelines
 - Tools and Packages
 - Author
 
@@ -20,129 +21,122 @@ WorkedIn is an application for people to share projects and collaborate with fol
 
 > Look for right people to collaborate on projects with desirable skills and good **WORK ETHICS**.
 
+We check work ethics of a person through `CONTRACTS` . Before starting a project, the team lead would create a contract between the team members and that contract would be shown in each member's profile. In this way, one can check the work ethics of a person through their past contracts whether they complete projects on time, ot they delay the projects frequently or if they are habitual of breaking or ghosting contract/projects.
+
 The site is in `PROGRESS`.
 
 ---
 
-# 👨‍💻 Getting started
+# How it works
 
+<!-- Before starting a project, you need to create a contract and a contract can only be created inside a group chat. You can s -->
 
-This section will walk you through how you can get started with the project.
+<p style="clear:both;">
+<img alt="Home page" src="https://user-images.githubusercontent.com/89806031/209111535-b0bb0b79-e07e-40db-b3c3-fc277830a8fd.png"  style="margin-left:10px" width="50%" align="right"/>
+<h3 align="center">Create a Post</h3>
 
-### Directory Layout
+<p align="justify">
+You can create a post regarding your project or devs you are looking to collaborate with or you can view other users post as well in the post feed below. We also allow uers to comment, like and share their or other user's posts. If someone is interested in your project they may approach you through chat section. 
+</p>
+<br /><br />
+</p>
+<!--  -->
+<p style="clear:both;">
+<img alt="Chat page" src="https://user-images.githubusercontent.com/89806031/209116220-067dacf3-5242-4f83-a757-3b6c4170e323.png"  style="margin-right:10px" width="50%" align="left"/>
+<h3 align="center">Create a Group Chat</h3>
+<p align="justify">
+Before starting a project, you would create a contract and contract could only be created inside a group chat. After a group chat is created with the members who'll be working on the project, the group admin | lead would create a contract and other members can accept it or reject it accordingly.
+<br/>
+In the left section, you can view all your chats and on the right side, all team members of the selected chat appear.
+<br/>
+There are different symbols in front of the Group Chat names :- 
+<br>
+1) <ins>Open Lock</ins> :- Tells that contract hasn't been approved by all members or not even contracted<br/>
+2) <ins>Closed Lock</ins> :- Tells that contract has been made and no member can casually exit the group. (Quitting the group would lead to breaking the contract)</br>
+3) <ins>Broken Lock</ins> :- Tells that contract was broken, maybe someone left the project or someone ghosted<br/>
+4) <ins>Double Tick</ins> :- Tells that contract was successfully completed within dueDate
+</p>
+<br />
+</p>
+<!--  -->
+<p style="clear:both;">
+<img alt="Contract" src="https://user-images.githubusercontent.com/89806031/209128795-b01c51cc-b4da-466a-ba3f-9b21f5963546.png" style="margin-left:10px" width="50%" align="right"/>
+<img alt="Contract" src="https://user-images.githubusercontent.com/89806031/209129118-9b421ae4-0bd9-4bb5-b95a-5ce9afe82da8.png" style="margin-left:10px" width="50%" align="right"/>
+<h3 align="center">Initialise Contract</h3>
+<p align="justify">
+Only the Admin or Group lead can initilaise CONTRACT. In the contract, the lead needs to specify Project's name, description, starting and due date and role and responsibilities of every member. 
+<br/>
+Once the contract is initialised, other members have to accept the contract. Until the contract isn't accepted by all, the contract isn't actually created.
+<br/>
+Once the contract is approved by all members, the group chat is now locked and the contract would be visible in each members profile.
+<br/>
+Only the admin can update or delete the contract, other team members can only accept or reject the contract, same while making a project submission.
+</p>
+<br /><br/><br/>
+</p>
+<!--  -->
+<p style="clear:both;">
+<img alt="Contract Submission" src="https://user-images.githubusercontent.com/89806031/209142614-3aa366ac-22c0-47d0-8d3d-cae7c47a44b8.png" style="margin-right:10px" width="50%" align="left"/>
+<h3 align="center">Contract Submission</h3>
+<p align="justify">
+Users have to make a submission in their contracts before the due-date. Only the Admin can initialise the submission which further would need approval from every other member. In the submission, it is required to submit the github link, deployed version of the project (if available) and at least 3 screenshots of the project or work done in contract. The whole submission would then have to be approved by other members and then only the actual submission would take place.
+<br/>
+</p>
+<br/>
+</p>
+<br/><br/>
+<!--  -->
+<p style="clear:both;">
+<img alt="All Contract page" src="https://user-images.githubusercontent.com/89806031/209134744-71cce40e-483b-4bed-9beb-ff05ba5a8030.png
+" style="margin-left:10px" width="50%" align="right"/>
+<h3 align="center">All Contracts</h3>
+<p align="justify">
+Users have to make a submission in their contracts before the due-date. Only the Admin can initialise the submission which further would need approval from every other member. In the submission, it is required project or work done in contract. The whole submission would then have to be approved by other members and
+<br/>
+</p>
+<br/>
+</p>
+<!--  -->
+<p style="clear:both;">
+<img alt="profile page" src="https://user-images.githubusercontent.com/89806031/209150566-3d3307db-3ac0-4094-b01c-36242d7e6e1f.png" style="margin-right:10px" width="50%" align="left"/>
+<h3 align="center">Past Contracts</h3>
+<p align="justify">
+You can check a user's past projects/contracts in their profile page. Only approved contracts would be added to the past projects section in a users profile.<br/>
+Through these contracts, one can infer that if that person would be fit for collaborating on the project. If they complete their projects, or they are habitual of leaving the projects pending or they often break the contracts. 
+<br/><br/>
+The contract has different status as :-
+<br />
+1) <ins>In-Progress</ins> :- When submission is to be made and contract hasn't reached its due date.<br/>
+2) <ins>Completed</ins> :- When submission has been made before the due date.<br/>
+3) <ins>Delayed</ins> :- When submission hasn't been made yet and contract has crossed the due date.<br/>
+4) <ins>Broken</ins> :- When someone left the contract in between or a successful ghost strike has been made.<br/>
+</p>
+<br/>
+</p>
 
+# Upcoming Features
 
-<pre>
+1. **Ghost Strike Logic** :- For someone ghosting the project, team members can file a Ghost Request and if the person against whom the ghost request is registered doesn't responds within a time limit, the contract will break and it would be declared that that ghost broke the contract.
 
-├── <strong>client</strong>
-|
-├── <strong>server</strong>
-|      ├── <strong>controllers</strong>
-|      │      ├── <strong>authController.js</strong>
-|      │      ├── <strong>chatController.js</strong>
-|      │      └── <strong>commentController.js</strong> 
-|      │      └── <strong>errorController.js</strong> 
-|      │      └── <strong>handlerFactory.js</strong> 
-|      │      └── <strong>messageController.js</strong> 
-|      │      └── <strong>postcontrollers.js</strong> 
-|      │      └── <strong>usercontrollers.js</strong> 
-|      │
-|      ├── <strong>models</strong>
-|      │      ├── <strong>chatModel.js</strong>
-|      │      ├── <strong>commentModel.js</strong>
-|      │      └── <strong>contractModel.js</strong> 
-|      │      └── <strong>messageModel.js</strong> 
-|      │      └── <strong>postModel.js</strong> 
-|      │      └── <strong>userModel.js</strong> 
-|      │
-|      ├── <strong>Routes</strong>
-|      │      ├── <strong>chatRoutes.js</strong>
-|      │      ├── <strong>commentRoutes.js</strong>
-|      │      └── <strong>contractRoutes.js</strong> 
-|      │      └── <strong>messageRoutes.js</strong> 
-|      │      └── <strong>postRoutes.js</strong> 
-|      │      └── <strong>userRoutes.js</strong> 
-|      |
-|      ├── <strong>utils</strong>
-|      │      ├── <strong>apiFeatures.js</strong>
-|      │      ├── <strong>appError.js</strong>
-|      │      └── <strong>catchAsync.js</strong> 
-|      │      └── <strong>email.js</strong> 
-|      │      └── <strong>exludedFields.js</strong> 
-|      |
-|      ├── <strong>views</strong>
-|      │      ├── <strong>_style.pug</strong>
-|      │      ├── <strong>baseEmail.pug</strong>
-|      │      └── <strong>passwordReset.pug</strong> 
-|      │      └── <strong>welcome.pug</strong> 
-|      │  
-|      └── app.js
-|  
-|
-└── README.md
-</pre>
+2. **Leave Chat API** :- If the contract is either broken or successful, members would have then access to exit the group chat.
 
+3. **Socket.io Implementation** :- For now, we havent implemented Socket.io logic due to which while sending a message in a chat, the page has to reload to show the posted messsage. To avoid this, we would implement Socket.io logic both in client and server, so that users can have a smooth messaging experience.
 
+4. **Review System** :- After finishing the contract, team members would give reviews to other members, which would be shown in the contract for a better conclusion of one's work ethics.
 
-### Run on your local server
+5. **ActivityBox** :- We would like to show recent activities in the application, like contract creation, contract submission and more.
 
-You will need [NodeJS](), [Git]() and [MongoDB]() installed to run this project locally
+6. **ProfileBox** :- We are showing User's stats in the Profile Box in the Home page where we would show `Contract Stats`, `Karma` (ratings after finishing contract) and `Profile Views`. For Karma, it would be a virtual field averaging the ratings from all contracts of the user. Rest of the stats would be taken from User's model.
 
-      node@v16.13.0 or higher
-      npm@8.1.0 or higher
-      git@2.34.1 or higher
+---
 
-If you dont have [MongoDB]() you use [MongoDB Atls]()
+# Contribute
 
+We welcome everyone either be Beginner or Expeienced in open source community to contribute to this project. You can suggest a new feature or can start working on any upcoming feature.
 
-1. Clone the repo or fork this repo
- ```bash
- git clone https://github.com/Garvit1809/WorkedIn
-```
+But make sure to raise an issue first before working on any feature and always create a different branch than main.
 
-2. Create a file called .env in the Backend directory of your project:
-
-
-       server
-       └──- controllers
-           - models
-           - Routes
-           - utils
-           - views
-           - .env         <-- create it here
-           - .gitignore
-           - app.js
-           - package-lock.json
-           - package.json
-
-
-
-3. Inside the .env file, add key `MONGO_URL` and assign your MongoDB local host or Mongo Atls like this. Also add `PORT` key and make sure to give it a value other than **3000** (client is running on 3000)
-
-```bash
-# .env
-PORT = 5000 
-MONGO_URL = "YOUR_DB_LOCAL_HOST" 
-# eg : mongodb://localhost/stresser or mongodb+srv://"Your username ":" your password "....
-```
-
-
-1. Starting the Server application
-```bash
-cd server 
-npm install
-nodemon index.js
-```
-   `This will start server on localhost:5000`     
-
-5. Starting the Client application.
-```bash
-cd client 
-npm install
-npm start
-```
-   `This will start client app on localhost:3000`  
-
+Be sure to read the <a href="https://github.com/Garvit1809/WorkedIn/blob/Documentation/CONTRIBUTING.md" target="_blank">WorkedIn Contributor Guide</a> on how to get started with the project and start contributing 😁.
 
 ---
 
@@ -150,36 +144,29 @@ npm start
 
 ## Client Dependencies
 
-
-  | Package | Description | version |
-  | ------------ | ------------- | ------------- |
-
+| Package | Description | version |
+| ------- | ----------- | ------- |
 
 ## Server Dependencies
 
-
-
-  | Package | Description | version |
-  | ------------ | ------------- | ------------- |
-  | [bcryptjs](https://www.npmjs.com/package/bcryptjs) | A library to help you hash password | 2.4.3 |
-  | [cors](https://www.npmjs.com/package/cors) | A package providing express middleware | 2.8.5 |
-  | [dotenv](https://www.npmjs.com/package/dotenv) | A library that loads environment variables from a .env file into process.env | 16.0.2 |
-  | [express](https://expressjs.com) | Node.js web application framework for server side scripting | 4.18.1 |
-  | [html-to-text](https://www.npmjs.com/package/html-to-text) | Node.js web application framework for server side scripting | 8.2.1 |
-  | [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) | Node.js web application framework for server side scripting | 8.5.1 |
-  | [mongoose](https://mongoosejs.com) | Elegant mongodb object modeling for node.js | 6.6.2 |
-  | [nodemailer](https://nodemailer.com/about/) | Elegant mongodb object modeling for node.js | 6.8.0 |
-  | [pug](https://pugjs.org/api/getting-started.html) |  A template engine for Node and browser | 3.0.2 |
-  | [validator](https://github.com/validatorjs/validator.js) | A library of string validators and sanitizers. | 13.7.0 |
-
+| Package                                                    | Description                                                                  | version |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------- | ------- |
+| [bcryptjs](https://www.npmjs.com/package/bcryptjs)         | A library to help you hash password                                          | 2.4.3   |
+| [cors](https://www.npmjs.com/package/cors)                 | A package providing express middleware                                       | 2.8.5   |
+| [dotenv](https://www.npmjs.com/package/dotenv)             | A library that loads environment variables from a .env file into process.env | 16.0.2  |
+| [express](https://expressjs.com)                           | Node.js web application framework for server side scripting                  | 4.18.1  |
+| [html-to-text](https://www.npmjs.com/package/html-to-text) | Node.js web application framework for server side scripting                  | 8.2.1   |
+| [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) | Node.js web application framework for server side scripting                  | 8.5.1   |
+| [mongoose](https://mongoosejs.com)                         | Elegant mongodb object modeling for node.js                                  | 6.6.2   |
+| [nodemailer](https://nodemailer.com/about/)                | Elegant mongodb object modeling for node.js                                  | 6.8.0   |
+| [pug](https://pugjs.org/api/getting-started.html)          | A template engine for Node and browser                                       | 3.0.2   |
+| [validator](https://github.com/validatorjs/validator.js)   | A library of string validators and sanitizers.                               | 13.7.0  |
 
 ## Server devDependencies
 
-  | Package | Description | version |
-  | ------------ | ------------- | ------------- |
-  | [nodemon](https://www.npmjs.com/package/nodemon) | A library to automatically restart node application | 2.0.16 |
-
-
+| Package                                          | Description                                         | version |
+| ------------------------------------------------ | --------------------------------------------------- | ------- |
+| [nodemon](https://www.npmjs.com/package/nodemon) | A library to automatically restart node application | 2.0.16  |
 
 ## 👦 Author
 

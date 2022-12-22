@@ -38,6 +38,10 @@ const contractModel = mongoose.Schema(
           type: Boolean,
           default: false,
         },
+        finishedApproved: {
+          type: Boolean,
+          default: false
+        },
         review: {
           //  ref data --> rating, description, userId, contractId, ratedUserId
           type: Number,
@@ -92,6 +96,10 @@ const contractModel = mongoose.Schema(
       default: false,
     },
     contractBroken: {
+      isBroken: {
+        type: Boolean,
+        default: false
+      },
       brokenBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -99,7 +107,17 @@ const contractModel = mongoose.Schema(
       reason: {
         type: String,
         default: null
-      }
+      },
+      workDoneByBroker: {
+        type: String,
+        default: null
+      },
+      workProof: [
+        {
+          type: String,
+          default: null,
+        },
+      ],
     },
   },
   { timestamps: true }
@@ -112,6 +130,9 @@ contractModel.pre(/^find/, function (next) {
   }).populate({
     path: "lead",
     select: "name photo",
+  }).populate({
+    path: 'contractBroken.brokenBy',
+    select: 'name'
   });
   next();
 });

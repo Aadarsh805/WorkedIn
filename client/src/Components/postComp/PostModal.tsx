@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useRef } from 'react'
 import styled from 'styled-components';
+import { postProps } from '../../types/postProps';
+import { userProps } from '../../types/userProps';
 import { BASE_URL, postEnd } from '../../utils/APIRoutes';
-import { userProps } from '../../utils/GlobalContants';
 import { getHeaders } from '../../utils/helperFunction';
 import { useOutsideAlerter } from '../../utils/OutsideAlerter';
 
@@ -29,23 +30,6 @@ h4{
     font-size: 0.8rem;
 }
 `;
-
-// userData | postId | post.author.id --> take full post 
-
-interface postProps {
-    author: {
-      name: string;
-      photo: string;
-      tagline: string;
-      _id: string;
-    };
-    description: string;
-    image: string;
-    comments: number;
-    like: Array<string>;
-    _id: string;
-    createdAt: string;
-  }
 
 interface postModalProps {
     user: userProps,

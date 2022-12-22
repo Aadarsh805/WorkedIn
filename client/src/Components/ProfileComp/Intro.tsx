@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import styled from "styled-components";
-import { userProps } from "../../utils/GlobalContants";
+import { userProps } from "../../types/userProps";
 import Socials from "./Socials";
-import UpdateIntroModal from "./UpdateIntroModal";
+import UpdateIntroModal from "./profileModals/UpdateIntroModal";
 
 const Section = styled.div`
   /* border: 1px solid red; */

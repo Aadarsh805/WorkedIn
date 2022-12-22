@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { userProps } from '../../utils/GlobalContants'
-import CreateContractModal from './CreateContractModal'
+import { chatObj } from '../../types/chatTypes'
+import { userProps } from '../../types/userProps'
+import CreateContractModal from './contractModals/CreateContract'
 
 const Section = styled.div`
     /* border: 1px solid white; */
@@ -35,36 +36,12 @@ const ContractBtn = styled.div`
     }
 `
 
-interface groupMemberProps {
-    _id: string;
-    name: string;
-    photo: string;
-  }
-  
-  interface chatObj {
-    chatName?: string;
-    contracted?: Boolean;
-    chatPhoto?: string;
-    createdAt?: string;
-    groupAdmin?: {
-      _id?: string;
-      name?: string;
-      photo?: string;
-    };
-    isGroupChat?: Boolean;
-    users?: Array<groupMemberProps>;
-    _id?: string;
-    contractId?: string;
-    contractAprovedBy: Array<string>;
-    contractApproved: Boolean
-}
-
 interface contractModalProps {
     selectedChat: chatObj;
     user: userProps;
   }
 
-const CreateContract = ({ selectedChat, user }: contractModalProps) => {
+const CreateContractBtn = ({ selectedChat, user }: contractModalProps) => {
     const [contractModal, setContractModal] = useState(false)
 
     const closeContractModal = () => {
@@ -81,4 +58,4 @@ const CreateContract = ({ selectedChat, user }: contractModalProps) => {
   )
 }
 
-export default CreateContract
+export default CreateContractBtn

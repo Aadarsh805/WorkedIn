@@ -30,10 +30,6 @@ exports.getUserContracts = catchAsync(async (req, res) => {
 
   const date = new Date();
 
-  // we get an array
-  // iterate through every contract
-  // if in-progress -> compare due date and current date and update to `delayed` if required
-
   contracts.forEach(async (contract) => {
     const contractDueDate = contract.dueDate;
     if (contract.status === "in-progress") {
@@ -59,10 +55,8 @@ exports.getContract = catchAsync(async (req, res, next) => {
 
   const contract = await Contract.findById(contractId)
     .populate("lead", "name photo")
-    .populate("team.member", "name photo");
-
-  // chek if contract is in-progress
-  // if in-progress --> compare due date and current date and update to `delayed` if required
+    .populate("team.member", "name photo")
+    .populate("contractBroken.brokenBy", "name");
 
   if (!contract) {
     console.log('No contract');
@@ -75,10 +69,8 @@ exports.getContract = catchAsync(async (req, res, next) => {
 
   let date = new Date();
 
-  console.log(date);
-  console.log(date >= contractDueDate);
-  // console.log(typeof date);
-  // console.log(typeof contractDueDate);
+  // console.log(date);
+  // console.log(date >= contractDueDate);
 
   if (contract.status === "in-progress") {
 
@@ -187,7 +179,7 @@ exports.acceptContract = catchAsync(async (req, res) => {
       }
     );
 
-    console.log(contract);
+    // console.log(contract);
 
     const updatedContract = await Contract.findById(req.params.contractId)
       .populate("lead", "name")
@@ -321,6 +313,7 @@ exports.updateDueContract = catchAsync(async (req, res, next) => {
   });
 });
 
+
 exports.deleteContract = catchAsync(async (req,res,next) => {
 
   const contractId = req.params.contractId;
@@ -341,7 +334,7 @@ exports.deleteContract = catchAsync(async (req,res,next) => {
 
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
     contracted: false,
-    contractId: undefined,
+    contractId: null,
     contractAprovedBy: [],
     contractApproved: false,
     contractFinishedApprovedBy: [],
@@ -357,12 +350,11 @@ exports.deleteContract = catchAsync(async (req,res,next) => {
 })
 
 
-
 exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
   const { githubLink, liveLink, projectImages } = req.body;
   const contractId = req.params.contractId;
 
-  if (!githubLink || !projectImages) {
+  if (!githubLink || projectImages.length < 3) {
     return next(new AppError('Provide sufficient details to finish the project'))
   }
 
@@ -379,12 +371,18 @@ exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
     return next(new AppError('The contract isnt approved by members'))
   }
 
-  const finishedContract = await Contract.findByIdAndUpdate(contractId, {
+  const finishedContract = await Contract.updateOne({
+    _id: contractId,
+    "team.member": req.user.id
+  }, {
     githubLink,
     liveLink,
     projectImages,
     finishContractInitiated: true,
-  });
+    $set: {
+      "team.$.finishedApproved": true
+    }
+  })
   
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
     $push: { contractFinishedApprovedBy: req.user.id }
@@ -401,25 +399,33 @@ exports.initialiseFinishContract = catchAsync(async (req,res,next) => {
 exports.acceptFinishContract = catchAsync(async (req,res,next) => {
 
   const contractId = req.params.contractId;
-  
-  const contract = await contract.findById(contractId);
-  const finishApprovalArr = contract.finishedApprovedBy;
 
-  console.log(finishApprovalArr.find(user => user === req.user.id));
+  const { chatId } = req.body;
+      
+  const chat = await Chat.findById(chatId);
+  const finishApprovalArr = chat.contractFinishedApprovedBy;
 
-  if (finishApprovalArr.find(user => user === req.user.id)) {
-    return next(new AppError('User has already approved the contract finish!!'))
-  }
-
-  const chatId = contract.chatId;
+  if (finishApprovalArr.find(user => user.valueOf() === req.user.id)) {
+      return next(new AppError('User has already approved the contract finish!!'))
+    }
 
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
     $push: { contractFinishedApprovedBy: req.user.id }
   })
 
+  const updatedContract = await Contract.updateOne({
+    _id: contractId,
+    "team.member": req.user.id
+  }, {
+    $set: {
+      "team.$.finishedApproved": true
+    }
+  })
+
   res.status(200).json({
     status: 'success',
-    updatedChat
+    updatedChat,
+    updatedContract
   })
 
 })
@@ -433,8 +439,17 @@ exports.finishContract = catchAsync(async (req,res) => {
     return next(new AppError('Only the Contract lead can finish contract'))
   }
 
-  if (contract.team.length !== contract.finishedApprovedBy.length) {
-    return next(new AppError('Everyone hasnt approved the contract finish yet!!'))
+  let finishapproved = true;
+  contract.team.forEach(member => {
+    if (member.approved) {
+      if(!member.finishedApproved) {
+        finishapproved = false;
+      }
+    }
+  })
+
+  if (!finishapproved) {
+    return next(new AppError('Every member hasnt approved the contract submission'));
   }
 
   const chatId = contract.chatId;
@@ -455,20 +470,29 @@ exports.finishContract = catchAsync(async (req,res) => {
 })
 
 
-exports.leaveContract = await catchAsync(async (req,res) => {
-  const { reason, chatId } = req.body;
+exports.leaveContract = catchAsync(async (req,res) => {
+  const { reason, workDoneByBroker, workProof, chatId } = req.body;
   const contractId = req.params.contractId;
+  const userId = req.user.id;
+
+  if (!reason && !workDoneByBroker && workProof.length < 2) {
+    return next(new AppError('Sufficient data is not sent to break this contract!!'))
+  }
 
   const brokenContract = await Contract.findByIdAndUpdate(contractId, {
     contractBroken: {
-      brokenBy: req.user.id,
-      reason
+      isBroken: true,
+      brokenBy: userId,
+      reason,
+      workDoneByBroker,
+      workProof
     },
     status: 'broken'
   })
 
   const updatedChat = await Chat.findByIdAndUpdate(chatId, {
-    contractApproved: false
+    contractBroken: true,
+    $pull: { users: userId},
   })
 
   res.status(200).json({

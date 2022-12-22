@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
-import { GrFormClose } from "react-icons/gr";
 import styled from "styled-components";
-import UpdateSkills from "./UpdateSkills";
+import UpdateSkills from "./profileModals/UpdateSkills";
 
 const Section = styled.div`
   /* border: 1px solid red; */
   box-sizing: border-box;
-  /* display: flex; */
   padding: 1rem 2rem;
   margin-bottom: 1.5rem;
   /* width: 45vw; */

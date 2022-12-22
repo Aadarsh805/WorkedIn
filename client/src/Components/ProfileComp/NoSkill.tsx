@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { GrAddCircle } from "react-icons/gr";
-import UpdateSkills from "./UpdateSkills";
+import UpdateSkills from "./profileModals/UpdateSkills";
 
 const Section = styled.div`
   box-sizing: border-box;

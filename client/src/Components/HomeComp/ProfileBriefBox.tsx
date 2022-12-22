@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { localStorageUser, userProps } from "../../utils/GlobalContants";
+import { userProps } from "../../types/userProps";
+import { localStorageUser } from "../../utils/GlobalContants";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -23,9 +24,8 @@ const Section = styled.div`
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
-    /* margin: 1rem auto 0.7rem; */
     margin-bottom: 0.7rem;
-    /* border: 1px solid white; */
+    object-fit: cover;
     -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
@@ -72,16 +72,16 @@ const ProfileBriefBox = () => {
       <h3>{user?.name?.split(" ")[0]}</h3>
       <ContractStats>
         <h4>
-        <span>🔥 4.3</span> Karma
+        <span>🔥 4.5</span> Karma
         </h4>
         <h4>
-          <span>🤝🏻 4</span> Successful Contracts
+          <span>🤝🏻 1</span> Successful Contracts
         </h4>
         <h4>
-           <span>📜 6</span> Total Contracts
+           <span>📜 2</span> Total Contracts
         </h4>
         <h4>
-           <span>✨ 100</span> Profile Views
+           <span>✨ 12</span> Profile Views
         </h4>
       </ContractStats>
     </Section>

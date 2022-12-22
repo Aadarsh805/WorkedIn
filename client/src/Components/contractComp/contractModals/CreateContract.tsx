@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
-import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import { chatObj, member } from "../../../types/chatTypes";
+import { userProps } from "../../../types/userProps";
+import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { getHeaders } from "../../../utils/helperFunction";
+import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -147,6 +148,7 @@ const MemberRole = styled.div`
       height: 3rem;
       margin-right: 0.6rem;
       border-radius: 50%;
+      object-fit: cover;
       -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
       -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
       box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
@@ -166,7 +168,7 @@ const MemberRole = styled.div`
     box-sizing: border-box;
 
     &::placeholder {
-      color: #faf8f1;
+      color: rgba(250, 248, 241, 0.7);
     }
   }
 
@@ -186,7 +188,7 @@ const MemberRole = styled.div`
 
     &::placeholder {
       font-size: 0.8rem;
-      color: #faf8f1;
+      color: rgba(250, 248, 241, 0.7);
       font-weight: 500;
     }
 
@@ -261,29 +263,6 @@ const InitialiseButton = styled.div`
   }
 `;
 
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-  contractId?: string;
-  contractAprovedBy: Array<string>;
-  contractApproved: Boolean;
-}
 
 interface contractModalProps {
   selectedChat: chatObj;
@@ -291,7 +270,7 @@ interface contractModalProps {
   closeContractModal: any;
 }
 
-interface memberRolesProps {
+interface memberRoleProps {
   id: number;
   member: string;
   role: string;
@@ -300,12 +279,12 @@ interface memberRolesProps {
   photo: string;
 }
 
-const CreateContractModal = ({
+const CreateContract = ({
   selectedChat,
   user,
   closeContractModal,
 }: contractModalProps) => {
-  const [memberRoles, setMemberRoles] = useState<memberRolesProps[]>([]);
+  const [memberRoles, setMemberRoles] = useState<memberRoleProps[]>([]);
   const [contractName, setContractName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -317,7 +296,7 @@ const CreateContractModal = ({
   useEffect(() => {
     console.log(selectedChat.users);
 
-    (selectedChat.users as unknown as groupMemberProps[]).map((user, index) => {
+    (selectedChat.users as unknown as member[]).map((user, index) => {
       console.log(index);
       if (memberRoles.find((member) => member.member === user._id)) {
         return memberRoles;
@@ -378,6 +357,7 @@ const CreateContractModal = ({
       }
     );
     console.log(data);
+    window.location.reload();
   };
 
   return (
@@ -455,4 +435,4 @@ const CreateContractModal = ({
   );
 };
 
-export default CreateContractModal;
+export default CreateContract;

@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useRef } from "react";
 import styled from "styled-components";
+import { commentProps } from "../../types/commentTypes";
+import { userProps } from "../../types/userProps";
 import { BASE_URL, postEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 
@@ -28,21 +29,9 @@ h4{
 }
 `;
 
-interface commentType {
-    comment: string;
-    createdAt: string;
-    user: {
-      name: string;
-      photo: string;
-      tagline: string;
-      _id: string;
-    };
-    _id: string;
-  }
-
 interface commentModalProps {
   userData: userProps;
-  comment: commentType,
+  comment: commentProps,
   postId: string,
   setUpdateComment: any,
   closeCommentModal: any

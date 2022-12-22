@@ -1,8 +1,9 @@
 import axios from "axios";
+import React from "react";
 import styled from "styled-components";
 import { chatObj } from "../../types/chatTypes";
 import { userProps } from "../../types/userProps";
-import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
+import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
 import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`
@@ -13,7 +14,7 @@ const Section = styled.div`
   justify-content: center;
 
   button {
-      /* cursor: pointer; */
+    /* cursor: pointer; */
     width: 90%;
     border-radius: 4px;
     padding: 12px 0px;
@@ -37,29 +38,28 @@ const Section = styled.div`
   }
 `;
 
-interface contractApprovalProps {
+interface contracFinishtApprovalProps {
   selectedChat: chatObj;
   user: userProps;
 }
 
-const ContractApproval = ({ selectedChat, user }: contractApprovalProps) => {
+const FinishApprovalBtn = ({
+  selectedChat,
+  user,
+}: contracFinishtApprovalProps) => {
   const totalMembers = (selectedChat.users as unknown as any[]).length;
-  const membersApproved = selectedChat.contractAprovedBy.length;
+  const membersApproved = selectedChat.contractFinishedApprovedBy.length;
   const percentApproval = (membersApproved / totalMembers) * 100;
 
-  const finaliseContractHandler = async () => {
-    if (user._id !== selectedChat.groupAdmin?._id) {
-      return;
-    }
-    const { data } = await axios.patch(
-      `${BASE_URL}${chatEnd}${selectedChat._id}/finalisecontract`,
-      {},
-      {
-        headers: getHeaders(user.token ?? ""),
-      }
-    );
+
+  const submitContracthandler = async () => {
+    const { data } = await axios.patch(`${BASE_URL}${contractEnd}${selectedChat.contractId}/finish/submit`, {}, {
+        headers: getHeaders(user.token ?? '')
+    });
     console.log(data);
-  };
+    window.location.reload();
+  } 
+
 
   return (
     <Section>
@@ -67,18 +67,18 @@ const ContractApproval = ({ selectedChat, user }: contractApprovalProps) => {
         <button
           disabled={percentApproval !== 100}
           onClick={
-            percentApproval !== 100 ? undefined : finaliseContractHandler
+            percentApproval !== 100 ? undefined : submitContracthandler
           }
         >
           {percentApproval !== 100
-            ? `${Math.round(percentApproval)}% Approved`
-            : "Finalise Contract"}
+            ? `${Math.round(percentApproval)}% Approval`
+            : "Submit Contract"}
         </button>
       ) : (
-        <button disabled>{Math.round(percentApproval)}% Approved</button>
+        <button disabled>{Math.round(percentApproval)}% Approval</button>
       )}
     </Section>
   );
 };
 
-export default ContractApproval;
+export default FinishApprovalBtn;

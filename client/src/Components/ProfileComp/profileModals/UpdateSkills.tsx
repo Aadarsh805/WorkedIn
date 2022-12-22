@@ -2,9 +2,9 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import { GrFormClose } from "react-icons/gr";
 import styled from "styled-components";
-import { BASE_URL, userEnd } from "../../utils/APIRoutes";
-import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import { BASE_URL, userEnd } from "../../../utils/APIRoutes";
+import { getHeaders } from "../../../utils/helperFunction";
+import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -14,6 +14,7 @@ const Section = styled.div`
   max-height: 60vh;
   box-sizing: border-box;
   background-color: #735f32;
+  z-index: 2;
   transform: translate(-50%, -53.5%);
   border-radius: 10px;
   overflow-y: auto;

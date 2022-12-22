@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
-import { userProps } from "../../utils/GlobalContants";
 import { getHeaders } from "../../utils/helperFunction";
 
 import formatDistance from "date-fns/formatDistance";
+import { userProps } from "../../types/userProps";
+import { chatObj } from "../../types/chatTypes";
+import { messageProps } from "../../types/messageTypes";
 
 interface ChatMessageStylesProps {
   singleChat: boolean
@@ -29,7 +31,7 @@ const Messages = styled.div`
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 0.4rem;
+    width: 0.25rem;
     &-thumb {
       background-color: #fff;
       /* background-color: rgba(236, 227, 212, 255); */
@@ -138,42 +140,9 @@ const SendMessage = styled.div`
   }
 `;
 
-interface groupMemberProps {
-  _id: string;
-  name: string;
-  photo: string;
-}
-
-interface chatObj {
-  chatName?: string;
-  contracted?: Boolean;
-  chatPhoto?: string;
-  createdAt?: string;
-  groupAdmin?: {
-    _id?: string;
-    name?: string;
-    photo?: string;
-  };
-  isGroupChat?: Boolean;
-  users?: Array<groupMemberProps>;
-  _id?: string;
-}
-
 interface chatMessageProps {
   user: userProps;
   selectedChat: chatObj;
-}
-
-interface messageProps {
-  chat: string;
-  content: string;
-  createdAt: string;
-  sender: {
-    name: string;
-    photo: string;
-    _id: string;
-  };
-  _id: string;
 }
 
 const ChatMessages = ({ user, selectedChat }: chatMessageProps) => {

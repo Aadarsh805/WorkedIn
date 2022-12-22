@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { teamMember } from "../../types/contractTypes";
 
 const Section = styled.div`
   background-color: #faf8f1;
   border-radius: 10px;
   width: 90%;
   margin: 0 auto;
-  /* margin: 1rem auto 0.5rem; */
   padding: 0.8rem 1rem;
   box-sizing: border-box;
 `;
@@ -33,7 +33,6 @@ const MemberDetails = styled.div`
     height: 3rem;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: center;
     /* border: 1px solid red; */
 
@@ -64,7 +63,6 @@ const MemberResponsibility = styled.p`
   padding: 0.5rem;
   border-radius: 10px;
   font-size: 0.9rem;
-  /* max-height: 8rem; */
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -76,21 +74,6 @@ const MemberResponsibility = styled.p`
     }
   }
 `;
-
-interface member {
-  name: string;
-  _id: string;
-  photo: string;
-}
-
-interface teamMember {
-  approved: Boolean;
-  denied: Boolean;
-  member: member;
-  responsibility: string;
-  review: number;
-  role: string;
-}
 
 interface memberProps {
   currentUser: teamMember;
