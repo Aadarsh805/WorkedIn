@@ -72,16 +72,16 @@ const ProfileBriefBox = () => {
       <h3>{user?.name?.split(" ")[0]}</h3>
       <ContractStats>
         <h4>
-        <span>🔥 4.3</span> Karma
+        <span>🔥 4.5</span> Karma
         </h4>
         <h4>
-          <span>🤝🏻 4</span> Successful Contracts
+          <span>🤝🏻 1</span> Successful Contracts
         </h4>
         <h4>
-           <span>📜 6</span> Total Contracts
+           <span>📜 2</span> Total Contracts
         </h4>
         <h4>
-           <span>✨ 100</span> Profile Views
+           <span>✨ 12</span> Profile Views
         </h4>
       </ContractStats>
     </Section>

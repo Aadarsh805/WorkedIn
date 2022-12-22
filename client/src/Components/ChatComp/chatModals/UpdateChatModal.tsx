@@ -145,7 +145,8 @@ const ServerName = styled.div`
     color: rgb(58, 66, 27);
 
     &::placeholder {
-      color: rgb(58, 66, 27);
+      color: rgba(58, 66, 27, 0.8);
+      /* color: rgba(250, 248, 241, 0.7); */
     }
   }
 `;

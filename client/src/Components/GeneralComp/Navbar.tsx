@@ -67,7 +67,7 @@ const Navbar = () => {
           <MenuItem>Home</MenuItem>
         </Link>
         <Link to="/chats">
-          <MenuItem>Rooms</MenuItem>
+          <MenuItem>Chats</MenuItem>
         </Link>
         <Link to="/contracts">
           <MenuItem>My Contracts</MenuItem>
@@ -81,7 +81,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// Feed
-// Profile
-// Chat Section

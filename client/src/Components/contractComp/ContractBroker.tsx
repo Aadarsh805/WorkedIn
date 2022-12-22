@@ -42,7 +42,7 @@ const ContractBroker = ({ broker }: contratBrokenProps) => {
     <Section>
       <h2>This contract was broken by <span>{broker.brokenBy?.name}</span> becz</h2>
       <BrokerReasons>{broker.reason}</BrokerReasons>
-      <h2>They claim to have done this muchj of work</h2>
+      <h2>They claim to have done this much of work</h2>
       <BrokerReasons>{broker.workDoneByBroker}</BrokerReasons>
     </Section>
   );

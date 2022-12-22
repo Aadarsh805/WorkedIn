@@ -145,6 +145,7 @@ const CreatePost = () => {
       }
     );
     console.log(data);
+    window.location.reload();
   };
 
   const postImage = (pics: FileList | null) => {

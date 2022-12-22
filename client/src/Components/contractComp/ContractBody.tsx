@@ -109,29 +109,42 @@ const Links = styled.div`
   /* border: 1px solid white; */
   margin-top: 1.7rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
 `;
 
 const Link = styled.div`
   /* border: 1px solid #fff; */
-  width: 50%;
+  width: 100%;
   overflow: hidden;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+
+
+  &:first-child{
+    margin-bottom: 1rem;
+  }
 
   h2 {
-    margin-bottom: 0.4rem;
     color: #faf8f1;
     font-size: 1.2rem;
     font-weight: 600;
+    /* margin-right: 1rem; */
+    /* border: 1px solid #fff; */
+    width: 17.5%;
   }
-
+  
   div {
+    /* border: 1px solid #fff; */
     display: flex;
+    align-items: center;
 
     h4 {
       color: rgba(236, 227, 212, 255);
       font-size: 1rem;
       font-weight: 300;
+      line-height: 100%;
       text-decoration: underline;
     }
 
@@ -230,11 +243,11 @@ const ContractBody = ({ contract, userData }: contractBodyProps) => {
         </ContractDates>
       </Header>
       <Description>{contract.projectDescription}</Description>
-      {contract.status === "completed" ? (
+      {contract.finishContractInitiated ? (
         <>
           <Links>
             <Link>
-              <h2>Github Link</h2>
+              <h2>Github Link </h2>
               <div>
                 <h4>{contract.githubLink}</h4>
                 <div
@@ -247,7 +260,7 @@ const ContractBody = ({ contract, userData }: contractBodyProps) => {
             </Link>
             {contract.liveLink ? (
               <Link>
-                <h2>Live on</h2>
+                <h2>Live Link</h2>
                 <div>
                   <h4>{contract.liveLink}</h4>
                   <div

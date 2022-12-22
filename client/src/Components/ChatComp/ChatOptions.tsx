@@ -111,11 +111,11 @@ const OptionsMenu = styled.div`
   }
 
   li.leave {
-      svg {
-        /* border: 1px solid blue; */
-        width: 1.25rem;
-        height: 1.1rem;
-      }
+    svg {
+      /* border: 1px solid blue; */
+      width: 1.25rem;
+      height: 1.1rem;
+    }
   }
 
   li.contract {
@@ -126,20 +126,20 @@ const OptionsMenu = styled.div`
     }
   }
 
-  li.break{
-    svg{
+  li.break {
+    svg {
       fill: #fff;
       /* border: 1px solid red; */
-      path{
+      path {
         fill: #fff;
         /* stroke: red; */
         /* color: red; */
       }
     }
 
-    &:hover{
-      svg{
-        path{
+    &:hover {
+      svg {
+        path {
           fill: #3a421b;
         }
       }
@@ -157,6 +157,7 @@ interface chat {
   setDeleteContract: React.Dispatch<React.SetStateAction<boolean>>;
   setFinishContract: React.Dispatch<React.SetStateAction<boolean>>;
   setBreakContract: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditSubmission: React.Dispatch<React.SetStateAction<boolean>>;
   updateServer: boolean;
   invitePeople: boolean;
   reviewContract: boolean;
@@ -164,6 +165,7 @@ interface chat {
   deleteContract: boolean;
   finishContract: boolean;
   breakContract: boolean;
+  editSubmission: boolean;
 }
 
 const ChatOptions = ({
@@ -176,13 +178,15 @@ const ChatOptions = ({
   setDeleteContract,
   setFinishContract,
   setBreakContract,
+  setEditSubmission,
   updateServer,
   updateContract,
   invitePeople,
   reviewContract,
   deleteContract,
   finishContract,
-  breakContract
+  breakContract,
+  editSubmission,
 }: chat) => {
   const [chatOptions, setChatOptions] = useState(false);
 
@@ -237,7 +241,7 @@ const ChatOptions = ({
             </ul>
           </OptionsMenu>
         ) : selectedChat.contractSuccessful ? (
-          <OptionsMenu events={updateServer || invitePeople}>
+          <OptionsMenu events={updateServer || invitePeople || reviewContract}>
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
                 <h5>Update Server</h5>
@@ -257,7 +261,11 @@ const ChatOptions = ({
             </ul>
           </OptionsMenu>
         ) : selectedChat.contractFinishedApprovedBy.length !== 0 ? (
-          <OptionsMenu events={updateServer || invitePeople}>
+          <OptionsMenu
+            events={
+              updateServer || reviewContract || updateContract || editSubmission
+            }
+          >
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
                 <h5>Update Server</h5>
@@ -279,7 +287,7 @@ const ChatOptions = ({
               </li>
               <li
                 className="medal"
-                onClick={() => setFinishContract(!finishContract)}
+                onClick={() => setEditSubmission(!editSubmission)}
               >
                 <h5>Edit Submission</h5>
                 <IoIosMedal />
@@ -292,7 +300,11 @@ const ChatOptions = ({
           </OptionsMenu>
         ) : selectedChat.contractApproved ? (
           // contract is approved
-          <OptionsMenu events={updateServer || invitePeople}>
+          <OptionsMenu
+            events={
+              updateServer || invitePeople || updateContract || finishContract
+            }
+          >
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
                 <h5>Update Server</h5>
@@ -327,7 +339,15 @@ const ChatOptions = ({
           </OptionsMenu>
         ) : selectedChat.contracted ? (
           // contract not approved but contracted
-          <OptionsMenu events={updateServer || invitePeople}>
+          <OptionsMenu
+            events={
+              updateServer ||
+              invitePeople ||
+              reviewContract ||
+              reviewContract ||
+              deleteContract
+            }
+          >
             <ul>
               <li onClick={() => setupdateServer(!updateServer)}>
                 <h5>Update Server</h5>
@@ -376,7 +396,8 @@ const ChatOptions = ({
           </OptionsMenu>
         )
       ) : chatOptions && selectedChat.contractBroken ? (
-        <OptionsMenu events={updateServer || invitePeople}>
+        // non admin options
+        <OptionsMenu events={reviewContract}>
           <ul>
             <li
               className="contract"
@@ -390,10 +411,9 @@ const ChatOptions = ({
               <ImExit />
             </li>
           </ul>
-        </OptionsMenu> 
+        </OptionsMenu>
       ) : chatOptions && selectedChat.contractSuccessful ? (
-        // non admin options
-        <OptionsMenu events={updateServer || invitePeople}>
+        <OptionsMenu events={reviewContract}>
           <ul>
             <li
               className="contract"
@@ -409,7 +429,7 @@ const ChatOptions = ({
           </ul>
         </OptionsMenu>
       ) : chatOptions && selectedChat.contractApproved ? (
-        <OptionsMenu events={updateServer || invitePeople}>
+        <OptionsMenu events={reviewContract || breakContract}>
           <ul>
             <li
               className="contract"
@@ -418,7 +438,10 @@ const ChatOptions = ({
               <h5>Review Contract</h5>
               <BsFillFileEarmarkSpreadsheetFill />
             </li>
-            <li className="break" onClick={() => setBreakContract(!breakContract)}>
+            <li
+              className="break"
+              onClick={() => setBreakContract(!breakContract)}
+            >
               <h5>Break Contract</h5>
               <RxCrumpledPaper />
             </li>
@@ -429,7 +452,7 @@ const ChatOptions = ({
           </ul>
         </OptionsMenu>
       ) : chatOptions && selectedChat.contracted ? (
-        <OptionsMenu events={updateServer || invitePeople}>
+        <OptionsMenu events={reviewContract}>
           <ul>
             <li
               className="contract"
@@ -446,7 +469,3 @@ const ChatOptions = ({
 };
 
 export default ChatOptions;
-
-// add contract break options
-// --> submit git link
-// ifcontract is broken, admin has to submit the work done so far

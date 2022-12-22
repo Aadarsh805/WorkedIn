@@ -7,7 +7,7 @@ import { BASE_URL, contractEnd } from "../../utils/APIRoutes";
 import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`
-  border: 1px solid white;
+  /* border: 1px solid white; */
   margin-top: 0.35rem;
   display: flex;
   align-items: center;
@@ -57,6 +57,7 @@ const FinishApprovalBtn = ({
         headers: getHeaders(user.token ?? '')
     });
     console.log(data);
+    window.location.reload();
   } 
 
 

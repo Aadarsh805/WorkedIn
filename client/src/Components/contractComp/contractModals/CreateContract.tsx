@@ -188,7 +188,7 @@ const MemberRole = styled.div`
 
     &::placeholder {
       font-size: 0.8rem;
-      color: rgba(250, 248, 241, 0.7);;
+      color: rgba(250, 248, 241, 0.7);
       font-weight: 500;
     }
 

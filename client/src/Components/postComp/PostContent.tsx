@@ -18,6 +18,7 @@ const AuthorDetails = styled.div`
     width: 4vw;
     height: 4vw;
     border-radius: 50%;
+    object-fit: cover;
     -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
@@ -120,17 +121,11 @@ const PostBottom = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  /* border: 1px solid red; */
-  /* height: fit-content; */
 
   svg {
-    /* border: 1px solid red; */
     width: 1.6rem;
     height: 1.4rem;
     cursor: pointer;
-    /* padding: 4px; */
-    /* border-radius: 10px; */
-    /* fill: rgba(137,117,88,255); */
   }
 `;
 
