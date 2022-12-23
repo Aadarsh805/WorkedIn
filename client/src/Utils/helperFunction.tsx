@@ -1,5 +1,5 @@
 import axios from "axios";
-import { localStorageUser, months } from "./GlobalContants";
+import { localStorageUser, months } from "./globalContants";
 
 export const apiProvider = axios.create({});
 

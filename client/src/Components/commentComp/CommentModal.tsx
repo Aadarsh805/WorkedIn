@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { commentProps } from "../../types/commentTypes";
-import { userProps } from "../../types/userProps";
-import { BASE_URL, postEnd } from "../../utils/APIRoutes";
+import { userProps } from "../../types/userTypes";
+import { BASE_URL, postEnd } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunction";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
+import { useOutsideAlerter } from "../../utils/outsideAlerter";
 
 const Menu = styled.div`
   position: absolute;

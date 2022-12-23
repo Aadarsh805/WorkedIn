@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
+import { useOutsideAlerter } from "../../../utils/outsideAlerter";
 import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import axios from "axios";
-import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { BASE_URL, contractEnd } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunction";
-import { userProps } from "../../../types/userProps";
+import { userProps } from "../../../types/userTypes";
 
 const Section = styled.div`
   position: absolute;

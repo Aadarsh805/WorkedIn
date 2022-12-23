@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CreatePost from "../components/homeComp/CreatePost";
 import Navbar from "../components/generalComp/Navbar";
-import { BASE_URL, postEnd } from "../utils/APIRoutes";
+import { BASE_URL, postEnd } from "../utils/apiRoutes";
 import ProfileBriefBox from "../components/homeComp/ProfileBriefBox";
 import { apiProvider } from "../utils/helperFunction";
 import ActivityBox from "../components/homeComp/ActivityBox";
 import PostFeed from "../components/homeComp/PostFeed";
-import { localStorageUser } from "../utils/GlobalContants";
-import { postProps } from "../types/postProps";
-import { userProps } from "../types/userProps";
+import { localStorageUser } from "../utils/globalContants";
+import { postProps } from "../types/postTypes";
+import { userProps } from "../types/userTypes";
 
 const Section = styled.div`
   width: 100%;

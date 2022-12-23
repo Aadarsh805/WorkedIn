@@ -21,7 +21,6 @@ router.patch('/me/profile', userController.getMe, userController.updateProfile)
 router.patch('/me/about', userController.getMe, userController.updateAbout)
 router.patch('/me/skills', userController.getMe, userController.updateSkills)
 
-
 router.get('/:id', userController.getUser)
 
 module.exports = router;

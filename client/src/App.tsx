@@ -4,9 +4,9 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Chats from "./pages/Chats";
-import GlobalStyles from "./utils/GlobalStyles";
+import GlobalStyles from "./utils/globalStyles";
 import { ThemeProvider } from "styled-components";
-import { light, dark, workedinScheme } from "./utils/Themes";
+import { light, dark, workedinScheme } from "./utils/themes";
 import Contracts from "./pages/Contracts";
 import SinglePost from "./components/postComp/SinglePost";
 

@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import ReactImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import styled from "styled-components";
-import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
+import { useOutsideAlerter } from "../../../utils/outsideAlerter";
 
 const Section = styled.div`
   position: absolute;

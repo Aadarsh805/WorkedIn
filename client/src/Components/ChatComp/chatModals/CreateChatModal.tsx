@@ -1,12 +1,12 @@
 import axios from 'axios'
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
-import { BASE_URL, chatEnd, searchUserEnd } from '../../../utils/APIRoutes'
+import { BASE_URL, chatEnd, searchUserEnd } from '../../../utils/apiRoutes'
 import { getHeaders } from '../../../utils/helperFunction'
 import UserBadge from '../../generalComp/UserBadge'
 import SearchedUser from '../../generalComp/SearchedUser'
-import { useOutsideAlerter } from '../../../utils/OutsideAlerter';
-import { userProps } from '../../../types/userProps'
+import { useOutsideAlerter } from '../../../utils/outsideAlerter';
+import { userProps } from '../../../types/userTypes'
 import { searchResultProps } from '../../../types/searchTypes'
 
 const Section = styled.div`

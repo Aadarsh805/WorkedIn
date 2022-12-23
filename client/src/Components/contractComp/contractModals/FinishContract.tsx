@@ -3,10 +3,10 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import styled from "styled-components";
 import { contractProps } from "../../../types/contractTypes";
-import { userProps } from "../../../types/userProps";
-import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { userProps } from "../../../types/userTypes";
+import { BASE_URL, contractEnd } from "../../../utils/apiRoutes";
 import { getHeaders, getReadableTime } from "../../../utils/helperFunction";
-import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
+import { useOutsideAlerter } from "../../../utils/outsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -268,6 +268,7 @@ const FinishContract = ({
     if (contractId) {
       fetchContract();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const postImage = (pics: FileList | null) => {

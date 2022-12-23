@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CreateChatModal from "./chatModals/CreateChatModal";
 import { BsFillUnlockFill, BsFillLockFill } from "react-icons/bs";
-import { userProps } from "../../types/userProps";
+import { userProps } from "../../types/userTypes";
 import { chatObj } from "../../types/chatTypes";
 import { BrokenLock, BrokenLock2 } from "../generalComp/SVG";
 import { MdOutlineDoneAll, MdRemoveDone } from "react-icons/md";

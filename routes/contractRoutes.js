@@ -25,15 +25,3 @@ router.route('/:contractId/break').patch(contractController.leaveContract)
 
 
 module.exports = router;
-
-// create a contract --> groupchatID, 
-// view one contracts of user
-// update contract --> can only update due date, responsibilities
-
-//  Routes --> 
-// Get ALL Contracts --> for dev env
-// 1) Initialize contract
-// 2) Accept Contract
-// 3) Deny Contract
-// 4) Update Contract
-// 5) Get Contract (notification) 

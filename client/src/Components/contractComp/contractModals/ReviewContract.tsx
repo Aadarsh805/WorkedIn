@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { contractProps } from "../../../types/contractTypes";
-import { userProps } from "../../../types/userProps";
-import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { userProps } from "../../../types/userTypes";
+import { BASE_URL, contractEnd } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunction";
-import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
+import { useOutsideAlerter } from "../../../utils/outsideAlerter";
 import ContractBody from "../ContractBody";
 
 const Section = styled.div`
@@ -66,6 +66,7 @@ const ReviewContract = ({ user, contractId, closeReviewContractModal }: reviewCo
     if (contractId) {
       fetchContract();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { chatObj } from '../../types/chatTypes'
-import { userProps } from '../../types/userProps'
+import { userProps } from '../../types/userTypes'
 import CreateContractModal from './contractModals/CreateContract'
 
 const Section = styled.div`

@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { chatObj, member } from "../../../types/chatTypes";
-import { userProps } from "../../../types/userProps";
-import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
+import { userProps } from "../../../types/userTypes";
+import { BASE_URL, contractEnd } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunction";
-import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
+import { useOutsideAlerter } from "../../../utils/outsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -313,6 +313,7 @@ const CreateContract = ({
         }),
       ]);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRoleChange = (

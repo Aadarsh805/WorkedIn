@@ -1,3 +1,5 @@
+// an error class created to keep code effective
+
 class AppError extends Error {
     constructor(message, statusCode) {
       super(message);

@@ -69,9 +69,6 @@ exports.getContract = catchAsync(async (req, res, next) => {
 
   let date = new Date();
 
-  // console.log(date);
-  // console.log(date >= contractDueDate);
-
   if (contract.status === "in-progress") {
 
     if (contractDueDate <= date) {
@@ -179,8 +176,6 @@ exports.acceptContract = catchAsync(async (req, res) => {
       }
     );
 
-    // console.log(contract);
-
     const updatedContract = await Contract.findById(req.params.contractId)
       .populate("lead", "name")
       .populate("team.member", "name");
@@ -200,7 +195,7 @@ exports.acceptContract = catchAsync(async (req, res) => {
       );
     }
 
-    res.send({
+    res.status(200).json({
       status: "success",
       updatedChat,
       updatedContract,
@@ -256,11 +251,7 @@ exports.updateDueContract = catchAsync(async (req, res, next) => {
   const parsedCurrentDate = Date.parse(date)
   const parsedStartingDate = Date.parse(contract.startDate)
   const parsedDueDate = Date.parse(contract.dueDate)
-
-  console.log(parsedDueDate);
-  console.log(parsedNewDueDate);
   
-  // check if prevDueDate and newDueDate arent similar
   if (parsedNewDueDate === parsedDueDate) {
     return next(new AppError("Enter a new Due Date"));
   }
@@ -502,13 +493,3 @@ exports.leaveContract = catchAsync(async (req,res) => {
   })
 
 })
-
-// exports.denyFinishContract = catchAsync(async (req,res) => {
-// // feature to be added in future
-// })
-
-// contractId --> 
-
-//  n members -- (n-1)*n
-
-//  After Finishing review, contract will ask to revoiew the members

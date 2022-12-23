@@ -41,5 +41,3 @@ postSchema.pre(/^find/, function (next) {
 const Post = mongoose.model("Post", postSchema);
 
 module.exports = Post;
-
-//  Authors Pic, Name, Tagline, Post Desc, Post Image, Tags, Like, Share, Comments, Three Dots --> Report, Delete, Update

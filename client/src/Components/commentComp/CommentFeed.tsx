@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { HiDotsVertical } from "react-icons/hi";
 import CommentModal from "./CommentModal";
 import axios from "axios";
-import { BASE_URL, postEnd } from "../../utils/APIRoutes";
+import { BASE_URL, postEnd } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunction";
 import { commentProps } from "../../types/commentTypes";
-import { userProps } from "../../types/userProps";
+import { userProps } from "../../types/userTypes";
 
 const Section = styled.div`
   width: 92.5%;

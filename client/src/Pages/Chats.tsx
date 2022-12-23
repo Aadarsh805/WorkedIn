@@ -8,8 +8,8 @@ import NoSelectedChat from '../components/chatComp/NoSelectedChat'
 
 import Navbar from '../components/generalComp/Navbar'
 import { chatObj } from '../types/chatTypes'
-import { userProps } from '../types/userProps'
-import { BASE_URL, chatEnd } from '../utils/APIRoutes'
+import { userProps } from '../types/userTypes'
+import { BASE_URL, chatEnd } from '../utils/apiRoutes'
 import { getHeaders, getUserData } from '../utils/helperFunction'
 
 const Section = styled.div`

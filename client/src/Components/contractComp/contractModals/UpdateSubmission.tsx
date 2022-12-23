@@ -3,9 +3,9 @@ import axios from "axios";
 import styled from "styled-components";
 import { contractProps } from "../../../types/contractTypes";
 import { getHeaders, getReadableTime } from "../../../utils/helperFunction";
-import { BASE_URL, contractEnd } from "../../../utils/APIRoutes";
-import { userProps } from "../../../types/userProps";
-import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
+import { BASE_URL, contractEnd } from "../../../utils/apiRoutes";
+import { userProps } from "../../../types/userTypes";
+import { useOutsideAlerter } from "../../../utils/outsideAlerter";
 
 const Section = styled.div`
   position: absolute;
@@ -149,6 +149,7 @@ const UpdateSubmission = ({contractId, user, clossEditSubmissionModal}: updateSu
         if (contractId) {
           fetchContract();
         }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
   return contract ? (

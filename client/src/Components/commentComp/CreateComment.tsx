@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { userProps } from "../../types/userProps";
-import { BASE_URL, postEnd } from "../../utils/APIRoutes";
+import { userProps } from "../../types/userTypes";
+import { BASE_URL, postEnd } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`

@@ -1,10 +1,10 @@
 import axios from "axios";
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
-import { userProps } from "../../../types/userProps";
-import { BASE_URL, userEnd } from "../../../utils/APIRoutes";
+import { userProps } from "../../../types/userTypes";
+import { BASE_URL, userEnd } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunction";
-import { useOutsideAlerter } from "../../../utils/OutsideAlerter";
+import { useOutsideAlerter } from "../../../utils/outsideAlerter";
 
 const Section = styled.div`
   position: absolute;

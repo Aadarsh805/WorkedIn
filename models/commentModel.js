@@ -32,6 +32,3 @@ commentSchema.pre(/^find/, function (next) {
 const Comment = mongoose.model("Comment", commentSchema);
 
 module.exports = Comment;
-
-
-//  --> user name, pic, tagline, comment

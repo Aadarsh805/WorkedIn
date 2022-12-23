@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
+import { BASE_URL, chatEnd } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunction";
 
 import formatDistance from "date-fns/formatDistance";
-import { userProps } from "../../types/userProps";
+import { userProps } from "../../types/userTypes";
 import { chatObj } from "../../types/chatTypes";
 import { messageProps } from "../../types/messageTypes";
 

@@ -91,7 +91,7 @@ Users have to make a submission in their contracts before the due-date. Only the
 " style="margin-left:10px" width="50%" align="right"/>
 <h3 align="center">All Contracts</h3>
 <p align="justify">
-Users have to make a submission in their contracts before the due-date. Only the Admin can initialise the submission which further would need approval from every other member. In the submission, it is required project or work done in contract. The whole submission would then have to be approved by other members and
+User can view all his contract (approved or not) in the Contracts Page. From here, the user can view contracts, accept or deny contract approvals and also accept the contract submission. Only the contracts which are approved will be shown in th profile page but in Contracts page, all contracts would be shown that the user is a part of.
 <br/>
 </p>
 <br/>
@@ -103,7 +103,7 @@ Users have to make a submission in their contracts before the due-date. Only the
 <p align="justify">
 You can check a user's past projects/contracts in their profile page. Only approved contracts would be added to the past projects section in a users profile.<br/>
 Through these contracts, one can infer that if that person would be fit for collaborating on the project. If they complete their projects, or they are habitual of leaving the projects pending or they often break the contracts. 
-<br/><br/>
+<br/>
 The contract has different status as :-
 <br />
 1) <ins>In-Progress</ins> :- When submission is to be made and contract hasn't reached its due date.<br/>

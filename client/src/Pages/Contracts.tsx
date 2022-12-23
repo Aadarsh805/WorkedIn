@@ -4,12 +4,12 @@ import styled from "styled-components";
 import NoContracts from "../components/contractComp/NoContracts";
 import ShowContract from "../components/contractComp/contractModals/ShowContract";
 import Navbar from "../components/generalComp/Navbar";
-import { BASE_URL, contractEnd } from "../utils/APIRoutes";
-import { localStorageUser } from "../utils/GlobalContants";
+import { BASE_URL, contractEnd } from "../utils/apiRoutes";
+import { localStorageUser } from "../utils/globalContants";
 import { getHeaders } from "../utils/helperFunction";
 import ContractCard from "../components/contractComp/ContractCard";
 import { contractProps } from "../types/contractTypes";
-import { userProps } from "../types/userProps";
+import { userProps } from "../types/userTypes";
 
 const Section = styled.div`
   padding: 1rem;

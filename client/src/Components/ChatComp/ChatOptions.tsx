@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
 import { HiUserAdd } from "react-icons/hi";
-import { useOutsideAlerter } from "../../utils/OutsideAlerter";
 import { TfiWrite } from "react-icons/tfi";
 import { BsFillFileEarmarkSpreadsheetFill } from "react-icons/bs";
 import { IoIosMedal } from "react-icons/io";
@@ -12,7 +11,8 @@ import { RiGhostFill } from "react-icons/ri";
 import { ImExit } from "react-icons/im";
 import { RxCrumpledPaper } from "react-icons/rx";
 import { chatObj } from "../../types/chatTypes";
-import { userProps } from "../../types/userProps";
+import { userProps } from "../../types/userTypes";
+import { useOutsideAlerter } from "../../utils/outsideAlerter";
 
 const Section = styled.div`
   border-bottom: 1px solid #3a421b;

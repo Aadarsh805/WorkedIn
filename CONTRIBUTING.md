@@ -11,49 +11,85 @@ This section will walk you through how you can get started with the project.
 <pre>
 
 ├── <strong>client</strong>
+|      └── <strong>src</strong>
+|           ├── <strong>assets</strong>
+|           ├── <strong>components</strong>
+|           |      ├── <strong>chatComp</strong>
+|           |      ├── <strong>commentComp</strong>
+|           |      ├── <strong>contractComp</strong>
+|           |      ├── <strong>generalComp</strong>
+|           |      ├── <strong>homeComp</strong>
+|           |      ├── <strong>postComp</strong>
+|           |      └── <strong>profileComp</strong>
+|           |
+|           ├── <strong>pages</strong>
+|           |      ├── <strong>Chat.tsx</strong>
+|           |      ├── <strong>Contracts.tsx</strong>
+|           |      ├── <strong>Home.tsx</strong>
+|           |      ├── <strong>Login.tsx</strong>
+|           |      ├── <strong>Profile.tsx</strong>
+|           |      └── <strong>Register.tsx</strong>
+|           |
+|           ├── <strong>types</strong>
+|           |      ├── <strong>chatTypes.ts</strong>
+|           |      ├── <strong>commentTypes.ts</strong>
+|           |      ├── <strong>contractTypes.ts</strong>
+|           |      ├── <strong>messageTypes.ts</strong>
+|           |      ├── <strong>postTypes.ts</strong>
+|           |      ├── <strong>searchTypes.ts</strong>
+|           |      └── <strong>userTypes.ts</strong>
+|           |
+|           └── <strong>utils</strong>
+|                  ├── <strong>apiRoutes.ts</strong>
+|                  ├── <strong>globalConstants.ts</strong>
+|                  ├── <strong>globalStyles.ts</strong>
+|                  ├── <strong>helperFunction.ts</strong>
+|                  ├── <strong>outsideAlerter.ts</strong>
+|                  └── <strong>themes.ts</strong>
 |
-├── <strong>server</strong>
-|      ├── <strong>controllers</strong>
-|      │      ├── <strong>authController.js</strong>
-|      │      ├── <strong>chatController.js</strong>
-|      │      └── <strong>commentController.js</strong> 
-|      │      └── <strong>errorController.js</strong> 
-|      │      └── <strong>handlerFactory.js</strong> 
-|      │      └── <strong>messageController.js</strong> 
-|      │      └── <strong>postcontrollers.js</strong> 
-|      │      └── <strong>usercontrollers.js</strong> 
-|      │
-|      ├── <strong>models</strong>
-|      │      ├── <strong>chatModel.js</strong>
-|      │      ├── <strong>commentModel.js</strong>
-|      │      └── <strong>contractModel.js</strong> 
-|      │      └── <strong>messageModel.js</strong> 
-|      │      └── <strong>postModel.js</strong> 
-|      │      └── <strong>userModel.js</strong> 
-|      │
-|      ├── <strong>Routes</strong>
-|      │      ├── <strong>chatRoutes.js</strong>
-|      │      ├── <strong>commentRoutes.js</strong>
-|      │      └── <strong>contractRoutes.js</strong> 
-|      │      └── <strong>messageRoutes.js</strong> 
-|      │      └── <strong>postRoutes.js</strong> 
-|      │      └── <strong>userRoutes.js</strong> 
-|      |
-|      ├── <strong>utils</strong>
-|      │      ├── <strong>apiFeatures.js</strong>
-|      │      ├── <strong>appError.js</strong>
-|      │      └── <strong>catchAsync.js</strong> 
-|      │      └── <strong>email.js</strong> 
-|      │      └── <strong>exludedFields.js</strong> 
-|      |
-|      ├── <strong>views</strong>
-|      │      ├── <strong>_style.pug</strong>
-|      │      ├── <strong>baseEmail.pug</strong>
-|      │      └── <strong>passwordReset.pug</strong> 
-|      │      └── <strong>welcome.pug</strong> 
-|      │  
-|      └── app.js
+├── <strong>controllers</strong>
+|      ├── <strong>authController.js</strong>
+|      ├── <strong>chatController.js</strong>
+|      ├── <strong>commentController.js</strong>
+|      ├── <strong>contractController.js</strong>
+|      ├── <strong>errorController.js</strong>
+|      ├── <strong>handlerController.js</strong>
+|      ├── <strong>messageController.js</strong>
+|      ├── <strong>postController.js</strong>
+|      └── <strong>userController.js</strong> 
+|
+├── <strong>models</strong>
+|      ├── <strong>chatModel.js</strong>
+|      ├── <strong>commentModel.js</strong>
+|      ├── <strong>contractModel.js</strong>
+|      ├── <strong>messageModel.js</strong>
+|      ├── <strong>postModel.js</strong>
+|      └── <strong>userModel.js</strong> 
+|      
+├── <strong>routes</strong>
+|      ├── <strong>chatRoutes.js</strong>
+|      ├── <strong>commentRoutes.js</strong>
+|      ├── <strong>contractRoutes.js</strong> 
+|      ├── <strong>messageRoutes.js</strong> 
+|      ├── <strong>postRoutes.js</strong> 
+|      └── <strong>userRoutes.js</strong> 
+|   
+├── <strong>utils</strong>
+|      ├── <strong>apiFeatures.js</strong>
+|      ├── <strong>appError.js</strong>
+|      ├── <strong>catchAsync.js</strong> 
+|      ├── <strong>email.js</strong> 
+|      └── <strong>exludedFields.js</strong> 
+|
+├── <strong>views</strong>
+|      ├── <strong>_style.pug</strong>
+|      ├── <strong>baseEmail.pug</strong>
+|      ├── <strong>passwordReset.pug</strong> 
+|      └── <strong>welcome.pug</strong> 
+|
+├── app.js
 |  
+├── CONTRIBUTING.md
 |
 └── README.md
 </pre>
@@ -79,17 +115,19 @@ If you dont have [MongoDB]() you use [MongoDB Atls]()
 2. Create a file called .env in the Backend directory of your project:
 
 
-       server
-       └──- controllers
-           - models
-           - Routes
-           - utils
-           - views
-           - .env         <-- create it here
-           - .gitignore
-           - app.js
-           - package-lock.json
-           - package.json
+         - client
+         - controllers
+         - models
+         - routes
+         - utils
+         - views
+         - .env         <-- create it here
+         - .gitignore
+         - app.js
+         - CONTRIBUTING.md
+         - package-lock.json
+         - package.json
+         - README.ms
 
 
 
@@ -103,7 +141,7 @@ MONGO_URL = "YOUR_DB_LOCAL_HOST"
 ```
 
 
-1. Starting the Server application
+4. Starting the Server application
 ```bash
 cd server 
 npm install

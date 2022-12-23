@@ -4,8 +4,8 @@ import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import PostModal from "./PostModal";
-import { userProps } from "../../types/userProps";
-import { postProps } from "../../types/postProps";
+import { userProps } from "../../types/userTypes";
+import { postProps } from "../../types/postTypes";
 import { ThumbsUp } from "../generalComp/SVG";
 
 const AuthorDetails = styled.div`

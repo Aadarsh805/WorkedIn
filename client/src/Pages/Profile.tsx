@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { localStorageUser } from "../utils/GlobalContants";
+import { localStorageUser } from "../utils/globalContants";
 
 import Navbar from "../components/generalComp/Navbar";
 import Intro from "../components/profileComp/Intro";
 import NoSkill from "../components/profileComp/NoSkill";
 import Skills from "../components/profileComp/Skills";
 import axios from "axios";
-import { BASE_URL, userEnd } from "../utils/APIRoutes";
+import { BASE_URL, userEnd } from "../utils/apiRoutes";
 import { getHeaders } from "../utils/helperFunction";
 import About from "../components/profileComp/About";
 import ContractCard from "../components/contractComp/ContractCard";
 import RecentUserActivity from "../components/profileComp/RecentUserActivity";
-import { userProps } from "../types/userProps";
+import { userProps } from "../types/userTypes";
 import { contractProps } from "../types/contractTypes";
 import ShowContract from "../components/contractComp/contractModals/ShowContract";
 

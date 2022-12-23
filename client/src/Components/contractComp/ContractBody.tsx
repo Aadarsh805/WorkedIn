@@ -4,7 +4,7 @@ import ReactImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { contractProps } from "../../types/contractTypes";
-import { userProps } from "../../types/userProps";
+import { userProps } from "../../types/userTypes";
 import { getReadableTime } from "../../utils/helperFunction";
 import ContractBroker from "./ContractBroker";
 import TeamMemberCard from "./TeamMemberCard";

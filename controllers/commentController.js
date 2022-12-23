@@ -11,15 +11,12 @@ exports.setPostandUserIds = (req,res,next) => {
 }
 
 exports.protectComment = catchAsync(async (req,res,next) => {
-    //  get commentId
     const commentId = req.params.id
 
-    // check author of comment id
     const authorData = await Comment.findById(commentId).select('user');
     const userId = req.user._id.valueOf();
     const commentUserId = authorData.user._id.valueOf();
     
-    // we'll see if author === user
     if (userId === commentUserId) {
         next()
     } else {
@@ -44,10 +41,8 @@ exports.reportComment = catchAsync(async (req,res,next) => {
 exports.getAllComments = factory.getAll(Comment)
 
 exports.postComment = catchAsync(async (req,res) => {
-    // post the comment
     const doc = await Comment.create(req.body);
 
-    // add 1 to comments in Post Model
     if (doc) {
         const post = await Post.findById(req.body.post)
         const postComments = post.comments
@@ -74,9 +69,7 @@ exports.deleteComment = catchAsync(async (req,res) => {
 
     if (doc) {
         const post = await Post.findById(req.body.post)
-        // console.log("POST :- " + post);
         const postComments = post.comments
-        // console.log("Comments:- " + postComments);
         await Post.findByIdAndUpdate(req.body.post, {
             comments: postComments - 1
         }, {

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import CommentBox from "../commentComp/CommentBox";
-import { userProps } from "../../types/userProps";
-import { postProps } from "../../types/postProps";
+import { userProps } from "../../types/userTypes";
+import { postProps } from "../../types/postTypes";
 import PostContent from "../postComp/PostContent";
 
 const Section = styled.div`

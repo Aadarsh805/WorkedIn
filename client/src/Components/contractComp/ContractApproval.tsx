@@ -1,8 +1,8 @@
 import axios from "axios";
 import styled from "styled-components";
 import { chatObj } from "../../types/chatTypes";
-import { userProps } from "../../types/userProps";
-import { BASE_URL, chatEnd } from "../../utils/APIRoutes";
+import { userProps } from "../../types/userTypes";
+import { BASE_URL, chatEnd } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunction";
 
 const Section = styled.div`

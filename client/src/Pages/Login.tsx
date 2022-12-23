@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
-import { localStorageUser } from '../utils/GlobalContants';
-import { BASE_URL, userEnd } from '../utils/APIRoutes';
+import { localStorageUser } from '../utils/globalContants';
+import { BASE_URL, userEnd } from '../utils/apiRoutes';
 
 const Section = styled.div`
 height: 100vh;

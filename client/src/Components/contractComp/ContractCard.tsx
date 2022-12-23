@@ -2,7 +2,7 @@ import React from "react";
 import { BsArrow90DegRight } from "react-icons/bs";
 import styled from "styled-components";
 import { contractProps } from "../../types/contractTypes";
-import { months } from "../../utils/GlobalContants";
+import { months } from "../../utils/globalContants";
 import { getReadableTime } from "../../utils/helperFunction";
 import StatusStrip from "./StatusStrip";
 

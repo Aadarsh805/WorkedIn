@@ -12,7 +12,7 @@ import FinishContract from "../contractComp/contractModals/FinishContract";
 import DeleteContract from "../contractComp/contractModals/DeleteContract";
 import FinishApprovalBtn from "../contractComp/FinishApprovalBtn";
 import BreakContract from "../contractComp/contractModals/BreakContract";
-import { userProps } from "../../types/userProps";
+import { userProps } from "../../types/userTypes";
 import { chatObj } from "../../types/chatTypes";
 import ContractBrokenBtn from "./ContractBrokenBtn";
 import UpdateSubmission from "../contractComp/contractModals/UpdateSubmission";

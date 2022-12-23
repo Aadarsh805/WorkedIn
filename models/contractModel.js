@@ -140,16 +140,3 @@ contractModel.pre(/^find/, function (next) {
 const Contract = mongoose.model("Contract", contractModel);
 
 module.exports = Contract;
-
-// Team Members Details --> Name, Mail, Pic
-//  Project Name
-// Project About
-// Project stack
-// Start Date
-// Due Date
-// roles
-// Responsibilities
-
-// on Contract complete --> Project links --> github, deployed version || give other teammates ratings and reviews
-
-//  Contract Initialized --> contract goes to all members --> leader automatically approved, team approves --> show in chat status of approvals --> contract made once everyon accepts
