@@ -87,8 +87,7 @@ Users have to make a submission in their contracts before the due-date. Only the
 <br/><br/>
 <!--  -->
 <p style="clear:both;">
-<img alt="All Contract page" src="https://user-images.githubusercontent.com/89806031/209134744-71cce40e-483b-4bed-9beb-ff05ba5a8030.png
-" style="margin-left:10px" width="50%" align="right"/>
+<img alt="All Contract page" src="https://user-images.githubusercontent.com/89806031/209348789-05849f51-e065-49c3-a990-5a1e2c6f0dc6.png" style="margin-left:10px" width="50%" align="right"/>
 <h3 align="center">All Contracts</h3>
 <p align="justify">
 User can view all his contract (approved or not) in the Contracts Page. From here, the user can view contracts, accept or deny contract approvals and also accept the contract submission. Only the contracts which are approved will be shown in th profile page but in Contracts page, all contracts would be shown that the user is a part of.
