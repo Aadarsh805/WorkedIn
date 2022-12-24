@@ -18,10 +18,13 @@ const Section = styled.div`
   padding: 0 5vw;
   background-color: rgba(207, 186, 148, 255);
   min-height: 100vh;
-`;
+  /* border: 1px solid red; */
+  `;
 
 const PostContainer = styled.div`
+/* border: 1px solid red; */
   width: 40vw;
+  height: fit-content;
   margin: 2rem 5vw;
   border-radius: 10px;
   padding-top: 1rem;
