@@ -48,7 +48,7 @@ You can create a post regarding your project or devs you are looking to collabor
 Before starting a project, you would create a contract and contract could only be created inside a group chat. After a group chat is created with the members who'll be working on the project, the group admin | lead would create a contract and other members can accept it or reject it accordingly.
 <br/>
 In the left section, you can view all your chats and on the right side, all team members of the selected chat appear.
-<br/>
+<br/><br/>
 There are different symbols in front of the Group Chat names :- 
 <br>
 1) <ins>Open Lock</ins> :- Tells that contract hasn't been approved by all members or not even contracted<br/>
@@ -56,7 +56,6 @@ There are different symbols in front of the Group Chat names :-
 3) <ins>Broken Lock</ins> :- Tells that contract was broken, maybe someone left the project or someone ghosted<br/>
 4) <ins>Double Tick</ins> :- Tells that contract was successfully completed within dueDate
 </p>
-<br />
 </p>
 <!--  -->
 <p style="clear:both;">
@@ -87,8 +86,7 @@ Users have to make a submission in their contracts before the due-date. Only the
 <br/><br/>
 <!--  -->
 <p style="clear:both;">
-<img alt="All Contract page" src="https://user-images.githubusercontent.com/89806031/209134744-71cce40e-483b-4bed-9beb-ff05ba5a8030.png
-" style="margin-left:10px" width="50%" align="right"/>
+<img alt="All Contract page" src="https://user-images.githubusercontent.com/89806031/209349832-bf66bc95-2fd4-4ea7-b994-1848722619ab.png" style="margin-left:10px" width="50%" align="right"/>
 <h3 align="center">All Contracts</h3>
 <p align="justify">
 User can view all his contract (approved or not) in the Contracts Page. From here, the user can view contracts, accept or deny contract approvals and also accept the contract submission. Only the contracts which are approved will be shown in th profile page but in Contracts page, all contracts would be shown that the user is a part of.
@@ -136,7 +134,7 @@ We welcome everyone either be Beginner or Expeienced in open source community to
 
 But make sure to raise an issue first before working on any feature and always create a different branch than main.
 
-Be sure to read the <a href="https://github.com/Garvit1809/WorkedIn/blob/Documentation/CONTRIBUTING.md" target="_blank">WorkedIn Contributor Guide</a> on how to get started with the project and start contributing 😁.
+Be sure to read the <a href="https://github.com/Garvit1809/WorkedIn/blob/main/CONTRIBUTING.md" target="_blank">WorkedIn Contributor Guide</a> on how to get started with the project and start contributing 😁.
 
 ---
 
