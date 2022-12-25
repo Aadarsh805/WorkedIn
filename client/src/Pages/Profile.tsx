@@ -15,6 +15,7 @@ import RecentUserActivity from "../components/profileComp/RecentUserActivity";
 import { userProps } from "../types/userTypes";
 import { contractProps } from "../types/contractTypes";
 import ShowContract from "../components/contractComp/contractModals/ShowContract";
+import { useLocation, useParams } from "react-router-dom";
 
 const Section = styled.div`
   /* border: 5px solid black; */
@@ -58,11 +59,21 @@ const Contracts = styled.div`
 const Profile = () => {
   const [localUser, setLocalUser] = useState<userProps>({});
   const [user, setUser] = useState<userProps>({});
+  const [userId, setUserId] = useState();
 
   const [isShowContractModalOpen, setIsShowContractModalOpen] = useState(false);
   const [clickedContract, setClickedContract] = useState<contractProps>();
 
-  async function fetchUserData() {
+  const params = useParams();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("Location ID :- " + location.state.id);
+    setUserId(location.state.id)
+  }, [])
+  
+
+  async function fetchLocalUserData() {
     const data = await JSON.parse(
       localStorage.getItem(localStorageUser) || "{}"
     );
@@ -78,16 +89,32 @@ const Profile = () => {
     setUser(userData);
   }
 
+  async function fetchUserDetails() {
+    const { data } = await axios.get(`${BASE_URL}${userEnd}${userId}`, {
+      headers: getHeaders(localUser.token ?? '')
+    })
+    console.log(data.data.data);
+    const userData = data.data.data;
+    setUser(userData)
+  }
+
   useEffect(() => {
-    fetchUserData();
+    fetchLocalUserData();
+    console.log(params.id);
   }, []);
 
   useEffect(() => {
-    console.log(localUser.token);
-    if (Object.keys(localUser).length !== 0) {
-      fetchMyDetails();
+    console.log("TYPE of PARAMID :- " + typeof userId);
+    console.log("TYPE of LocalId :- " + typeof localUser._id);
+    if (Object.keys(localUser).length !== 0 && userId) {
+      if (userId !== localUser._id) {
+        console.log('next');
+        fetchUserDetails();
+      } else {
+        fetchMyDetails();
+      }
     }
-  }, [localUser]);
+  }, [localUser, userId]);
 
   const showContract = (contract: contractProps) => {
     setIsShowContractModalOpen(!isShowContractModalOpen);

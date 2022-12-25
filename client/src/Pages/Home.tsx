@@ -60,7 +60,7 @@ const Home = () => {
         <PostContainer>
           <CreatePost />
           {posts.map((post, index) => {
-            return (<PostFeed post={post} user={userData} key={index} />);
+            return <PostFeed post={post} user={userData} key={index} />;
           })}
         </PostContainer>
         <ActivityBox />

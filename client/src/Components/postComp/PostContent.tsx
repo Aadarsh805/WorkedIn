@@ -7,6 +7,7 @@ import PostModal from "./PostModal";
 import { userProps } from "../../types/userTypes";
 import { postProps } from "../../types/postTypes";
 import { ThumbsUp } from "../generalComp/SVG";
+import { useNavigate } from "react-router-dom";
 
 const AuthorDetails = styled.div`
   display: flex;
@@ -144,9 +145,18 @@ const PostContent = ({ post, user, commentBoxHandler }: postContentProps) => {
 
   const host = window.location.protocol + "//" + window.location.host;
 
+  const navigate = useNavigate();
+  const profileNavigator = () => {
+    navigate(`/profile/${post.author.name}`, {
+      state: {
+        id: post.author._id
+      }
+    })
+  }
+
   return post ? (
     <>
-      <AuthorDetails>
+      <AuthorDetails onClick={profileNavigator} >
         <img src={post.author.photo} alt="postAuthorImg" />
         <AuthorTopSection>
           <div>
