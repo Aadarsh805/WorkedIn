@@ -99,7 +99,7 @@ User can view all his contract (approved or not) in the Contracts Page. From her
 <img alt="profile page" src="https://user-images.githubusercontent.com/89806031/209150566-3d3307db-3ac0-4094-b01c-36242d7e6e1f.png" style="margin-right:10px" width="50%" align="left"/>
 <h3 align="center">Past Contracts</h3>
 <p align="justify">
-You can check a user's past projects/contracts in their profile page. Only approved contracts would be added to the past projects section in a users profile.<br/><br/>
+You can check a user's past projects/contracts in their profile page. Only approved contracts would be added to the past projects section in a users profile.<br/>
 Through these contracts, one can infer that if that person would be fit for collaborating on the project. If they complete their projects, or they are habitual of leaving the projects pending or they often break the contracts. 
 <br/><br/>
 The contract has different status as :-

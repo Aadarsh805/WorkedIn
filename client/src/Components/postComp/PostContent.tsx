@@ -1,21 +1,29 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
-import { FaRegThumbsUp } from "react-icons/fa";
+import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import PostModal from "./PostModal";
 import { userProps } from "../../types/userTypes";
 import { postProps } from "../../types/postTypes";
 import { ThumbsUp } from "../generalComp/SVG";
 import { useNavigate } from "react-router-dom";
-import { localStorageUser } from "../../utils/globalContants";
+import axios from "axios";
+import { BASE_URL, postEnd } from "../../utils/apiRoutes";
+import { getHeaders } from "../../utils/helperFunction";
 
 const AuthorDetails = styled.div`
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   padding-left: 0.5rem;
   /* border: 1px solid red; */
+`;
 
+const AuthorImage = styled.div`
+  /* border: 1px solid red; */
+  margin: 0;
+  border-radius: 50%;
+  padding: 0;
   img {
     width: 4vw;
     height: 4vw;
@@ -119,6 +127,28 @@ const PostStats = styled.div`
   }
 `;
 
+const likeAnimation = keyframes`
+  0%{
+    transform: rotate(0deg);
+  } 
+  25%{
+    transform: rotate(-30deg) scale(1.3);
+  }
+  50% {
+    transform: rotate(0deg) scale(1.2);
+  }
+  75%{
+    transform: rotate(40deg) scale(1.1);
+  }
+  100%{
+    transform: rotate(0deg) scale(1);
+  }
+`;
+
+interface likeProps {
+  likeAnimate: boolean;
+}
+
 const PostBottom = styled.div`
   display: flex;
   align-items: center;
@@ -129,6 +159,18 @@ const PostBottom = styled.div`
     height: 1.4rem;
     cursor: pointer;
   }
+
+  div.like {
+    /* border: 1px solid red; */
+
+    svg {
+      animation: ${(props: likeProps) =>
+        props.likeAnimate &&
+        css`
+          ${likeAnimation} 0.6s linear
+        `};
+    }
+  }
 `;
 
 interface postContentProps {
@@ -138,20 +180,12 @@ interface postContentProps {
 }
 
 const PostContent = ({ post, user, commentBoxHandler }: postContentProps) => {
-  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const [localUser, setLocalUser] = useState<userProps>({});
+  const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
+  const [likeAnimate, setSvgAnimate] = useState<boolean>(false);
+  const [postLikes, setPostLikes] = useState<number>(post.like.length);
+  const [postLikeArr, setPostLikeArr] = useState<Array<string>>(post.like);
 
-  async function fetchLocalUserData() {
-    const data = await JSON.parse(
-      localStorage.getItem(localStorageUser) || "{}"
-    );
-    setLocalUser(data);
-  }
-
-  useEffect(() => {
-    fetchLocalUserData()
-  }, [])
-  
+  const navigate = useNavigate();
 
   const closePostModal = () => {
     setIsPostModalOpen(false);
@@ -169,12 +203,11 @@ const PostContent = ({ post, user, commentBoxHandler }: postContentProps) => {
     return slugName;
   };
 
-  const navigate = useNavigate();
   const profileNavigator = () => {
-    console.log("LOCAL USER ID :- " + localUser._id);
+    console.log("LOCAL USER ID :- " + user._id);
     console.log("POST AUTHOR ID :- " + post.author._id);
-    if (post.author._id !== localUser._id) {
-      const slugName = slugify(post.author.name)
+    if (post.author._id !== user._id) {
+      const slugName = slugify(post.author.name);
       navigate(`/profile/${slugName}`, {
         state: {
           id: post.author._id,
@@ -185,10 +218,40 @@ const PostContent = ({ post, user, commentBoxHandler }: postContentProps) => {
     }
   };
 
+  const likeHandler = async () => {
+    setSvgAnimate(true);
+
+
+    if (!postLikeArr.find(id => {
+      return id === user._id
+    })) {
+      setPostLikes(postLikes + 1)
+      setPostLikeArr([...postLikeArr, user._id!])
+    } else {
+      setPostLikes(postLikes - 1)
+      setPostLikeArr(postLikeArr => postLikeArr.filter(id => id !== user._id))
+    }
+
+    const { data } = await axios.patch(
+      `${BASE_URL}${postEnd}${post._id}/like`,
+      {},
+      {
+        headers: getHeaders(user.token ?? ""),
+      }
+    );
+    console.log(data);
+
+    setTimeout(() => {
+      setSvgAnimate(false);
+    }, 1000);
+  };
+
   return post ? (
     <>
-      <AuthorDetails onClick={profileNavigator}>
-        <img src={post.author.photo} alt="postAuthorImg" />
+      <AuthorDetails>
+        <AuthorImage onClick={profileNavigator}>
+          <img src={post.author.photo} alt="postAuthorImg" />
+        </AuthorImage>
         <AuthorTopSection>
           <div>
             <h3>{post.author.name}</h3>
@@ -217,16 +280,22 @@ const PostContent = ({ post, user, commentBoxHandler }: postContentProps) => {
       <PostStats>
         <div>
           <ThumbsUp />
-          <h5>{post.like.length}</h5>
+          <h5>{postLikes}</h5>
         </div>
         <h5>
           {post.comments} <span>comments</span>
         </h5>
       </PostStats>
       <hr />
-      <PostBottom>
-        <div>
-          <FaRegThumbsUp />
+      <PostBottom likeAnimate={likeAnimate}>
+        <div className="like" onClick={likeHandler}>
+          {postLikeArr.find((id) => {
+            return id === user._id;
+          }) ? (
+            <FaThumbsUp />
+          ) : (
+            <FaRegThumbsUp />
+          )}
         </div>
         <div onClick={commentBoxHandler}>
           <BiCommentDetail />
