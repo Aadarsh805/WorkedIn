@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { localStorageUser } from "../utils/globalContants";
-
-import Navbar from "../components/generalComp/Navbar";
-import Intro from "../components/profileComp/Intro";
-import NoSkill from "../components/profileComp/NoSkill";
-import Skills from "../components/profileComp/Skills";
 import axios from "axios";
-import { BASE_URL, userEnd } from "../utils/apiRoutes";
-import { getHeaders } from "../utils/helperFunction";
-import About from "../components/profileComp/About";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 import ContractCard from "../components/contractComp/ContractCard";
-import RecentUserActivity from "../components/profileComp/RecentUserActivity";
-import { userProps } from "../types/userTypes";
-import { contractProps } from "../types/contractTypes";
 import ShowContract from "../components/contractComp/contractModals/ShowContract";
-import { useLocation, useParams } from "react-router-dom";
+import Navbar from "../components/generalComp/Navbar";
+import About from "../components/profileComp/About";
+import Intro from "../components/profileComp/Intro";
+import RecentUserActivity from "../components/profileComp/RecentUserActivity";
+import Skills from "../components/profileComp/Skills";
+import { contractProps } from "../types/contractTypes";
+import { userProps } from "../types/userTypes";
+import { BASE_URL, userEnd } from "../utils/apiRoutes";
+import { localStorageUser } from "../utils/globalContants";
+import { getHeaders } from "../utils/helperFunction";
 
 const Section = styled.div`
   /* border: 5px solid black; */
@@ -56,22 +54,20 @@ const Contracts = styled.div`
   flex-direction: column-reverse;
 `;
 
-const Profile = () => {
+const UserProfile = () => {
+  const [userId, setUserId] = useState();
   const [localUser, setLocalUser] = useState<userProps>({});
   const [user, setUser] = useState<userProps>({});
-  const [userId, setUserId] = useState();
 
   const [isShowContractModalOpen, setIsShowContractModalOpen] = useState(false);
   const [clickedContract, setClickedContract] = useState<contractProps>();
 
-  const params = useParams();
   const location = useLocation();
 
   useEffect(() => {
-    console.log("Location ID :- " + location.state.id);
-    setUserId(location.state.id)
-  }, [])
-  
+    setUserId(location.state.id);
+    console.log(location);
+  }, []);
 
   async function fetchLocalUserData() {
     const data = await JSON.parse(
@@ -80,8 +76,12 @@ const Profile = () => {
     setLocalUser(data);
   }
 
-  async function fetchMyDetails() {
-    const { data } = await axios.get(`${BASE_URL}${userEnd}me`, {
+  useEffect(() => {
+    fetchLocalUserData();
+  }, []);
+
+  async function fetchUserDetails() {
+    const { data } = await axios.get(`${BASE_URL}${userEnd}${userId}`, {
       headers: getHeaders(localUser.token ?? ""),
     });
     console.log(data.data.data);
@@ -89,30 +89,11 @@ const Profile = () => {
     setUser(userData);
   }
 
-  async function fetchUserDetails() {
-    const { data } = await axios.get(`${BASE_URL}${userEnd}${userId}`, {
-      headers: getHeaders(localUser.token ?? '')
-    })
-    console.log(data.data.data);
-    const userData = data.data.data;
-    setUser(userData)
-  }
-
   useEffect(() => {
-    fetchLocalUserData();
-    console.log(params.id);
-  }, []);
-
-  useEffect(() => {
-    console.log("TYPE of PARAMID :- " + typeof userId);
-    console.log("TYPE of LocalId :- " + typeof localUser._id);
+    console.log("USER ID :- " + userId);
+    
     if (Object.keys(localUser).length !== 0 && userId) {
-      if (userId !== localUser._id) {
-        console.log('next');
-        fetchUserDetails();
-      } else {
-        fetchMyDetails();
-      }
+      fetchUserDetails();
     }
   }, [localUser, userId]);
 
@@ -131,20 +112,13 @@ const Profile = () => {
         <Navbar />
         <Section>
           <UserDetails>
-            <Intro user={user} userToken={localUser.token!} />
-            <About
-              userAbout={user.about!}
-              userToken={localUser.token!}
-              mail={user.email!}
-              portfolio={user.personalWebsite!}
-            />
+            <Intro user={user} localUser={localUser!} />
+            <About user={user} localUser={localUser!} />
             {user.skills?.length !== 0 ? (
               <Skills skillArr={user.skills!} userToken={localUser.token!} />
-            ) : (
-              <NoSkill userToken={localUser.token!} />
-            )}
+            ) : null}
             <MyProjects>
-              <ProjectHeading>My Past Projects</ProjectHeading>
+              <ProjectHeading>Past projects</ProjectHeading>
               <Contracts>
                 {Object.keys(user).length !== 0 &&
                   (user.pastProjects as unknown as contractProps[]).map(
@@ -176,8 +150,4 @@ const Profile = () => {
   );
 };
 
-// Intro
-// Skills
-// Past Projects
-
-export default Profile;
+export default UserProfile;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
 import { FaRegThumbsUp } from "react-icons/fa";
@@ -8,6 +8,7 @@ import { userProps } from "../../types/userTypes";
 import { postProps } from "../../types/postTypes";
 import { ThumbsUp } from "../generalComp/SVG";
 import { useNavigate } from "react-router-dom";
+import { localStorageUser } from "../../utils/globalContants";
 
 const AuthorDetails = styled.div`
   display: flex;
@@ -138,6 +139,19 @@ interface postContentProps {
 
 const PostContent = ({ post, user, commentBoxHandler }: postContentProps) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [localUser, setLocalUser] = useState<userProps>({});
+
+  async function fetchLocalUserData() {
+    const data = await JSON.parse(
+      localStorage.getItem(localStorageUser) || "{}"
+    );
+    setLocalUser(data);
+  }
+
+  useEffect(() => {
+    fetchLocalUserData()
+  }, [])
+  
 
   const closePostModal = () => {
     setIsPostModalOpen(false);
@@ -145,18 +159,35 @@ const PostContent = ({ post, user, commentBoxHandler }: postContentProps) => {
 
   const host = window.location.protocol + "//" + window.location.host;
 
+  const slugify = (name: string) => {
+    const slugName = name
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    return slugName;
+  };
+
   const navigate = useNavigate();
   const profileNavigator = () => {
-    navigate(`/profile/${post.author.name}`, {
-      state: {
-        id: post.author._id
-      }
-    })
-  }
+    console.log("LOCAL USER ID :- " + localUser._id);
+    console.log("POST AUTHOR ID :- " + post.author._id);
+    if (post.author._id !== localUser._id) {
+      const slugName = slugify(post.author.name)
+      navigate(`/profile/${slugName}`, {
+        state: {
+          id: post.author._id,
+        },
+      });
+    } else {
+      navigate("/profile/me");
+    }
+  };
 
   return post ? (
     <>
-      <AuthorDetails onClick={profileNavigator} >
+      <AuthorDetails onClick={profileNavigator}>
         <img src={post.author.photo} alt="postAuthorImg" />
         <AuthorTopSection>
           <div>

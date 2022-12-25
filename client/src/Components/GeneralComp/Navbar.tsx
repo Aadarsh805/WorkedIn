@@ -98,7 +98,9 @@ const Navbar = () => {
         <Link to="/contracts">
           <MenuItem>My Contracts</MenuItem>
         </Link>
-          <MenuItem onClick={profileNavigator}>Profile</MenuItem>
+        <Link to="/profile/me" >
+          <MenuItem>Profile</MenuItem>
+        </Link>
       </Menu>
     </Section>
   );
