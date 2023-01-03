@@ -493,3 +493,7 @@ exports.leaveContract = catchAsync(async (req,res) => {
   })
 
 })
+
+exports.submitWorkToBrokenContract = catchAsync(async (req,res) => {
+  
+})

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FaPencilAlt } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 import UpdateAboutModal from "./profileModals/UpdateAboutModal";
+import { userProps } from "../../types/userTypes";
 
 const Section = styled.div`
   box-sizing: border-box;
@@ -21,10 +22,10 @@ const Section = styled.div`
     /* color: black; */
     font-size: 1.4rem;
   }
-  
+
   h4 {
     color: rgba(236, 227, 212, 255);
-  /* color: black; */
+    /* color: black; */
     font-size: 1rem;
     font-weight: 300;
   }
@@ -82,43 +83,44 @@ const AboutHandlers = styled.div`
 `;
 
 interface aboutProps {
-  userAbout: string;
-  mail: string;
-  portfolio: string;
-  userToken: string
+  user: userProps;
+  localUser: userProps;
 }
 
-const About = ({ userAbout, mail, portfolio, userToken }: aboutProps) => {
+const About = ({ user, localUser }: aboutProps) => {
+  const { about, email, personalWebsite } = user;
+  const [updateAbout, setUpdateAbout] = useState(false);
+
+  const firstname = user.name?.split(' ')[0];
 
   const aboutSocialHandler = (social: string) => {
-    navigator.clipboard.writeText(social)
+    navigator.clipboard.writeText(social);
   };
 
-  const [updateAbout, setUpdateAbout] = useState(false)
-
   const closeUpdateAboutModal = () => {
-    setUpdateAbout(false)
-  }
-
+    setUpdateAbout(false);
+  };
 
   return (
     <Section>
       <AboutSection>
         <Header>
           <h2>About</h2>
-          <div onClick={() => setUpdateAbout(!updateAbout)} >
-          <FaPencilAlt />
-          </div>
+          {user._id === localUser._id ? (
+            <div onClick={() => setUpdateAbout(!updateAbout)}>
+              <FaPencilAlt />
+            </div>
+          ) : null}
         </Header>
-        <h4>{userAbout ? userAbout : "Tell us more about yourself"}</h4>
+        <h4>{about ? about : user._id === localUser._id ? "Tell us more about yourself" : `${firstname} hasnt shared much about them`}</h4>
       </AboutSection>
-      {portfolio ? (
+      {user.personalWebsite ? (
         <AboutHandlers>
           <h2>Personal Website</h2>
           <div>
-            <h4>{portfolio}</h4>
+            <h4>{user.personalWebsite}</h4>
             <div
-              onClick={() => aboutSocialHandler(portfolio)}
+              onClick={() => aboutSocialHandler(personalWebsite!)}
               style={{ color: "rgba(236, 227, 212, 255)" }}
             >
               <FiArrowUpRight />
@@ -129,18 +131,23 @@ const About = ({ userAbout, mail, portfolio, userToken }: aboutProps) => {
       <AboutHandlers>
         <h2>Email</h2>
         <div>
-          <h4>{mail}</h4>
+          <h4>{user.email}</h4>
           <div
-            onClick={() => aboutSocialHandler(mail)}
+            onClick={() => aboutSocialHandler(email!)}
             style={{ color: "rgba(236, 227, 212, 255)" }}
           >
             <FiArrowUpRight />
           </div>
         </div>
       </AboutHandlers>
-      {
-        updateAbout ? <UpdateAboutModal userToken={userToken} closeUpdateAboutModal={closeUpdateAboutModal} userAbout={userAbout} mail={mail} /> : null
-      }
+      {updateAbout ? (
+        <UpdateAboutModal
+          userToken={localUser.token!}
+          closeUpdateAboutModal={closeUpdateAboutModal}
+          userAbout={about!}
+          mail={email!}
+        />
+      ) : null}
     </Section>
   );
 };

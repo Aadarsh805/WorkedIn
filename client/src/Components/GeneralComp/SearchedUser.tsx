@@ -18,6 +18,7 @@ const Section = styled.div`
   img {
     width: 2rem;
     height: 2rem;
+    object-fit: cover;
     margin-right: 0.6rem;
     border-radius: 50%;
     -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);

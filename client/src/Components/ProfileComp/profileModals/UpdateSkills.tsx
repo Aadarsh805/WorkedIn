@@ -153,6 +153,10 @@ const UpdateSkills = ({ modalFunction, userSkills, userToken }: skillModalProps)
     }
   };
 
+  const removeSkill = (selectedSkill:string) => {
+    setSkillArr(skillArr => skillArr.filter(skill => skill !== selectedSkill))
+  }
+
   const updateSkillHandler = async () => {
     const { data } = await axios.patch(`${BASE_URL}${userEnd}me/skills`, {
       skills: skillArr
@@ -171,7 +175,7 @@ const UpdateSkills = ({ modalFunction, userSkills, userToken }: skillModalProps)
         return (
           <SkillBadge key={index}>
             <h5>{skill}</h5>
-            <div>
+            <div onClick={() => removeSkill(skill)} >
               <GrFormClose />
             </div>
           </SkillBadge>

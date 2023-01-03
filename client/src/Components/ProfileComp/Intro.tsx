@@ -29,7 +29,6 @@ const ImageContainer = styled.div`
     height: 9rem;
     border-radius: 50%;
     object-fit: cover;
-    cursor: pointer;
     z-index: 1;
     /* border: 2px solid grey; */
   }
@@ -102,10 +101,10 @@ const UpdateIntro = styled.div`
 
 interface introProps {
   user: userProps;
-  userToken: string;
+  localUser: userProps;
 }
 
-const Intro = ({ user, userToken }: introProps) => {
+const Intro = ({ user, localUser }: introProps) => {
   const [updateIntro, setUpdateIntro] = useState(false);
 
   let socialProps;
@@ -134,16 +133,18 @@ const Intro = ({ user, userToken }: introProps) => {
           <Socials {...socialProps} />
         </div>
         <Designation>
-          {user.tagline ? user.tagline : "Your Tagline ..."}
+          {user.tagline ? user.tagline : user._id === localUser._id ? "Your Tagline ..." : '---'}
         </Designation>
       </DetailContainer>
-      <UpdateIntro onClick={() => setUpdateIntro(!updateIntro)}>
-        <FaPencilAlt />
-      </UpdateIntro>
+      {user._id === localUser._id ? (
+        <UpdateIntro onClick={() => setUpdateIntro(!updateIntro)}>
+          <FaPencilAlt />
+        </UpdateIntro>
+      ) : null}
       {updateIntro ? (
         <UpdateIntroModal
           user={user}
-          userToken={userToken}
+          userToken={localUser.token!}
           closeUpdateIntroModal={closeUpdateIntroModal}
         />
       ) : null}

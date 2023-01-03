@@ -59,6 +59,7 @@ const ContractApproval = ({ selectedChat, user }: contractApprovalProps) => {
       }
     );
     console.log(data);
+    window.location.reload();
   };
 
   return (

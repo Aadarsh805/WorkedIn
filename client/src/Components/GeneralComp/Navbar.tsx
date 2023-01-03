@@ -1,6 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { userProps } from "../../types/userTypes";
+import { localStorageUser } from "../../utils/globalContants";
 
 const Section = styled.div`
   width: 100%;
@@ -57,6 +59,30 @@ cursor: pointer;
 `;
 
 const Navbar = () => {
+  const [localUser, setLocalUser] = useState<userProps>({});
+
+  async function fetchUserData() {
+    const data = await JSON.parse(
+      localStorage.getItem(localStorageUser) || "{}"
+    );
+    setLocalUser(data);
+  }
+
+  useEffect(() => {
+    fetchUserData();
+    // console.log(params.id);
+  }, []);
+
+  const navigate = useNavigate()
+
+  const profileNavigator = () => {
+    navigate(`/profile/${localUser.name}`, {
+      state: {
+        id: localUser._id
+      }
+    })
+  }
+
   return (
     <Section>
       <Logo>
@@ -72,7 +98,7 @@ const Navbar = () => {
         <Link to="/contracts">
           <MenuItem>My Contracts</MenuItem>
         </Link>
-        <Link to="/me">
+        <Link to="/profile/me" >
           <MenuItem>Profile</MenuItem>
         </Link>
       </Menu>
