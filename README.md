@@ -27,7 +27,7 @@ The site is in `PROGRESS`.
 
 ---
 
-# How it works
+# 🤔How it works
 
 <!-- Before starting a project, you need to create a contract and a contract can only be created inside a group chat. You can s -->
 
@@ -99,7 +99,7 @@ User can view all his contract (approved or not) in the Contracts Page. From her
 <img alt="profile page" src="https://user-images.githubusercontent.com/89806031/209150566-3d3307db-3ac0-4094-b01c-36242d7e6e1f.png" style="margin-right:10px" width="50%" align="left"/>
 <h3 align="center">Past Contracts</h3>
 <p align="justify">
-You can check a user's past projects/contracts in their profile page. Only approved contracts would be added to the past projects section in a users profile.<br/>
+You can check a user's past projects/contracts in their profile page. Only approved contracts would be added to the past projects section in a users profile.
 Through these contracts, one can infer that if that person would be fit for collaborating on the project. If they complete their projects, or they are habitual of leaving the projects pending or they often break the contracts. 
 <br/><br/>
 The contract has different status as :-
@@ -112,7 +112,7 @@ The contract has different status as :-
 <br/>
 </p>
 
-# Upcoming Features
+# 🚀Upcoming Features
 
 1. **Ghost Strike Logic** :- For someone ghosting the project, team members can file a Ghost Request and if the person against whom the ghost request is registered doesn't responds within a time limit, the contract will break and it would be declared that that ghost broke the contract.
 
@@ -128,7 +128,7 @@ The contract has different status as :-
 
 ---
 
-# Contribute
+# 🌟Contribute
 
 We welcome everyone either be Beginner or Expeienced in open source community to contribute to this project. You can suggest a new feature or can start working on any upcoming feature.
 
@@ -142,8 +142,14 @@ Be sure to read the <a href="https://github.com/Garvit1809/WorkedIn/blob/main/CO
 
 ## Client Dependencies
 
-| Package | Description | version |
-| ------- | ----------- | ------- |
+| Package                                                    | Description                                                                  | version |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------- | ------- |
+| [axios](https://www.npmjs.com/package/axios)         |  A promise-based HTTP library                                          | 1.1.2   |
+| [react-icons](https://react-icons.github.io/react-icons/)         | Include popular icons in your React project                                          | 4.7.1   |
+| [react-image-gallery](https://www.npmjs.com/package/react-image-gallery)         |  React component for building image galleries and carousels                                          | 1.2.11   |
+| [react-router-dom](https://www.npmjs.com/package/react-router-dom)         | Enables you to implement dynamic routing in a web app                                          | 6.4.1   |
+| [react-toastify](https://www.npmjs.com/package/react-toastify)         | A package that allows to add notifications to our app with ease                                          | 9.0.8   |
+| [styled-components](https://styled-components.com/)         | A library which lets you write CSS in your JavaScript                                          | 5.3.6   |
 
 ## Server Dependencies
 
@@ -153,10 +159,10 @@ Be sure to read the <a href="https://github.com/Garvit1809/WorkedIn/blob/main/CO
 | [cors](https://www.npmjs.com/package/cors)                 | A package providing express middleware                                       | 2.8.5   |
 | [dotenv](https://www.npmjs.com/package/dotenv)             | A library that loads environment variables from a .env file into process.env | 16.0.2  |
 | [express](https://expressjs.com)                           | Node.js web application framework for server side scripting                  | 4.18.1  |
-| [html-to-text](https://www.npmjs.com/package/html-to-text) | Node.js web application framework for server side scripting                  | 8.2.1   |
-| [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) | Node.js web application framework for server side scripting                  | 8.5.1   |
-| [mongoose](https://mongoosejs.com)                         | Elegant mongodb object modeling for node.js                                  | 6.6.2   |
-| [nodemailer](https://nodemailer.com/about/)                | Elegant mongodb object modeling for node.js                                  | 6.8.0   |
+| [html-to-text](https://www.npmjs.com/package/html-to-text) | Advanced converter that parses HTML and returns beautiful text                  | 8.2.1   |
+| [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) | To securely transfer information over the web                  | 8.5.1   |
+| [mongoose](https://mongoosejs.com)                         | Elegant mongodb object modeling for node.js                                  | 6.8.0   |
+| [nodemailer](https://nodemailer.com/about/)                | A Node. js module that allows you to send emails from your server with ease                                  | 6.8.0   |
 | [pug](https://pugjs.org/api/getting-started.html)          | A template engine for Node and browser                                       | 3.0.2   |
 | [validator](https://github.com/validatorjs/validator.js)   | A library of string validators and sanitizers.                               | 13.7.0  |
 
