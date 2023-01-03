@@ -13,26 +13,22 @@ const Section = styled.div`
   padding: 0.4rem;
   margin: 0rem 0rem 1.2rem 1.2rem;
   box-sizing: border-box;
-  /* border: 1px solid purple; */
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
-    -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
-    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
-  /* background-color: #fff; */
+  -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+  /* border: 1px solid purple; */
 `;
 
 const CommentAuthor = styled.div`
   display: flex;
-  /* align-items: center; */
-  /* border: 1px solid yellow; */
-
   img {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 0.6rem;
-        -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     -moz-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
     box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.22);
   }
@@ -40,19 +36,16 @@ const CommentAuthor = styled.div`
 
 const AboutAuthor = styled.div`
 
-
 h4{
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 400;
   width: 93.5%;
   overflow: hidden;
   white-space: nowrap;
-  /* border: 1px solid red; */
 }
 `;
 
 const AuthorName = styled.div`
-/* border: 1px solid red; */
 display: flex;
 text-align: center;
 align-items: center;
@@ -62,31 +55,22 @@ width: calc(37vw - 4rem);
 h3{
   font-size: 1rem;
 }
-
-svg{
-   /* border: 1px solid red; */
-   /* margin-right: 0; */
-}
 `
 
 const CommentOptions = styled.div`
   position: relative;
   right: 0.5rem;
   top: 2px;
-  /* margin: auto 0; */
   cursor: pointer;
-  svg {
-    /* width: 3vw; */
-  }
 `;
 
 const CommentContent = styled.div`
 margin-top: 0.5rem;
 padding-left: 0.5rem;
-/* border: 1px solid blue; */
 p{
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   line-height: 150%;
+  font-weight: 600;
 }
 
 input{

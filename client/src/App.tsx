@@ -32,15 +32,3 @@ function App() {
 }
 
 export default App;
-
-//  Profile Page Setup
-//  Profile API
-// --> Name, Pic, Description, About, Social Links
-// Skills
-// Past Projects/Contracts
-
-// Decide a coloe scheme
-// Work on Auth Pages
-// Post Pages
-// Profile Page
-// Chat Pages
